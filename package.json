@@ -8,7 +8,6 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "build:prod": "ng build --configuration production --output-path docs --base-href / && cp src/CNAME docs/CNAME"
-
   },
   "private": true,
   "dependencies": {
@@ -29,6 +28,7 @@
     "@angular-devkit/build-angular": "^14.1.0",
     "@angular/cli": "~14.1.0",
     "@angular/compiler-cli": "^14.1.0",
+    "@types/bootstrap": "^5.2.10",
     "@types/jasmine": "~4.0.0",
     "angular-cli-ghpages": "^2.0.3",
     "jasmine-core": "~4.2.0",
