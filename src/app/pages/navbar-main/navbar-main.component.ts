@@ -1,26 +1,23 @@
-import { Component, OnInit } from '@angular/core';
-
-// Import Bootstrap
-import * as bootstrap from 'bootstrap';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-navbar-main',
   templateUrl: './navbar-main.component.html',
   styleUrls: ['./navbar-main.component.scss']
 })
-export class NavbarMainComponent implements OnInit {
+export class NavbarMainComponent {
 
-  constructor() { }
-
-  ngOnInit(): void { }
+  toggleNavbar() {
+    const navbarCollapse = document.getElementById('navbarNav');
+    if (navbarCollapse) {
+      navbarCollapse.classList.toggle('show'); // Toggle the 'show' class
+    }
+  }
 
   closeNavbar() {
-    const navbar = document.getElementById('navbarNav');
-    if (navbar) {
-      const bsCollapse = new bootstrap.Collapse(navbar, {
-        toggle: false
-      });
-      bsCollapse.hide();
+    const navbarCollapse = document.getElementById('navbarNav');
+    if (navbarCollapse) {
+      navbarCollapse.classList.remove('show'); // Ensure navbar closes when clicking a link
     }
   }
 }
