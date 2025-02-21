@@ -11,6 +11,49 @@
 <!--<img src="https://www.dropbox.com/scl/fi/1uzd1mzphk5ouohrnahix/1.jpg?rlkey=q74icz7rpal49z4rlxyx14jdv&st=wp3o02il&raw=1"-->
 <!--     class="d-block w-100 rounded" alt="Image 1">-->
 
+<!--<div class="position-relative">-->
+<!--  <img src="https://www.dropbox.com/scl/fi/1uzd1mzphk5ouohrnahix/1.jpg?rlkey=q74icz7rpal49z4rlxyx14jdv&st=wp3o02il&raw=1"-->
+<!--       class="d-block w-100 rounded" alt="Image 1">-->
+<!--  <div class="position-absolute top-50 start-50 translate-middle text-white fw-bold fs-4">-->
+<!--    Hi, how are you?-->
+<!--  </div>-->
+<!--</div>-->
+
+
+
+<!--show spinner and load page -->
+<!--
+
+
+<div class="position-relative">
+  &lt;!&ndash; Bootstrap Spinner (Visible while loading) &ndash;&gt;
+  <div *ngIf="!isImageLoaded" class="d-flex justify-content-center align-items-center" style="height: 300px;">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  &lt;!&ndash; Image (Visible after loading) &ndash;&gt;
+  <img loading="lazy"
+       src="https://www.dropbox.com/scl/fi/1uzd1mzphk5ouohrnahix/1.jpg?rlkey=q74icz7rpal49z4rlxyx14jdv&st=wp3o02il&raw=1"
+       class="d-block w-100 rounded"
+       alt="Image 1"
+       (load)="isImageLoaded = true"
+       (error)="isImageLoaded = false"
+       [hidden]="!isImageLoaded">
+
+  &lt;!&ndash; Overlay Text (Visible after loading) &ndash;&gt;
+  <div *ngIf="isImageLoaded"
+       class="position-absolute bottom-0 start-50 translate-middle-x text-white fw-bold fs-4 bg-dark bg-opacity-25 p-2 rounded">
+    Hi, how are you?
+  </div>
+</div>
+
+-->
+
+
+
+
 
 <div class="container mt-4">
   <app-home-page-carousel></app-home-page-carousel>
