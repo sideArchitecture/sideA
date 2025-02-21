@@ -10,6 +10,7 @@ import { FooterComponent } from './footer/footer.component';
 import { HomePageCarouselComponent } from './pages/home/home-page-carousel/home-page-carousel.component';
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { PeopleComponent } from './pages/people/people.component';
+import { BuildingAnimationComponent } from './pages/building-animation/building-animation.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { PeopleComponent } from './pages/people/people.component';
     FooterComponent,
     HomePageCarouselComponent,
     ProjectsComponent,
-    PeopleComponent
+    PeopleComponent,
+    BuildingAnimationComponent
   ],
   imports: [
     BrowserModule,
