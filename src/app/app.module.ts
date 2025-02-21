@@ -8,6 +8,7 @@ import { AboutComponent } from './pages/about/about.component';
 import { NavbarMainComponent } from './pages/navbar-main/navbar-main.component';
 import { FooterComponent } from './footer/footer.component';
 import { HomePageCarouselComponent } from './pages/home/home-page-carousel/home-page-carousel.component';
+import { ProjectsComponent } from './pages/projects/projects.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { HomePageCarouselComponent } from './pages/home/home-page-carousel/home-
     AboutComponent,
     NavbarMainComponent,
     FooterComponent,
-    HomePageCarouselComponent
+    HomePageCarouselComponent,
+    ProjectsComponent
   ],
   imports: [
     BrowserModule,
