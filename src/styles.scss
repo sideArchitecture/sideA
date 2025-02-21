@@ -4,3 +4,17 @@
   hyphens: auto;
   line-height: 1.6;
 }
+
+
+@font-face {
+  font-family: 'Qanelas';
+  src: url('assets/fonts/qanelas/Qanelas-Regular.otf') format('otf'),
+  url('assets/fonts/qanelas/Qanelas-Regular.ttf') format('ttf');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  font-family: 'Qanelas', sans-serif;
+
+}
