@@ -9,12 +9,36 @@
 @font-face {
   font-family: 'Qanelas';
   src: url('assets/fonts/qanelas/Qanelas-Regular.otf') format('otf'),
-  url('assets/fonts/qanelas/Qanelas-Regular.ttf') format('ttf');
+  url('assets/fonts/qanelas/Qanelas-Regular.ttf') format('truetype');
   font-weight: normal;
+  font-style: normal;
+}
+/*
+
+@font-face {
+  font-family: 'Qanelas';
+  src: url('assets/fonts/qanelas/Qanelas-Bold.otf') format('otf'),
+  url('assets/fonts/qanelas/Qanelas-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+*/
+
+@font-face {
+  font-family: 'Qanelas';
+  src: url('assets/fonts/qanelas/Qanelas-Medium.otf') format('otf'),
+  url('assets/fonts/qanelas/Qanelas-Medium.ttf') format('truetype');
+  font-weight: 500;
   font-style: normal;
 }
 
 body {
   font-family: 'Qanelas', sans-serif;
+}
 
+/* Apply Bold Qanelas to Headings */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Qanelas', sans-serif;
+  font-weight: 500;
 }
