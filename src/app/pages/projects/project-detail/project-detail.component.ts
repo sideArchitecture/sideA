@@ -51,4 +51,55 @@ export class ProjectDetailComponent implements OnInit {
 
     return Array.from({ length: count }, (_, i) => `${basePath}image${i + 1}.jpg`);
   }
+
+  getProjectImages22(): string[] {
+    if (!this.project) return [];
+
+    if (this.project.imageUrls?.length) {
+      return this.project.imageUrls;
+    }
+
+    const basePath = `assets/projects/${this.project.id}/`;
+    const count = this.project.imageCount || 0;
+    const extensions = ['jpg', 'jpeg', 'png'];
+
+    const imagePaths: string[] = [];
+
+    for (let i = 1; i <= count; i++) {
+      for (const ext of extensions) {
+        imagePaths.push(`${basePath}image${i}.${ext}`);
+      }
+    }
+
+    return imagePaths;
+  }
+
+  brokenImages = new Set<string>();
+
+  onImageError(imgUrl: string): void {
+    this.brokenImages.add(imgUrl);
+  }
+
+  // getProjectImages(): string[] {
+  //   if (!this.project) return [];
+  //
+  //   if (this.project.imageUrls && this.project.imageUrls.length > 0) {
+  //     return this.project.imageUrls;
+  //   }
+  //
+  //   const basePath = `assets/projects/${this.project.id}/`;
+  //   const count = this.project.imageCount || 0;
+  //   const extensions = ['jpg', 'jpeg', 'png'];
+  //
+  //   const imagePaths: string[] = [];
+  //
+  //   for (let i = 1; i <= count; i++) {
+  //     for (const ext of extensions) {
+  //       const path = `${basePath}image${i}.${ext}`;
+  //       imagePaths.push(path); // Push all possible variants
+  //     }
+  //   }
+  //
+  //   return imagePaths;
+  // }
 }
