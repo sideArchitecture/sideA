@@ -6,5 +6,6 @@ export interface Project {
   imageUrl: string;
   slug?: string;
   description?: string;
-  category?: ProjectCategory[];  // Enforced values
+  category?: ProjectCategory[];
+  notes?: string; // 👈 Add this
 }

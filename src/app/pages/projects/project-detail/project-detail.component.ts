@@ -22,4 +22,14 @@ export class ProjectDetailComponent implements OnInit {
       this.project = this.projectService.getProjectById(id);
     }
   }
+
+  getProjectImages(): string[] {
+    if (!this.project) return [];
+    const basePath = `assets/projects/${this.project.id}/`;
+    return [
+      `${basePath}image1.jpg`,
+      `${basePath}image2.jpg`,
+      // Add more if needed
+    ];
+  }
 }
