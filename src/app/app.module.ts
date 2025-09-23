@@ -12,6 +12,7 @@ import { ProjectsComponent } from './pages/projects/projects.component';
 import { PeopleComponent } from './pages/people/people.component';
 import { BuildingAnimationComponent } from './pages/building-animation/building-animation.component';
 import { ProjectListComponent } from './pages/projects/project-list/project-list.component';
+import { ProjectDetailComponent } from './pages/projects/project-detail/project-detail.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { ProjectListComponent } from './pages/projects/project-list/project-list
     ProjectsComponent,
     PeopleComponent,
     BuildingAnimationComponent,
-    ProjectListComponent
+    ProjectListComponent,
+    ProjectDetailComponent
   ],
   imports: [
     BrowserModule,
