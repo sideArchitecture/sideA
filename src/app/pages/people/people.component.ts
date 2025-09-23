@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-
+// people.component.ts (inside ngAfterViewInit)
+import { gsap } from 'gsap';
 @Component({
   selector: 'app-people',
   templateUrl: './people.component.html',
@@ -12,4 +13,14 @@ export class PeopleComponent implements OnInit {
   ngOnInit(): void {
   }
 
+
+
+ngAfterViewInit() {
+  gsap.from('.principal-profile', {
+    opacity: 0,
+    y: 50,
+    duration: 1,
+    ease: 'power2.out'
+  });
+}
 }
