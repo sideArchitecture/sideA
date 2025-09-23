@@ -11,6 +11,7 @@ import { HomePageCarouselComponent } from './pages/home/home-page-carousel/home-
 import { ProjectsComponent } from './pages/projects/projects.component';
 import { PeopleComponent } from './pages/people/people.component';
 import { BuildingAnimationComponent } from './pages/building-animation/building-animation.component';
+import { ProjectListComponent } from './pages/projects/project-list/project-list.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { BuildingAnimationComponent } from './pages/building-animation/building-
     HomePageCarouselComponent,
     ProjectsComponent,
     PeopleComponent,
-    BuildingAnimationComponent
+    BuildingAnimationComponent,
+    ProjectListComponent
   ],
   imports: [
     BrowserModule,
