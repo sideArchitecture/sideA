@@ -14,6 +14,7 @@ export class ProjectService {
       slug: 'sidea-tower',
       description: 'A minimalist high-rise blending form and function.',
       category: [ProjectCategory.Commercial],
+      imageCount: 2,
       notes: `SIDEA Tower redefines verticality with a minimalist approach.
       The structure is designed to optimize daylight, airflow, and spatial clarity.
       Its facade features rhythmic fenestration and modular panels that echo the brand’s ethos of precision and elegance.`
