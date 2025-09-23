@@ -8,4 +8,5 @@ export interface Project {
   description?: string;
   category?: ProjectCategory[];
   notes?: string; // 👈 Add this
+  imageUrls?: string[];
 }

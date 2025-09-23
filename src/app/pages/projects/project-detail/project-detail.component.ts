@@ -22,9 +22,15 @@ export class ProjectDetailComponent implements OnInit {
       this.project = this.projectService.getProjectById(id);
     }
   }
-
   getProjectImages(): string[] {
     if (!this.project) return [];
+
+    // Use external URLs if provided
+    if (this.project.imageUrls && this.project.imageUrls.length > 0) {
+      return this.project.imageUrls;
+    }
+
+    // Fallback to local assets
     const basePath = `assets/projects/${this.project.id}/`;
     return [
       `${basePath}image1.jpg`,
