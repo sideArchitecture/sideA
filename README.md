@@ -14,3 +14,7 @@ Run `npm run build:prod` to generate production ready files and they will be sto
 ## Further Help
 
 Please reach out to Anil!
+
+
+## to start server
+ng serve
