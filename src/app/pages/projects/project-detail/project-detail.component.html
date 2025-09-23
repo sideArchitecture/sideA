@@ -1,1 +1,10 @@
-<p>project-detail works!</p>
+<div class="container mt-5" *ngIf="project">
+  <h2 class="text-secondary">{{ project.title }}</h2>
+  <img
+    [src]="project.imageUrl"
+    [alt]="project.title"
+    class="img-fluid mb-4 shadow-sm"
+    style="max-height: 400px; object-fit: cover;"
+  >
+  <p class="text-muted">{{ project.description }}</p>
+</div>
