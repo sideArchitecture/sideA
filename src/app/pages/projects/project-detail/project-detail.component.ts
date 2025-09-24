@@ -66,23 +66,50 @@ export class ProjectDetailComponent implements OnInit {
     return imagePaths;
   }
 
-
   loadValidImages(): void {
     const paths = this.getProjectImagesRaw();
     const valid: string[] = [];
+    let loadedCount = 0;
 
     paths.forEach(path => {
       const img = new Image();
       img.onload = () => {
         valid.push(path);
-        this.validImages = [...valid]; // trigger change detection
+        loadedCount++;
+        if (loadedCount === paths.length) {
+          this.validImages = [...valid]; // trigger change detection
+
+          // Wait for DOM to render, then animate
+          setTimeout(() => {
+            gsap.from('.project-image', {
+              opacity: 0,
+              scale: 0.95,
+              duration:2,
+              ease: 'power2.out',
+              stagger: 0.4
+            });
+          }, 10);
+        }
       };
       img.onerror = () => {
-        // skip broken image
+        loadedCount++;
+        if (loadedCount === paths.length) {
+          this.validImages = [...valid];
+          setTimeout(() => {
+            gsap.from('.project-image', {
+              opacity: 0,
+              scale: 0.95,
+              duration: 2,
+              ease: 'power2.out',
+              stagger: 0.4
+            });
+          }, 50);
+        }
       };
       img.src = path;
     });
   }
+
 
 
   selectedImageIndex: number | null = null;
