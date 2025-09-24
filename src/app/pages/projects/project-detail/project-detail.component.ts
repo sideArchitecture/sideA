@@ -27,11 +27,20 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    gsap.from('.project-detail-wrapper', {
+    gsap.from('.project-profile', {
       opacity: 0,
       y: 40,
       duration: 1,
       ease: 'power2.out'
+    });
+
+    gsap.from('.project-image', {
+      opacity: 0,
+      scale: 0.95,
+      duration: 0.6,
+      ease: 'power2.out',
+      stagger: 0.1,
+      delay: 0.5
     });
   }
 
@@ -56,6 +65,7 @@ export class ProjectDetailComponent implements OnInit {
 
     return imagePaths;
   }
+
 
   loadValidImages(): void {
     const paths = this.getProjectImagesRaw();

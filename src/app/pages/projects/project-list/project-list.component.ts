@@ -28,9 +28,9 @@ export class ProjectListComponent implements OnInit {
     gsap.from('.card', {
       opacity: 0,
       y: 30,
-      duration: 2,
+      duration: 1,
       ease: 'power2.out',
-      stagger: 0.4
+      stagger: 0.1
     });
   }
 
