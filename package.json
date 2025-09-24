@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host 0.0.0.0",
+    "start": "node generate_manifest.js && ng serve --host 0.0.0.0",
+
+
     "startdefault": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
@@ -45,3 +47,5 @@
     "typescript": "~4.7.2"
   }
 }
+
+

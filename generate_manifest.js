@@ -29,6 +29,6 @@ fs.readdirSync(projectsDir).forEach(projectName => {
 /*
 
 // to run this file:
-  node generate-manifests.js
+  node generate_manifest.js
 
 */
