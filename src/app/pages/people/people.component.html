@@ -30,17 +30,17 @@
       <br/>
 
       <!-- Contact Info -->
-      <span class="h6 text-secondary">Contact:</span>
-      <br/>
       <span class="h6 text-secondary">
         side.a.projects@gmail.com
         <i
-          class="bi bi-clipboard ms-2 text-primary"
+          class="bi bi-copy ms-2 text-primary"
           style="cursor: pointer;"
           (click)="copyEmail('side.a.projects@gmail.com')"
           title="Copy to clipboard"
         ></i>
+        <span *ngIf="copied" class="ms-2 text-success">Copied!</span>
       </span>
+
 
       <!--      <table class="table table-borderless text-secondary">-->
 <!--        <tbody>-->

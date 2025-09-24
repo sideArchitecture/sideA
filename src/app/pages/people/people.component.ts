@@ -24,10 +24,18 @@ ngAfterViewInit() {
   });
 }
 
+
+
+  copied: boolean = false;
+
   copyEmail(email: string): void {
     navigator.clipboard.writeText(email).then(() => {
-      console.log('Email copied to clipboard:', email);
-      // Optionally show a toast or alert
+      this.copied = true;
+
+      // Hide message after 2 seconds
+      setTimeout(() => {
+        this.copied = false;
+      }, 2000);
     }).catch(err => {
       console.error('Failed to copy email:', err);
     });
