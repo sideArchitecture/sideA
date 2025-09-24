@@ -14,6 +14,7 @@ import { BuildingAnimationComponent } from './pages/building-animation/building-
 import { ProjectListComponent } from './pages/projects/project-list/project-list.component';
 import { ProjectDetailComponent } from './pages/projects/project-detail/project-detail.component';
 import {PinchZoomModule} from "@mtnair/ngx-pinch-zoom";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import {PinchZoomModule} from "@mtnair/ngx-pinch-zoom";
     BrowserModule,
     AppRoutingModule,
     HammerModule,
-    PinchZoomModule
+    PinchZoomModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
