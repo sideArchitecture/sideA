@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Project } from '../../../models/project.model';
 import { ProjectService } from '../../../services/project.service';
 import { ProjectCategory } from '../../../models/project-category.enum';
-
+import { gsap } from 'gsap';
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
@@ -23,6 +23,17 @@ export class ProjectListComponent implements OnInit {
     this.projects = [...this.allProjects];
     this.computeCategoryCounts();
   }
+
+  ngAfterViewInit(): void {
+    gsap.from('.card', {
+      opacity: 0,
+      y: 30,
+      duration: 2,
+      ease: 'power2.out',
+      stagger: 0.4
+    });
+  }
+
 
   computeCategoryCounts(): void {
     const counts: { [key: string]: number } = {};
@@ -73,6 +84,7 @@ export class ProjectListComponent implements OnInit {
     const count = this.categoryCounts[cat] ?? 0;
     return `${titleCase} (${count})`;
   }
+
 
 
 
