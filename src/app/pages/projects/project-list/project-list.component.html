@@ -6,7 +6,7 @@
         [(ngModel)]="selectedCategory"
         (change)="filterProjects()"
       >
-        <option *ngFor="let cat of categories" [value]="cat">
+        <option *ngFor="let cat of filteredCategories" [value]="cat">
           {{ getCategoryLabel(cat) }}
         </option>
       </select>

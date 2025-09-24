@@ -13,8 +13,8 @@ export class ProjectListComponent implements OnInit {
   projects: Project[] = [];
   selectedCategory: string = 'All';
 
-  // Map of category name to count
   categoryCounts: { [key: string]: number } = {};
+  filteredCategories: string[] = [];
 
   constructor(private projectService: ProjectService) {}
 
@@ -27,12 +27,10 @@ export class ProjectListComponent implements OnInit {
   computeCategoryCounts(): void {
     const counts: { [key: string]: number } = {};
 
-    // Initialize counts
     Object.values(ProjectCategory).forEach(cat => {
       counts[cat] = 0;
     });
 
-    // Count each category
     for (const project of this.allProjects) {
       if (Array.isArray(project.category)) {
         for (const cat of project.category) {
@@ -41,10 +39,12 @@ export class ProjectListComponent implements OnInit {
       }
     }
 
-    // Add "All" count
     counts['All'] = this.allProjects.length;
-
     this.categoryCounts = counts;
+
+    this.filteredCategories = Object.keys(counts)
+      .filter(cat => counts[cat] > 0)
+      .sort((a, b) => this.getCategoryLabel(a).localeCompare(this.getCategoryLabel(b)));
   }
 
   filterProjects(): void {
@@ -58,12 +58,20 @@ export class ProjectListComponent implements OnInit {
     }
   }
 
+  showCounts =true;
+
   getCategoryLabel(cat: string): string {
+    const titleCase = cat
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+
+    if (!this.showCounts) return titleCase;
+
     const count = this.categoryCounts[cat] ?? 0;
-    return `${cat} (${count})`;
+    return `${titleCase} (${count})`;
   }
 
-  get categories(): string[] {
-    return ['All', ...Object.values(ProjectCategory)];
-  }
+
 }
