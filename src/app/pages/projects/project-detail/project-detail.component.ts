@@ -1,9 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { ProjectService } from '../../../services/project.service';
-import { Project } from '../../../models/project.model';
-import { gsap } from 'gsap';
-import { HttpClient } from '@angular/common/http';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ProjectService} from '../../../services/project.service';
+import {Project} from '../../../models/project.model';
+import {gsap} from 'gsap';
+import {HttpClient} from '@angular/common/http';
+
 
 @Component({
   selector: 'app-project-detail',
@@ -17,10 +18,15 @@ export class ProjectDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
-  private http: HttpClient
-  ) {}
+    private http: HttpClient,
+    private router: Router
+  ) {
+  }
+
+  selectedCategory: string | null = null;
 
   ngOnInit(): void {
+    this.selectedCategory = this.route.snapshot.queryParamMap.get('category');
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.project = this.projectService.getProjectById(id);
@@ -83,7 +89,6 @@ export class ProjectDetailComponent implements OnInit {
   }
 
 
-
   async loadValidImages(): Promise<void> {
     const paths = await this.getProjectImagesRaw();
     const valid: string[] = [];
@@ -127,7 +132,6 @@ export class ProjectDetailComponent implements OnInit {
   }
 
 
-
   selectedImageIndex: number | null = null;
 
   @ViewChild('zoomRef') zoomRef: any;
@@ -144,7 +148,6 @@ export class ProjectDetailComponent implements OnInit {
       });
     }, 100); // Slight delay ensures DOM is ready
   }
-
 
 
   closeLightbox(): void {

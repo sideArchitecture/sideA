@@ -1,8 +1,13 @@
 <span class="float-end">
-  <a class="text-secondary" routerLink="/projects" >
+  <a
+    class="text-secondary"
+    [routerLink]="['/projects']"
+    [queryParams]="{ category: selectedCategory }"
+  >
     <i class="bi bi-arrow-left-circle-fill"></i>
-    All Projects
+    Back
   </a>
+
 </span>
 <br/>
 <div class="container mt-5 project-profile" *ngIf="project">

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Project } from '../../../models/project.model';
 import { ProjectService } from '../../../services/project.service';
 import { ProjectCategory } from '../../../models/project-category.enum';
+import { ActivatedRoute, Router } from '@angular/router';
 import { gsap } from 'gsap';
 @Component({
   selector: 'app-project-list',
@@ -16,12 +17,22 @@ export class ProjectListComponent implements OnInit {
   categoryCounts: { [key: string]: number } = {};
   filteredCategories: string[] = [];
 
-  constructor(private projectService: ProjectService) {}
+  constructor(
+    private projectService: ProjectService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.allProjects = this.projectService.getAllProjects();
     this.projects = [...this.allProjects];
     this.computeCategoryCounts();
+
+    const category = this.route.snapshot.queryParamMap.get('category');
+    if (category) {
+      this.selectedCategory = category;
+      this.filterProjects();
+    }
   }
 
   ngAfterViewInit(): void {
