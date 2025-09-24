@@ -18,7 +18,8 @@
       class="col-md-4 mb-4"
       *ngFor="let project of projects"
     >
-      <a [routerLink]="['/projects', project.id]" class="text-decoration-none">
+      <a [routerLink]="['/projects', project.id]" [queryParams]="{ category: selectedCategory }" class="text-decoration-none">
+
         <div class="card h-100 shadow-sm">
           <div class="square-wrapper">
             <img
