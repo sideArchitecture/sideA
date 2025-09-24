@@ -5,9 +5,8 @@
 .project-cover {
   max-width: 250px;
   height: auto;
-  border-radius: 50%;
+  border-radius: 12px; // Rounded corners instead of circle
   object-fit: cover;
-  border: 4px solid white;
   box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
 
