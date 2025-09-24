@@ -28,12 +28,17 @@ export class ProjectListComponent implements OnInit {
     this.projects = [...this.allProjects];
     this.computeCategoryCounts();
 
-    const category = this.route.snapshot.queryParamMap.get('category');
-    if (category) {
-      this.selectedCategory = category;
+    this.route.queryParamMap.subscribe(params => {
+      const category = params.get('category');
+      if (category && this.filteredCategories.includes(category)) {
+        this.selectedCategory = category;
+      } else {
+        this.selectedCategory = 'All';
+      }
       this.filterProjects();
-    }
+    });
   }
+
 
   ngAfterViewInit(): void {
     gsap.from('.card', {

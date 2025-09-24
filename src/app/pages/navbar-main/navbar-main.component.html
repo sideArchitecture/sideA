@@ -24,8 +24,19 @@
 
 
         <li class="nav-item">
-          <a class="nav-link" routerLink="/projects" (click)="closeNavbar()">Projects</a>
+          <a
+            class="nav-link"
+            [routerLink]="['/projects']"
+            [queryParams]="null"
+            (click)="closeNavbar()"
+          >
+            Projects
+          </a>
+
+
         </li>
+
+
 
 
 <!--        <li class="nav-item">-->
