@@ -1,26 +1,41 @@
-<div class="container mt-5" *ngIf="project">
-  <h2 class="text-secondary">{{ project.title }}</h2>
+<div class="container mt-5 project-profile" *ngIf="project">
+  <div class="row align-items-center">
+    <!-- Cover Image -->
+    <div class="col-md-4 text-center">
+      <img
+        [src]="project.imageUrl"
+        [alt]="project.title"
+        class="img-fluid rounded-circle shadow-sm project-cover"
+      >
+    </div>
 
-  <div class="cover-wrapper mb-4">
-    <img
-      [src]="project.imageUrl"
-      [alt]="project.title"
-      class="cover-image"
-    >
+    <!-- Project Details -->
+    <div class="col-md-8">
+      <h2 class="text-secondary">{{ project.title }}</h2>
+      <p class="text-secondary justify-text custom-text">
+        {{ project.description }}
+      </p>
+    </div>
   </div>
+</div>
 
-  <p class="text-muted">{{ project.description }}</p>
+<!-- Project Notes -->
+<div class="container mt-4" *ngIf="project?.notes">
+<!--  <h4 class="text-secondary">Project Notes</h4>-->
   <p class="text-muted">{{ project?.notes }}</p>
 </div>
 
-<div class="row mt-4">
-  <div class="col-md-6 mb-4" *ngFor="let img of validImages">
-    <div class="image-wrapper">
-      <img
-        [src]="img"
-        alt="Project image"
-        class="project-image"
-      >
+<!-- Project Images -->
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6 mb-4" *ngFor="let img of validImages">
+      <div class="image-wrapper">
+        <img
+          [src]="img"
+          alt="Project image"
+          class="project-image"
+        >
+      </div>
     </div>
   </div>
 </div>
