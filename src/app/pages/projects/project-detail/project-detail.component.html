@@ -21,15 +21,14 @@
 
 <!-- Project Notes -->
 <div class="container mt-4" *ngIf="project?.notes">
-<!--  <h4 class="text-secondary">Project Notes</h4>-->
   <p class="text-muted">{{ project?.notes }}</p>
 </div>
 
 <!-- Project Images -->
 <div class="container mt-4">
   <div class="row">
-    <div class="col-md-6 mb-4" *ngFor="let img of validImages">
-      <div class="image-wrapper">
+    <div class="col-md-6 mb-4" *ngFor="let img of validImages; let i = index">
+      <div class="image-wrapper" (click)="openLightbox(i)">
         <img
           [src]="img"
           alt="Project image"
@@ -37,5 +36,18 @@
         >
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Lightbox Viewer -->
+<div class="lightbox-overlay" *ngIf="selectedImageIndex !== null">
+  <div class="lightbox-content">
+    <button class="lightbox-close" (click)="closeLightbox()">×</button>
+
+    <button class="lightbox-nav left" (click)="prevImage()" [disabled]="selectedImageIndex === 0">‹</button>
+
+    <img [src]="validImages[selectedImageIndex!]" alt="Full view" class="lightbox-image">
+
+    <button class="lightbox-nav right" (click)="nextImage()" [disabled]="selectedImageIndex === validImages.length - 1">›</button>
   </div>
 </div>

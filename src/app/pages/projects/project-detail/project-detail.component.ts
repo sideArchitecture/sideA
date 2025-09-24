@@ -63,4 +63,27 @@ export class ProjectDetailComponent implements OnInit {
       img.src = path;
     });
   }
+
+
+  selectedImageIndex: number | null = null;
+
+  openLightbox(index: number): void {
+    this.selectedImageIndex = index;
+  }
+
+  closeLightbox(): void {
+    this.selectedImageIndex = null;
+  }
+
+  nextImage(): void {
+    if (this.selectedImageIndex !== null && this.selectedImageIndex < this.validImages.length - 1) {
+      this.selectedImageIndex++;
+    }
+  }
+
+  prevImage(): void {
+    if (this.selectedImageIndex !== null && this.selectedImageIndex > 0) {
+      this.selectedImageIndex--;
+    }
+  }
 }
