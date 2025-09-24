@@ -59,19 +59,21 @@ export class ProjectListComponent implements OnInit {
   }
 
   showCounts =true;
-
   getCategoryLabel(cat: string): string {
-    const titleCase = cat
-      .toLowerCase()
-      .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(' ');
+    const titleCase = cat === 'All'
+      ? 'All Projects'
+      : cat
+        .toLowerCase()
+        .split(' ')
+        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
 
     if (!this.showCounts) return titleCase;
 
     const count = this.categoryCounts[cat] ?? 0;
     return `${titleCase} (${count})`;
   }
+
 
 
 }
