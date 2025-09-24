@@ -5,5 +5,6 @@ export enum ProjectCategory {
   Institutional = 'institutional',
   Cultural = 'cultural',
   Interior = 'interior',
-  Landscape = 'landscape'
+  Landscape = 'landscape',
+  Featured = 'featured'
 }
