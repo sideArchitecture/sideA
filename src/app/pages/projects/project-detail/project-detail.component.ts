@@ -103,7 +103,7 @@ export class ProjectDetailComponent implements OnInit {
               ease: 'power2.out',
               stagger: 0.4
             });
-          }, 50);
+          }, 0);
         }
       };
       img.src = path;
