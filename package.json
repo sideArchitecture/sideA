@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --host 0.0.0.0",
+    "startdefault": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
@@ -21,6 +22,7 @@
     "@angular/router": "^14.1.0",
     "bootstrap": "^5.3.3",
     "gsap": "^3.12.7",
+    "hammerjs": "^2.0.8",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

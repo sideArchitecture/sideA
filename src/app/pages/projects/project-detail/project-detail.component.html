@@ -39,7 +39,11 @@
   </div>
 </div>
 
-<div class="lightbox-overlay" *ngIf="selectedImageIndex !== null">
+<div class="lightbox-overlay"
+     *ngIf="selectedImageIndex !== null"
+     (swipeleft)="nextImage()"
+     (swiperight)="prevImage()"
+>
   <div class="lightbox-content">
     <button class="lightbox-close" (click)="closeLightbox()">×</button>
 

@@ -76,12 +76,15 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   nextImage(): void {
+    console.log("next swiped");
     if (this.selectedImageIndex !== null && this.selectedImageIndex < this.validImages.length - 1) {
       this.selectedImageIndex++;
     }
   }
 
   prevImage(): void {
+    console.log("prev swiped");
+
     if (this.selectedImageIndex !== null && this.selectedImageIndex > 0) {
       this.selectedImageIndex--;
     }

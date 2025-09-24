@@ -113,36 +113,3 @@
   display: none;
 }
 
-@media (min-width: 769px) {
-  .lightbox-content {
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .lightbox-nav-row {
-    display: none;
-  }
-
-  .lightbox-nav-side {
-    display: block;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 2rem;
-    background: rgba(0, 0, 0, 0.4);
-    border: none;
-    border-radius: 50%;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    z-index: 10001;
-  }
-
-  .lightbox-nav-side.left {
-    left: 20px;
-  }
-
-  .lightbox-nav-side.right {
-    right: 20px;
-  }
-}
