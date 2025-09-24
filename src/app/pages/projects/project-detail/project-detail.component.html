@@ -51,9 +51,12 @@
     <button class="lightbox-nav-side left" (click)="prevImage()" [disabled]="selectedImageIndex === 0">‹</button>
     <button class="lightbox-nav-side right" (click)="nextImage()" [disabled]="selectedImageIndex === validImages.length - 1">›</button>
 
-    <pinch-zoom>
+
+
+    <pinch-zoom #zoomRef [disablePan]="false">
       <img [src]="validImages[selectedImageIndex!]" alt="Full view" class="lightbox-image">
     </pinch-zoom>
+
 
     <!-- Mobile chevrons -->
     <div class="lightbox-nav-row">

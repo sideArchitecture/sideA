@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
@@ -67,9 +67,22 @@ export class ProjectDetailComponent implements OnInit {
 
   selectedImageIndex: number | null = null;
 
-  openLightbox(index: number): void {
+  @ViewChild('zoomRef') zoomRef: any;
+
+  openLightbox(index: number) {
     this.selectedImageIndex = index;
+
+    // Wait for layout + orientation to settle
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        if (this.zoomRef?.reset) {
+          this.zoomRef.reset(); // Force zoom reset
+        }
+      });
+    }, 100); // Slight delay ensures DOM is ready
   }
+
+
 
   closeLightbox(): void {
     this.selectedImageIndex = null;
