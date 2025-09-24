@@ -77,3 +77,27 @@
     </div>
   </div>
 </div>
+
+
+<br/>
+<br/>
+<br/>
+<br/>
+
+
+<span class="float-end" *ngIf="validImages.length > 5">
+  <a
+    class="text-secondary"
+    [routerLink]="['/projects']"
+    [queryParams]="{ category: selectedCategory }"
+  >
+    <i class="bi bi-arrow-left-circle-fill"></i>
+    Back
+  </a>
+
+</span>
+
+<br/>
+<br/>
+<br/>
+<br/>
