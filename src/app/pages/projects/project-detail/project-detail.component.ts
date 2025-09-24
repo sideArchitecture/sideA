@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
 import { gsap } from 'gsap';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-project-detail',
@@ -15,7 +16,8 @@ export class ProjectDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private projectService: ProjectService
+    private projectService: ProjectService,
+  private http: HttpClient
   ) {}
 
   ngOnInit(): void {
@@ -44,30 +46,46 @@ export class ProjectDetailComponent implements OnInit {
     });
   }
 
-  getProjectImagesRaw(): string[] {
-    if (!this.project) return [];
 
+  getProjectImagesRaw(): Promise<string[]> {
+    if (!this.project) return Promise.resolve([]);
+
+    // ✅ Priority 1: Direct image URLs from service
     if (this.project.imageUrls?.length) {
-      return this.project.imageUrls;
+      return Promise.resolve(this.project.imageUrls);
     }
 
+    // ✅ Priority 2: Manifest-based local assets
     const basePath = `assets/projects/${this.project.id}/`;
-    const count = this.project.imageCount || 0;
-    const extensions = ['jpg', 'jpeg', 'png'];
+    const manifestPath = `${basePath}manifest.json`;
 
-    const imagePaths: string[] = [];
+    return this.http.get<{ images: string[] }>(manifestPath).toPromise()
+      .then((manifest) => {
+        if (manifest?.images?.length) {
+          return manifest.images.map((img: string) => `${basePath}${img}`);
+        }
+        return [];
+      })
+      .catch(() => {
+        // ✅ Priority 3: Fallback to guessed extensions
+        const count = this.project?.imageCount || 0;
+        const extensions = ['jpg', 'jpeg', 'png'];
+        const imagePaths: string[] = [];
 
-    for (let i = 1; i <= count; i++) {
-      for (const ext of extensions) {
-        imagePaths.push(`${basePath}image${i}.${ext}`);
-      }
-    }
+        for (let i = 1; i <= count; i++) {
+          for (const ext of extensions) {
+            imagePaths.push(`${basePath}image${i}.${ext}`);
+          }
+        }
 
-    return imagePaths;
+        return imagePaths;
+      });
   }
 
-  loadValidImages(): void {
-    const paths = this.getProjectImagesRaw();
+
+
+  async loadValidImages(): Promise<void> {
+    const paths = await this.getProjectImagesRaw();
     const valid: string[] = [];
     let loadedCount = 0;
 
@@ -77,14 +95,12 @@ export class ProjectDetailComponent implements OnInit {
         valid.push(path);
         loadedCount++;
         if (loadedCount === paths.length) {
-          this.validImages = [...valid]; // trigger change detection
-
-          // Wait for DOM to render, then animate
+          this.validImages = [...valid];
           setTimeout(() => {
             gsap.from('.project-image', {
               opacity: 0,
               scale: 0.95,
-              duration:2,
+              duration: 2,
               ease: 'power2.out',
               stagger: 0.4
             });

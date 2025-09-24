@@ -15,6 +15,7 @@ import { ProjectListComponent } from './pages/projects/project-list/project-list
 import { ProjectDetailComponent } from './pages/projects/project-detail/project-detail.component';
 import {PinchZoomModule} from "@mtnair/ngx-pinch-zoom";
 import {FormsModule} from "@angular/forms";
+import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import {FormsModule} from "@angular/forms";
     AppRoutingModule,
     HammerModule,
     PinchZoomModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
