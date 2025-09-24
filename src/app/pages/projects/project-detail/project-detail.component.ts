@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
+import {gsap} from "gsap";
 
 @Component({
   selector: 'app-project-detail',
@@ -23,6 +24,16 @@ export class ProjectDetailComponent implements OnInit {
       this.loadValidImages();
     }
   }
+
+  // ngAfterViewInit() {
+  //   gsap.from('.principal-profile', {
+  //     opacity: 0,
+  //     y: 50,
+  //     duration: 1,
+  //     ease: 'power2.out'
+  //   });
+  // }
+
   // getProjectImages11(): string[] {
   //   if (!this.project) return [];
   //
