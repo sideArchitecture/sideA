@@ -17,9 +17,19 @@
 </div>
 
 
+<!--<div class="row">-->
+<!--  <div class="col-md-6 mb-4" *ngFor="let img of getProjectImages()">-->
+<!--    <img [src]="img" class="img-fluid shadow-sm" alt="Project image">-->
+<!--  </div>-->
+<!--</div>-->
+
 <div class="row">
-  <div class="col-md-6 mb-4" *ngFor="let img of getProjectImages()">
-    <img [src]="img" class="img-fluid shadow-sm" alt="Project image">
+  <div class="col-md-6 mb-4" *ngFor="let img of validImages">
+    <img
+      [src]="img"
+      class="img-fluid shadow-sm"
+      alt="Project image"
+    >
   </div>
 </div>
 

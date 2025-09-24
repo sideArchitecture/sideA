@@ -20,6 +20,7 @@ export class ProjectDetailComponent implements OnInit {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.project = this.projectService.getProjectById(id);
+      this.loadValidImages();
     }
   }
   // getProjectImages11(): string[] {
@@ -39,20 +40,26 @@ export class ProjectDetailComponent implements OnInit {
   //   ];
   // }
 
-  getProjectImages(): string[] {
-    if (!this.project) return [];
+  validImages: string[] = [];
 
-    if (this.project.imageUrls && this.project.imageUrls.length > 0) {
-      return this.project.imageUrls;
-    }
+  loadValidImages(): void {
+    const paths = this.getProjectImagesRaw(); // returns all possible paths
+    const valid: string[] = [];
 
-    const basePath = `assets/projects/${this.project.id}/`;
-    const count = this.project.imageCount || 0;
-
-    return Array.from({ length: count }, (_, i) => `${basePath}image${i + 1}.jpg`);
+    paths.forEach(path => {
+      const img = new Image();
+      img.onload = () => {
+        valid.push(path);
+        this.validImages = [...valid]; // trigger change detection
+      };
+      img.onerror = () => {
+        // do nothing — skip broken image
+      };
+      img.src = path;
+    });
   }
 
-  getProjectImages22(): string[] {
+  getProjectImagesRaw(): string[] {
     if (!this.project) return [];
 
     if (this.project.imageUrls?.length) {
@@ -74,11 +81,11 @@ export class ProjectDetailComponent implements OnInit {
     return imagePaths;
   }
 
-  brokenImages = new Set<string>();
 
-  onImageError(imgUrl: string): void {
-    this.brokenImages.add(imgUrl);
-  }
+
+
+
+
 
   // getProjectImages(): string[] {
   //   if (!this.project) return [];
