@@ -24,7 +24,9 @@ export class ProjectListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    document.addEventListener('click', this.handleOutsideClick.bind(this));
     this.searchTerm = this.getCategoryLabel(this.selectedCategory);
+    this.lastConfirmedCategory = this.selectedCategory;
 
     this.allProjects = this.projectService.getAllProjects();
     this.projects = [...this.allProjects];
@@ -50,8 +52,16 @@ export class ProjectListComponent implements OnInit {
     const target = event.target as HTMLElement;
     if (!target.closest('.position-relative')) {
       this.showDropdown = false;
+
+      // Restore previous selection if nothing was chosen
+      this.searchTerm = this.getCategoryLabel(this.lastConfirmedCategory);
+      this.selectedCategory = this.lastConfirmedCategory;
     }
   }
+  ngOnDestroy(): void {
+    document.removeEventListener('click', this.handleOutsideClick.bind(this));
+  }
+
 
 
   ngAfterViewInit(): void {
@@ -63,6 +73,9 @@ export class ProjectListComponent implements OnInit {
       stagger: 0.1
     });
   }
+
+  lastConfirmedCategory: string = 'All';
+
 
   searchTerm = '';
   visibleCategories: string[] = [];
@@ -78,6 +91,7 @@ export class ProjectListComponent implements OnInit {
 
   selectCategory(cat: string): void {
     this.selectedCategory = cat;
+    this.lastConfirmedCategory = cat;
     this.searchTerm = this.getCategoryLabel(cat);
     this.showDropdown = false;
     this.filterProjects();
