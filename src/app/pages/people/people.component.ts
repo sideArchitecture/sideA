@@ -23,4 +23,14 @@ ngAfterViewInit() {
     ease: 'power2.out'
   });
 }
+
+  copyEmail(email: string): void {
+    navigator.clipboard.writeText(email).then(() => {
+      console.log('Email copied to clipboard:', email);
+      // Optionally show a toast or alert
+    }).catch(err => {
+      console.error('Failed to copy email:', err);
+    });
+  }
+
 }
