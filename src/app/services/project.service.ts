@@ -44,4 +44,8 @@ export class ProjectService {
   getProjectById(id: string): Project | undefined {
     return this.projects.find(p => p.id === id);
   }
+  getAllProjects(): Project[] {
+    return this.projects;
+  }
+
 }
