@@ -24,6 +24,8 @@ export class ProjectListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.searchTerm = this.getCategoryLabel(this.selectedCategory);
+
     this.allProjects = this.projectService.getAllProjects();
     this.projects = [...this.allProjects];
     this.computeCategoryCounts();
@@ -39,6 +41,18 @@ export class ProjectListComponent implements OnInit {
     });
   }
 
+  onInputClick(): void {
+    this.searchTerm = '';
+    this.visibleCategories = [...this.filteredCategories];
+    this.showDropdown = true;
+  }
+  handleOutsideClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.position-relative')) {
+      this.showDropdown = false;
+    }
+  }
+
 
   ngAfterViewInit(): void {
     gsap.from('.card', {
@@ -49,6 +63,26 @@ export class ProjectListComponent implements OnInit {
       stagger: 0.1
     });
   }
+
+  searchTerm = '';
+  visibleCategories: string[] = [];
+  showDropdown = false;
+
+  filterCategoryOptions(): void {
+    const term = this.searchTerm.toLowerCase();
+    this.visibleCategories = this.filteredCategories.filter(cat =>
+      this.getCategoryLabel(cat).toLowerCase().includes(term)
+    );
+    this.showDropdown = true;
+  }
+
+  selectCategory(cat: string): void {
+    this.selectedCategory = cat;
+    this.searchTerm = this.getCategoryLabel(cat);
+    this.showDropdown = false;
+    this.filterProjects();
+  }
+
 
 
   computeCategoryCounts(): void {

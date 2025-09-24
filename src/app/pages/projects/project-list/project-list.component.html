@@ -1,15 +1,28 @@
 <div class="container mt-5">
   <div class="row mb-4">
     <div class="col-md-4">
-      <select
-        class="form-select"
-        [(ngModel)]="selectedCategory"
-        (change)="filterProjects()"
-      >
-        <option *ngFor="let cat of filteredCategories" [value]="cat">
-          {{ getCategoryLabel(cat) }}
-        </option>
-      </select>
+      <div class="position-relative">
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="searchTerm"
+          (input)="filterCategoryOptions()"
+          (click)="onInputClick()"
+          placeholder="Search category..."
+        />
+
+
+        <ul class="list-group position-absolute w-100 z-3" *ngIf="showDropdown">
+          <li
+            class="list-group-item list-group-item-action"
+            *ngFor="let cat of visibleCategories"
+            (click)="selectCategory(cat)"
+          >
+            {{ getCategoryLabel(cat) }}
+          </li>
+        </ul>
+      </div>
+
     </div>
   </div>
 
