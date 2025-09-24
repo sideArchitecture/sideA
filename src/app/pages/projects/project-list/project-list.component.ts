@@ -25,8 +25,6 @@ export class ProjectListComponent implements OnInit {
 
   ngOnInit(): void {
     document.addEventListener('click', this.handleOutsideClick.bind(this));
-    this.searchTerm = this.getCategoryLabel(this.selectedCategory);
-    this.lastConfirmedCategory = this.selectedCategory;
 
     this.allProjects = this.projectService.getAllProjects();
     this.projects = [...this.allProjects];
@@ -39,6 +37,11 @@ export class ProjectListComponent implements OnInit {
       } else {
         this.selectedCategory = 'All';
       }
+
+      // ✅ Move these inside the subscription so they reflect the actual filter
+      this.searchTerm = this.getCategoryLabel(this.selectedCategory);
+      this.lastConfirmedCategory = this.selectedCategory;
+
       this.filterProjects();
     });
   }
