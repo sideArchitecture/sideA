@@ -32,9 +32,11 @@ export class ProjectService {
         'https://images.unsplash.com/photo-1507525428034-b723cf961d3e',
         'https://images.unsplash.com/photo-1470770841072-f978cf4d019e',
         'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
-        'https://images.unsplash.com/photo-1499696011070-5d4c4f3e4f9c',
-        'https://images.unsplash.com/photo-1499696011070-5d4c4f3e4f9c',
-        'https://images.unsplash.com/photo-1499696011070-5d4c4f3e4f9c'
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
+        'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee',
       ]
     },
     {
