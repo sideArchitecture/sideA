@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
-import {gsap} from "gsap";
 
 @Component({
   selector: 'app-project-detail',
@@ -11,6 +10,7 @@ import {gsap} from "gsap";
 })
 export class ProjectDetailComponent implements OnInit {
   project: Project | undefined;
+  validImages: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
@@ -23,51 +23,6 @@ export class ProjectDetailComponent implements OnInit {
       this.project = this.projectService.getProjectById(id);
       this.loadValidImages();
     }
-  }
-
-  // ngAfterViewInit() {
-  //   gsap.from('.principal-profile', {
-  //     opacity: 0,
-  //     y: 50,
-  //     duration: 1,
-  //     ease: 'power2.out'
-  //   });
-  // }
-
-  // getProjectImages11(): string[] {
-  //   if (!this.project) return [];
-  //
-  //   // Use external URLs if provided
-  //   if (this.project.imageUrls && this.project.imageUrls.length > 0) {
-  //     return this.project.imageUrls;
-  //   }
-  //
-  //   // Fallback to local assets
-  //   const basePath = `assets/projects/${this.project.id}/`;
-  //   return [
-  //     `${basePath}image1.jpg`,
-  //     `${basePath}image2.jpg`,
-  //     // Add more if needed
-  //   ];
-  // }
-
-  validImages: string[] = [];
-
-  loadValidImages(): void {
-    const paths = this.getProjectImagesRaw(); // returns all possible paths
-    const valid: string[] = [];
-
-    paths.forEach(path => {
-      const img = new Image();
-      img.onload = () => {
-        valid.push(path);
-        this.validImages = [...valid]; // trigger change detection
-      };
-      img.onerror = () => {
-        // do nothing — skip broken image
-      };
-      img.src = path;
-    });
   }
 
   getProjectImagesRaw(): string[] {
@@ -92,32 +47,20 @@ export class ProjectDetailComponent implements OnInit {
     return imagePaths;
   }
 
+  loadValidImages(): void {
+    const paths = this.getProjectImagesRaw();
+    const valid: string[] = [];
 
-
-
-
-
-
-  // getProjectImages(): string[] {
-  //   if (!this.project) return [];
-  //
-  //   if (this.project.imageUrls && this.project.imageUrls.length > 0) {
-  //     return this.project.imageUrls;
-  //   }
-  //
-  //   const basePath = `assets/projects/${this.project.id}/`;
-  //   const count = this.project.imageCount || 0;
-  //   const extensions = ['jpg', 'jpeg', 'png'];
-  //
-  //   const imagePaths: string[] = [];
-  //
-  //   for (let i = 1; i <= count; i++) {
-  //     for (const ext of extensions) {
-  //       const path = `${basePath}image${i}.${ext}`;
-  //       imagePaths.push(path); // Push all possible variants
-  //     }
-  //   }
-  //
-  //   return imagePaths;
-  // }
+    paths.forEach(path => {
+      const img = new Image();
+      img.onload = () => {
+        valid.push(path);
+        this.validImages = [...valid]; // trigger change detection
+      };
+      img.onerror = () => {
+        // skip broken image
+      };
+      img.src = path;
+    });
+  }
 }
