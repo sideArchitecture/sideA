@@ -18,3 +18,6 @@ Please reach out to Anil!
 
 ## to start server
 ng serve
+
+## in dev mode to run server
+npm run startdev

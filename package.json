@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "node generate_manifest.js && ng serve --host 0.0.0.0",
+    "start": "ng serve",
+    "startdev": "node generate_manifest.js && ng serve --host 0.0.0.0",
 
 
     "startdefault": "ng serve",
