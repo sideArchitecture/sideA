@@ -22,6 +22,7 @@
     "@angular/router": "^14.1.0",
     "@mtnair/ngx-pinch-zoom": "^2.5.10",
     "bootstrap": "^5.3.3",
+    "bootstrap-icons": "^1.13.1",
     "gsap": "^3.12.7",
     "hammerjs": "^2.0.8",
     "rxjs": "~7.5.0",
