@@ -68,7 +68,7 @@ export class ProjectDetailComponent implements OnInit {
       })
       .catch(() => {
         // ✅ Priority 3: Fallback to guessed extensions
-        const count = this.project?.imageCount || 0;
+        const count = 0;
         const extensions = ['jpg', 'jpeg', 'png'];
         const imagePaths: string[] = [];
 
