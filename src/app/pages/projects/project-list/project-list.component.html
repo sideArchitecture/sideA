@@ -1,40 +1,37 @@
 <div class="container mt-5">
-
-
-  <div class="container mt-5">
-    <div class="row mb-4">
-      <div class="col-md-4">
-        <select
-          class="form-select"
-          [(ngModel)]="selectedCategory"
-          (change)="filterProjects()"
-        >
-          <option *ngFor="let cat of categories" [value]="cat">{{ cat }}</option>
-        </select>
-      </div>
-    </div>
-
-    <div class="row">
-      <div
-        class="col-md-4 mb-4"
-        *ngFor="let project of projects"
+  <div class="row mb-4">
+    <div class="col-md-4">
+      <select
+        class="form-select"
+        [(ngModel)]="selectedCategory"
+        (change)="filterProjects()"
       >
-        <a [routerLink]="['/projects', project.id]" class="text-decoration-none">
-          <div class="card h-100 shadow-sm">
-            <div class="square-wrapper">
-              <img
-                [src]="project.imageUrl"
-                [alt]="project.title"
-                class="square-image"
-              >
-            </div>
-            <div class="card-body text-center">
-              <h5 class="card-title text-secondary">{{ project.title }}</h5>
-            </div>
-          </div>
-        </a>
-      </div>
+        <option *ngFor="let cat of categories" [value]="cat">
+          {{ getCategoryLabel(cat) }}
+        </option>
+      </select>
     </div>
   </div>
 
-
+  <div class="row">
+    <div
+      class="col-md-4 mb-4"
+      *ngFor="let project of projects"
+    >
+      <a [routerLink]="['/projects', project.id]" class="text-decoration-none">
+        <div class="card h-100 shadow-sm">
+          <div class="square-wrapper">
+            <img
+              [src]="project.imageUrl"
+              [alt]="project.title"
+              class="square-image"
+            >
+          </div>
+          <div class="card-body text-center">
+            <h5 class="card-title text-secondary">{{ project.title }}</h5>
+          </div>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
