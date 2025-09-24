@@ -1,47 +1,26 @@
 <div class="container mt-5" *ngIf="project">
   <h2 class="text-secondary">{{ project.title }}</h2>
-  <img
-    [src]="project.imageUrl"
-    [alt]="project.title"
-    class="img-fluid mb-4 shadow-sm"
-    style="max-height: 400px; object-fit: cover;"
-  >
-  <p class="text-muted">{{ project.description }}</p>
 
-  <p class="text-muted">{{ project?.notes }}</p>
-
-</div>
-
-<div class="mt-4" *ngIf="project?.notes">
-<!--  <h4 class="text-secondary"></h4>-->
-</div>
-
-
-<!--<div class="row">-->
-<!--  <div class="col-md-6 mb-4" *ngFor="let img of getProjectImages()">-->
-<!--    <img [src]="img" class="img-fluid shadow-sm" alt="Project image">-->
-<!--  </div>-->
-<!--</div>-->
-
-<div class="row">
-  <div class="col-md-6 mb-4" *ngFor="let img of validImages">
+  <div class="cover-wrapper mb-4">
     <img
-      [src]="img"
-      class="img-fluid shadow-sm"
-      alt="Project image"
+      [src]="project.imageUrl"
+      [alt]="project.title"
+      class="cover-image"
     >
   </div>
+
+  <p class="text-muted">{{ project.description }}</p>
+  <p class="text-muted">{{ project?.notes }}</p>
 </div>
 
-
-<!--<div class="row">-->
-<!--  <div class="col-md-6 mb-4" *ngFor="let img of getProjectImages()">-->
-<!--    <img-->
-<!--      *ngIf="!brokenImages.has(img)"-->
-<!--      [src]="img"-->
-<!--      class="img-fluid shadow-sm"-->
-<!--      alt="Project image"-->
-<!--      (error)="onImageError(img)"-->
-<!--    >-->
-<!--  </div>-->
-<!--</div>-->
+<div class="row mt-4">
+  <div class="col-md-6 mb-4" *ngFor="let img of validImages">
+    <div class="image-wrapper">
+      <img
+        [src]="img"
+        alt="Project image"
+        class="project-image"
+      >
+    </div>
+  </div>
+</div>
