@@ -39,15 +39,20 @@
   </div>
 </div>
 
-<!-- Lightbox Viewer -->
 <div class="lightbox-overlay" *ngIf="selectedImageIndex !== null">
   <div class="lightbox-content">
     <button class="lightbox-close" (click)="closeLightbox()">×</button>
 
-    <button class="lightbox-nav left" (click)="prevImage()" [disabled]="selectedImageIndex === 0">‹</button>
+    <!-- Desktop chevrons -->
+    <button class="lightbox-nav-side left" (click)="prevImage()" [disabled]="selectedImageIndex === 0">‹</button>
+    <button class="lightbox-nav-side right" (click)="nextImage()" [disabled]="selectedImageIndex === validImages.length - 1">›</button>
 
     <img [src]="validImages[selectedImageIndex!]" alt="Full view" class="lightbox-image">
 
-    <button class="lightbox-nav right" (click)="nextImage()" [disabled]="selectedImageIndex === validImages.length - 1">›</button>
+    <!-- Mobile chevrons -->
+    <div class="lightbox-nav-row">
+      <button class="lightbox-nav-bottom" (click)="prevImage()" [disabled]="selectedImageIndex === 0">‹</button>
+      <button class="lightbox-nav-bottom" (click)="nextImage()" [disabled]="selectedImageIndex === validImages.length - 1">›</button>
+    </div>
   </div>
 </div>
