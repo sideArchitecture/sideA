@@ -13,6 +13,7 @@ import { PeopleComponent } from './pages/people/people.component';
 import { BuildingAnimationComponent } from './pages/building-animation/building-animation.component';
 import { ProjectListComponent } from './pages/projects/project-list/project-list.component';
 import { ProjectDetailComponent } from './pages/projects/project-detail/project-detail.component';
+import {PinchZoomModule} from "@mtnair/ngx-pinch-zoom";
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ProjectDetailComponent } from './pages/projects/project-detail/project-
     BrowserModule,
     AppRoutingModule,
     HammerModule,
+    PinchZoomModule
   ],
   providers: [],
   bootstrap: [AppComponent]
