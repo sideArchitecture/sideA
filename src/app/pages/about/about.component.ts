@@ -18,7 +18,7 @@ export class AboutComponent implements OnInit {
     gsap.from('.principal-profile', {
       opacity: 0,
       y: 50,
-      duration: 1,
+      duration: 5,
       ease: 'power2.out'
     });
   }
