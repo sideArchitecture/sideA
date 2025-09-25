@@ -48,7 +48,8 @@ export class ProjectListComponent implements OnInit {
     });
   }
 
-  onInputClick11(): void {
+  // show only categories
+  onInputClick(): void {
     this.searchTerm = '';
     this.visibleCategories = [...this.filteredCategories];
     this.visibleProjects = [];
@@ -62,7 +63,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   // show projects also
-  onInputClick(): void {
+  onInputClick22(): void {
     this.searchTerm = '';
     this.visibleCategories = [...this.filteredCategories];
     this.visibleProjects = [...this.allProjects];
