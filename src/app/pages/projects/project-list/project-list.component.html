@@ -14,7 +14,9 @@
 
         <ul class="list-group position-absolute w-100 z-3" *ngIf="showDropdown">
           <li class="list-group-item fw-bold text-muted" *ngIf="visibleCategories.length > 0">
-            Categories
+            Categories:
+<!--            &nbsp;-->
+<!--            <i class="bi bi-tag text-secondary"></i>-->
           </li>
 
           <ng-container *ngFor="let item of combinedResults">
@@ -28,7 +30,10 @@
           </ng-container>
 
           <li class="list-group-item fw-bold text-muted mt-2" *ngIf="visibleProjects.length > 0">
-            Projects
+            Projects:
+<!--            &nbsp;-->
+<!--            <i class="bi bi-briefcase text-secondary"></i>-->
+
           </li>
 
           <ng-container *ngFor="let item of combinedResults">
