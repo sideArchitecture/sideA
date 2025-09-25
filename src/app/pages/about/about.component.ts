@@ -15,6 +15,13 @@ export class AboutComponent implements OnInit {
 
 
   ngAfterViewInit() {
+    gsap.from('.firm-profile', {
+      opacity: 0,
+      y: 50,
+      duration: 2,
+      ease: 'power2.out'
+    });
+
     gsap.from('.principal-profile', {
       opacity: 0,
       y: 50,
