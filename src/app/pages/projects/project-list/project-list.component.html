@@ -8,19 +8,41 @@
           [(ngModel)]="searchTerm"
           (input)="filterCategoryOptions()"
           (click)="onInputClick()"
-          placeholder="Search category..."
+          placeholder="Search category / projects"
         />
 
 
         <ul class="list-group position-absolute w-100 z-3" *ngIf="showDropdown">
-          <li
-            class="list-group-item list-group-item-action"
-            *ngFor="let cat of visibleCategories"
-            (click)="selectCategory(cat)"
-          >
-            {{ getCategoryLabel(cat) }}
+          <li class="list-group-item fw-bold text-muted" *ngIf="visibleCategories.length > 0">
+            Categories
           </li>
+
+          <ng-container *ngFor="let item of combinedResults">
+            <li
+              class="list-group-item list-group-item-action"
+              *ngIf="item.type === 'category'"
+              (click)="selectCategory(item)"
+            >
+              {{ getCategoryLabel(item.value) }}
+            </li>
+          </ng-container>
+
+          <li class="list-group-item fw-bold text-muted mt-2" *ngIf="visibleProjects.length > 0">
+            Projects
+          </li>
+
+          <ng-container *ngFor="let item of combinedResults">
+            <li
+              class="list-group-item list-group-item-action"
+              *ngIf="item.type === 'project'"
+              (click)="selectCategory(item)"
+            >
+              {{ item.value.title }}
+            </li>
+          </ng-container>
         </ul>
+
+
       </div>
 
     </div>

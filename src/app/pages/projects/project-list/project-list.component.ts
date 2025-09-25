@@ -13,6 +13,8 @@ export class ProjectListComponent implements OnInit {
   allProjects: Project[] = [];
   projects: Project[] = [];
   selectedCategory: string = 'All';
+  visibleProjects: Project[] = [];
+  combinedResults: { type: 'category' | 'project'; value: any }[] = [];
 
   categoryCounts: { [key: string]: number } = {};
   filteredCategories: string[] = [];
@@ -46,11 +48,35 @@ export class ProjectListComponent implements OnInit {
     });
   }
 
+  onInputClick11(): void {
+    this.searchTerm = '';
+    this.visibleCategories = [...this.filteredCategories];
+    this.visibleProjects = [];
+
+    this.combinedResults = [
+      ...this.visibleCategories.map(cat => ({ type: 'category' as const, value: cat }))
+      // No projects shown until user types
+    ];
+
+    this.showDropdown = true;
+  }
+
+  // show projects also
   onInputClick(): void {
     this.searchTerm = '';
     this.visibleCategories = [...this.filteredCategories];
+    this.visibleProjects = [...this.allProjects];
+
+    this.combinedResults = [
+      ...this.visibleCategories.map(cat => ({ type: 'category' as const, value: cat })),
+      ...this.visibleProjects.map(project => ({ type: 'project' as const, value: project }))
+    ];
+
     this.showDropdown = true;
   }
+
+
+
   handleOutsideClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.position-relative')) {
@@ -61,6 +87,8 @@ export class ProjectListComponent implements OnInit {
       this.selectedCategory = this.lastConfirmedCategory;
     }
   }
+
+
   ngOnDestroy(): void {
     document.removeEventListener('click', this.handleOutsideClick.bind(this));
   }
@@ -86,19 +114,42 @@ export class ProjectListComponent implements OnInit {
 
   filterCategoryOptions(): void {
     const term = this.searchTerm.toLowerCase();
-    this.visibleCategories = this.filteredCategories.filter(cat =>
+
+    const matchedCategories = this.filteredCategories.filter(cat =>
       this.getCategoryLabel(cat).toLowerCase().includes(term)
     );
+
+    const matchedProjects = this.allProjects.filter(project =>
+      project.title.toLowerCase().includes(term)
+    );
+
+    this.visibleCategories = matchedCategories;
+    this.visibleProjects = matchedProjects;
+
+    this.combinedResults = [
+      ...matchedCategories.map(cat => ({ type: 'category' as const, value: cat })),
+      ...matchedProjects.map(project => ({ type: 'project' as const, value: project }))
+    ];
+
+
     this.showDropdown = true;
   }
 
-  selectCategory(cat: string): void {
-    this.selectedCategory = cat;
-    this.lastConfirmedCategory = cat;
-    this.searchTerm = this.getCategoryLabel(cat);
+  selectCategory(item: { type: 'category' | 'project'; value: any }): void {
+    if (item.type === 'category') {
+      this.selectedCategory = item.value;
+      this.lastConfirmedCategory = item.value;
+      this.searchTerm = this.getCategoryLabel(item.value);
+      this.filterProjects();
+    } else {
+      this.router.navigate(['/projects', item.value.id], {
+        queryParams: { category: this.selectedCategory }
+      });
+    }
+
     this.showDropdown = false;
-    this.filterProjects();
   }
+
 
 
 
