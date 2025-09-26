@@ -1,6 +1,3 @@
 {
-  "newDashboard": true,
-  "betaMode": false,
-  "showAds": true,
-  "searchProjects": true
+  "searchProjects": false
 }

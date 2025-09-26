@@ -2,64 +2,59 @@
   <div class="row mb-4">
     <div class="col-md-4">
       <div class="position-relative">
-        <input
-          type="text"
-          class="form-control"
-          [(ngModel)]="searchTerm"
-          (input)="filterCategoryOptions()"
-          (click)="onInputClick()"
-          placeholder="Search category / projects"
-        />
+        <ng-container *ngIf="isSearchProjectsEnabled(); else simpleDropdown">
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="searchTerm"
+            (input)="filterCategoryOptions()"
+            (click)="onInputClick()"
+            placeholder="Search category / projects"
+          />
 
-
-        <ul class="list-group position-absolute w-100 z-3" *ngIf="showDropdown">
-          <li class="list-group-item fw-bold text-muted" *ngIf="visibleCategories.length > 0">
-            Categories:
-<!--            &nbsp;-->
-<!--            <i class="bi bi-tag text-secondary"></i>-->
-          </li>
-
-          <ng-container *ngFor="let item of combinedResults">
-            <li
-              class="list-group-item list-group-item-action"
-              *ngIf="item.type === 'category'"
-              (click)="selectCategory(item)"
-            >
-              {{ getCategoryLabel(item.value) }}
+          <ul class="list-group position-absolute w-100 z-3" *ngIf="showDropdown">
+            <li class="list-group-item fw-bold text-muted" *ngIf="visibleCategories.length > 0">
+              Categories:
             </li>
-          </ng-container>
+            <ng-container *ngFor="let item of combinedResults">
+              <li
+                class="list-group-item list-group-item-action"
+                *ngIf="item.type === 'category'"
+                (click)="selectCategory(item)"
+              >
+                {{ getCategoryLabel(item.value) }}
+              </li>
+            </ng-container>
 
-          <li class="list-group-item fw-bold text-muted mt-2" *ngIf="visibleProjects.length > 0">
-            Projects:
-<!--            &nbsp;-->
-<!--            <i class="bi bi-briefcase text-secondary"></i>-->
-
-          </li>
-
-          <ng-container *ngFor="let item of combinedResults">
-            <li
-              class="list-group-item list-group-item-action"
-              *ngIf="item.type === 'project'"
-              (click)="selectCategory(item)"
-            >
-              {{ item.value.title }}
+            <li class="list-group-item fw-bold text-muted mt-2" *ngIf="visibleProjects.length > 0">
+              Projects:
             </li>
-          </ng-container>
-        </ul>
+            <ng-container *ngFor="let item of combinedResults">
+              <li
+                class="list-group-item list-group-item-action"
+                *ngIf="item.type === 'project'"
+                (click)="selectCategory(item)"
+              >
+                {{ item.value.title }}
+              </li>
+            </ng-container>
+          </ul>
+        </ng-container>
 
-
+        <ng-template #simpleDropdown>
+          <select class="form-select" [(ngModel)]="selectedCategory" (change)="selectCategory({ type: 'category', value: selectedCategory })">
+            <option *ngFor="let cat of filteredCategories" [value]="cat">
+              {{ getCategoryLabel(cat) }}
+            </option>
+          </select>
+        </ng-template>
       </div>
-
     </div>
   </div>
 
   <div class="row">
-    <div
-      class="col-md-4 mb-4"
-      *ngFor="let project of projects"
-    >
+    <div class="col-md-4 mb-4" *ngFor="let project of projects">
       <a [routerLink]="['/projects', project.id]" [queryParams]="{ category: selectedCategory }" class="text-decoration-none">
-
         <div class="card h-100 shadow-sm">
           <div class="square-wrapper">
             <img

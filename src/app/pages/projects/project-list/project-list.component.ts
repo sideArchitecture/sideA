@@ -4,6 +4,8 @@ import { ProjectService } from '../../../services/project.service';
 import { ProjectCategory } from '../../../models/project-category.enum';
 import { ActivatedRoute, Router } from '@angular/router';
 import { gsap } from 'gsap';
+import { FlipperFlagsService } from '../../../services/flipper-flags.service';
+
 @Component({
   selector: 'app-project-list',
   templateUrl: './project-list.component.html',
@@ -19,10 +21,17 @@ export class ProjectListComponent implements OnInit {
   categoryCounts: { [key: string]: number } = {};
   filteredCategories: string[] = [];
 
+  searchTerm = '';
+  visibleCategories: string[] = [];
+  showDropdown = false;
+  lastConfirmedCategory: string = 'All';
+  showCounts = true;
+
   constructor(
     private projectService: ProjectService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private flipperFlagsService: FlipperFlagsService
   ) {}
 
   ngOnInit(): void {
@@ -40,61 +49,12 @@ export class ProjectListComponent implements OnInit {
         this.selectedCategory = 'All';
       }
 
-      // ✅ Move these inside the subscription so they reflect the actual filter
       this.searchTerm = this.getCategoryLabel(this.selectedCategory);
       this.lastConfirmedCategory = this.selectedCategory;
 
       this.filterProjects();
     });
   }
-
-  // show only categories
-  onInputClick(): void {
-    this.searchTerm = '';
-    this.visibleCategories = [...this.filteredCategories];
-    this.visibleProjects = [];
-
-    this.combinedResults = [
-      ...this.visibleCategories.map(cat => ({ type: 'category' as const, value: cat }))
-      // No projects shown until user types
-    ];
-
-    this.showDropdown = true;
-  }
-
-  // show projects also
-  onInputClick22(): void {
-    this.searchTerm = '';
-    this.visibleCategories = [...this.filteredCategories];
-    this.visibleProjects = [...this.allProjects];
-
-    this.combinedResults = [
-      ...this.visibleCategories.map(cat => ({ type: 'category' as const, value: cat })),
-      ...this.visibleProjects.map(project => ({ type: 'project' as const, value: project }))
-    ];
-
-    this.showDropdown = true;
-  }
-
-
-
-  handleOutsideClick(event: MouseEvent): void {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.position-relative')) {
-      this.showDropdown = false;
-
-      // Restore previous selection if nothing was chosen
-      this.searchTerm = this.getCategoryLabel(this.lastConfirmedCategory);
-      this.selectedCategory = this.lastConfirmedCategory;
-    }
-  }
-
-
-  ngOnDestroy(): void {
-    document.removeEventListener('click', this.handleOutsideClick.bind(this));
-  }
-
-
 
   ngAfterViewInit(): void {
     gsap.from('.card', {
@@ -106,12 +66,25 @@ export class ProjectListComponent implements OnInit {
     });
   }
 
-  lastConfirmedCategory: string = 'All';
+  ngOnDestroy(): void {
+    document.removeEventListener('click', this.handleOutsideClick.bind(this));
+  }
 
+  isSearchProjectsEnabled(): boolean {
+    return this.flipperFlagsService.isEnabled('searchProjects');
+  }
 
-  searchTerm = '';
-  visibleCategories: string[] = [];
-  showDropdown = false;
+  onInputClick(): void {
+    this.searchTerm = '';
+    this.visibleCategories = [...this.filteredCategories];
+    this.visibleProjects = [];
+
+    this.combinedResults = [
+      ...this.visibleCategories.map(cat => ({ type: 'category' as const, value: cat }))
+    ];
+
+    this.showDropdown = true;
+  }
 
   filterCategoryOptions(): void {
     const term = this.searchTerm.toLowerCase();
@@ -132,8 +105,16 @@ export class ProjectListComponent implements OnInit {
       ...matchedProjects.map(project => ({ type: 'project' as const, value: project }))
     ];
 
-
     this.showDropdown = true;
+  }
+
+  handleOutsideClick(event: MouseEvent): void {
+    const target = event.target as HTMLElement;
+    if (!target.closest('.position-relative')) {
+      this.showDropdown = false;
+      this.searchTerm = this.getCategoryLabel(this.lastConfirmedCategory);
+      this.selectedCategory = this.lastConfirmedCategory;
+    }
   }
 
   selectCategory(item: { type: 'category' | 'project'; value: any }): void {
@@ -150,9 +131,6 @@ export class ProjectListComponent implements OnInit {
 
     this.showDropdown = false;
   }
-
-
-
 
   computeCategoryCounts(): void {
     const counts: { [key: string]: number } = {};
@@ -188,7 +166,6 @@ export class ProjectListComponent implements OnInit {
     }
   }
 
-  showCounts =true;
   getCategoryLabel(cat: string): string {
     const titleCase = cat === 'All'
       ? 'All Projects'
@@ -203,8 +180,4 @@ export class ProjectListComponent implements OnInit {
     const count = this.categoryCounts[cat] ?? 0;
     return `${titleCase} (${count})`;
   }
-
-
-
-
 }
