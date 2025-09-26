@@ -10,7 +10,7 @@ export class FlipperFlagsService {
   constructor(private http: HttpClient) {}
 
   load(): Promise<void> {
-    return this.http.get<Record<string, boolean>>(environment.featureFlagsFile)
+    return this.http.get<Record<string, boolean>>(environment.flipperFlagsFile)
       .toPromise()
       .then(flags => {
         this.flags = flags || {};
