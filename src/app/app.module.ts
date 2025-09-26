@@ -19,8 +19,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { FeatureFlagDirective } from './directives/feature-flag.directive';
 
 import { APP_INITIALIZER } from '@angular/core';
-import { FeatureFlagsService } from './services/feature-flags.service';
-export function initFlags(flags: FeatureFlagsService) {
+import {FlipperFlagsService} from "./services/flipper-flags.service";
+export function initFlags(flags: FlipperFlagsService) {
   return () => flags.load();
 }
 
@@ -51,7 +51,7 @@ export function initFlags(flags: FeatureFlagsService) {
     {
       provide: APP_INITIALIZER,
       useFactory: initFlags,
-      deps: [FeatureFlagsService],
+      deps: [FlipperFlagsService],
       multi: true
     }
   ],

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {FeatureFlagsService} from "../../services/feature-flags.service";
+import {FlipperFlagsService} from "../../services/flipper-flags.service";
 
 @Component({
   selector: 'app-home',
@@ -9,7 +9,7 @@ import {FeatureFlagsService} from "../../services/feature-flags.service";
 export class HomeComponent implements OnInit {
   isImageLoaded = false;
 
-  constructor(private featureFlags: FeatureFlagsService) { }
+  constructor(private featureFlags: FlipperFlagsService) { }
 
   ngOnInit(): void {
   }

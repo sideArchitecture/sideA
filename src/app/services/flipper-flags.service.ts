@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
-export class FeatureFlagsService {
+export class FlipperFlagsService {
   private flags: Record<string, boolean> = {};
 
   constructor(private http: HttpClient) {}
