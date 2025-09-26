@@ -16,10 +16,10 @@ import { ProjectDetailComponent } from './pages/projects/project-detail/project-
 import {PinchZoomModule} from "@mtnair/ngx-pinch-zoom";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
-import { FeatureFlagDirective } from './directives/feature-flag.directive';
 
 import { APP_INITIALIZER } from '@angular/core';
 import {FlipperFlagsService} from "./services/flipper-flags.service";
+import {FlipperFlagDirective} from "./directives/flipper-flag.directive";
 export function initFlags(flags: FlipperFlagsService) {
   return () => flags.load();
 }
@@ -37,7 +37,7 @@ export function initFlags(flags: FlipperFlagsService) {
     BuildingAnimationComponent,
     ProjectListComponent,
     ProjectDetailComponent,
-    FeatureFlagDirective
+    FlipperFlagDirective
   ],
   imports: [
     BrowserModule,

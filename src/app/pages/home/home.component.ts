@@ -9,13 +9,13 @@ import {FlipperFlagsService} from "../../services/flipper-flags.service";
 export class HomeComponent implements OnInit {
   isImageLoaded = false;
 
-  constructor(private featureFlags: FlipperFlagsService) { }
+  constructor(private flipperFlagsService: FlipperFlagsService) { }
 
   ngOnInit(): void {
   }
 
   isNewDashBoardEnabled(){
-   return  this.featureFlags.isEnabled('newDashboard');
+   return  this.flipperFlagsService.isEnabled('newDashboard');
   }
 
 }
