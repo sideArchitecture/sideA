@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  featureFlagsFile: '/assets/features.prod.json'
+  featureFlagsFile: '/assets/flipper-model.prod.json'
+
 };

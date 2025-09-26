@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  featureFlagsFile: '/assets/features.dev.json'
+  featureFlagsFile: '/assets/flipper-model.dev.json'
 };
 
 /*
