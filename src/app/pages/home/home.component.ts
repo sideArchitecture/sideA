@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {FeatureFlagsService} from "../../services/feature-flags.service";
 
 @Component({
   selector: 'app-home',
@@ -8,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 export class HomeComponent implements OnInit {
   isImageLoaded = false;
 
-  constructor() { }
+  constructor(private featureFlags: FeatureFlagsService) { }
 
   ngOnInit(): void {
+  }
+
+  isNewDashBoardEnabled(){
+   return  this.featureFlags.isEnabled('newDashboard');
   }
 
 }

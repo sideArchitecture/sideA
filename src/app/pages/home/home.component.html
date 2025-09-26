@@ -53,7 +53,11 @@
 
 
 <div *featureFlag="'newDashboard'">
-  🚀 Welcome to the new dashboard!
+  🚀 Welcome to the new dashboard From Component!
+</div>
+
+<div *ngIf="isNewDashBoardEnabled()">
+  🚀 Welcome to the new dashboard From Directive!
 </div>
 
 
