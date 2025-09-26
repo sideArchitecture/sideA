@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  featureFlagsFile: '/assets/features.prod.json'
 };

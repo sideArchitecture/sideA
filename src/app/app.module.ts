@@ -16,6 +16,13 @@ import { ProjectDetailComponent } from './pages/projects/project-detail/project-
 import {PinchZoomModule} from "@mtnair/ngx-pinch-zoom";
 import {FormsModule} from "@angular/forms";
 import {HttpClientModule} from "@angular/common/http";
+import { FeatureFlagDirective } from './directives/feature-flag.directive';
+
+import { APP_INITIALIZER } from '@angular/core';
+import { FeatureFlagsService } from './services/feature-flags.service';
+export function initFlags(flags: FeatureFlagsService) {
+  return () => flags.load();
+}
 
 @NgModule({
   declarations: [
@@ -29,7 +36,8 @@ import {HttpClientModule} from "@angular/common/http";
     PeopleComponent,
     BuildingAnimationComponent,
     ProjectListComponent,
-    ProjectDetailComponent
+    ProjectDetailComponent,
+    FeatureFlagDirective
   ],
   imports: [
     BrowserModule,
@@ -39,7 +47,14 @@ import {HttpClientModule} from "@angular/common/http";
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initFlags,
+      deps: [FeatureFlagsService],
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
