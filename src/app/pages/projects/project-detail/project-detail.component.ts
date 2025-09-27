@@ -50,44 +50,40 @@ export class ProjectDetailComponent implements OnInit {
     if (!this.project?.imageUrls?.length) return;
 
     const imageCount = this.project.imageUrls.length;
-    const valid: string[] = [];
+    const valid: (string | null)[] = new Array(imageCount).fill(null);
     let loadedCount = 0;
 
-    this.project.imageUrls.forEach(path => {
+    this.project.imageUrls.forEach((path, index) => {
       const img = new Image();
       img.onload = () => {
-        valid.push(path);
+        valid[index] = path;
         loadedCount++;
         if (loadedCount === imageCount) {
-          this.validImages = [...valid];
-          setTimeout(() => {
-            gsap.from('.project-image', {
-              opacity: 0,
-              scale: 0.95,
-              duration: 2,
-              ease: 'power2.out',
-              stagger: 0.4
-            });
-          }, 10);
+          this.validImages = valid.filter(Boolean) as string[];
+          this.animateImages();
         }
       };
       img.onerror = () => {
         loadedCount++;
         if (loadedCount === imageCount) {
-          this.validImages = [...valid];
-          setTimeout(() => {
-            gsap.from('.project-image', {
-              opacity: 0,
-              scale: 0.95,
-              duration: 2,
-              ease: 'power2.out',
-              stagger: 0.4
-            });
-          }, 0);
+          this.validImages = valid.filter(Boolean) as string[];
+          this.animateImages();
         }
       };
       img.src = path;
     });
+  }
+
+  private animateImages(): void {
+    setTimeout(() => {
+      gsap.from('.project-image', {
+        opacity: 0,
+        scale: 0.95,
+        duration: 2,
+        ease: 'power2.out',
+        stagger: 0.4
+      });
+    }, 10);
   }
 
   openLightbox(index: number): void {
