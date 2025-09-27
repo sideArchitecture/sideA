@@ -146,10 +146,6 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   computeCategoryCounts(): void {
     const counts: { [key: string]: number } = {};
 
-    Object.values(ProjectCategory).forEach(cat => {
-      counts[cat] = 0;
-    });
-
     for (const project of this.allProjects) {
       if (Array.isArray(project.category)) {
         for (const cat of project.category) {
@@ -161,9 +157,18 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     counts['All'] = this.allProjects.length;
     this.categoryCounts = counts;
 
-    this.filteredCategories = Object.keys(counts)
-      .filter(cat => counts[cat] > 0)
-      .sort((a, b) => this.getCategoryLabel(a).localeCompare(this.getCategoryLabel(b)));
+    const sorted = Object.keys(counts)
+      .filter(cat => cat !== 'All')
+      .sort((a, b) => {
+        const indexA = this.getSortIndexForCategory(a);
+        const indexB = this.getSortIndexForCategory(b);
+
+        return indexA === indexB
+          ? a.localeCompare(b)
+          : indexA - indexB;
+      });
+
+    this.filteredCategories = ['All', ...sorted];
   }
 
   filterProjects(): void {
@@ -189,4 +194,18 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     const count = this.categoryCounts[cat] ?? 0;
     return `${titleCase} (${count})`;
   }
+
+  getSortIndexForCategory(cat: string): number {
+    const matchingProject = this.allProjects.find(p =>
+      p.projectPath?.toLowerCase().includes(cat.toLowerCase())
+    );
+
+    if (matchingProject?.projectPath) {
+      const match = matchingProject.projectPath.match(/^(\d+)-/);
+      return match ? parseInt(match[1], 10) : Infinity;
+    }
+
+    return Infinity;
+  }
+
 }
