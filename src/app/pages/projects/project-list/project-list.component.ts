@@ -1,10 +1,10 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import { Project } from '../../../models/project.model';
-import { ProjectService } from '../../../services/project.service';
-import { ProjectCategory } from '../../../models/project-category.enum';
-import { ActivatedRoute, Router } from '@angular/router';
-import { gsap } from 'gsap';
-import { FlipperFlagsService } from '../../../services/flipper-flags.service';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {Project} from '../../../models/project.model';
+import {ProjectService} from '../../../services/project.service';
+import {ProjectCategory} from '../../../models/project-category.enum';
+import {ActivatedRoute, Router} from '@angular/router';
+import {gsap} from 'gsap';
+import {FlipperFlagsService} from '../../../services/flipper-flags.service';
 
 @Component({
   selector: 'app-project-list',
@@ -33,7 +33,8 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private flipperFlagsService: FlipperFlagsService
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     document.addEventListener('click', this.handleOutsideClick.bind(this));
@@ -55,7 +56,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
         if (!category) {
           this.router.navigate([], {
             relativeTo: this.route,
-            queryParams: { category: this.selectedCategory },
+            queryParams: {category: this.selectedCategory},
             queryParamsHandling: 'merge'
           });
         }
@@ -77,6 +78,12 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
+  animateCards(): void {
+    setTimeout(() => {
+      gsap.from('.card', {opacity: 0, y: 30, duration: 1, ease: 'power2.out', stagger: 0.1});
+    }, 0);
+  }
+
   ngOnDestroy(): void {
     document.removeEventListener('click', this.handleOutsideClick.bind(this));
   }
@@ -91,7 +98,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.visibleProjects = [];
 
     this.combinedResults = [
-      ...this.visibleCategories.map(cat => ({ type: 'category' as const, value: cat }))
+      ...this.visibleCategories.map(cat => ({type: 'category' as const, value: cat}))
     ];
 
     this.showDropdown = true;
@@ -112,8 +119,8 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.visibleProjects = matchedProjects;
 
     this.combinedResults = [
-      ...matchedCategories.map(cat => ({ type: 'category' as const, value: cat })),
-      ...matchedProjects.map(project => ({ type: 'project' as const, value: project }))
+      ...matchedCategories.map(cat => ({type: 'category' as const, value: cat})),
+      ...matchedProjects.map(project => ({type: 'project' as const, value: project}))
     ];
 
     this.showDropdown = true;
@@ -136,7 +143,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
       this.filterProjects();
     } else {
       this.router.navigate(['/projects', item.value.id], {
-        queryParams: { category: this.selectedCategory }
+        queryParams: {category: this.selectedCategory}
       });
     }
 
@@ -178,6 +185,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
         Array.isArray(project.category) &&
         project.category.includes(this.selectedCategory as ProjectCategory)
       );
+    this.animateCards();
   }
 
   getCategoryLabel(cat: string): string {
