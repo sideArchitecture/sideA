@@ -12,8 +12,10 @@ import { gsap } from 'gsap';
 export class ProjectDetailComponent implements OnInit {
   project: Project | undefined;
   validImages: string[] = [];
-  selectedCategory: string | null = null;
   isLoading = true;
+  selectedImageIndex: number | null = null;
+
+  @ViewChild('zoomRef') zoomRef: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -23,10 +25,9 @@ export class ProjectDetailComponent implements OnInit {
 
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('id');
-    this.selectedCategory = this.route.snapshot.queryParamMap.get('category');
 
-    if (slug && this.selectedCategory) {
-      this.projectService.getProjectDetail(this.selectedCategory, slug).subscribe(data => {
+    if (slug) {
+      this.projectService.getProjectDetail(slug).subscribe(data => {
         this.project = data;
         this.isLoading = false;
         this.loadValidImages();
@@ -46,9 +47,9 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   loadValidImages(): void {
-    if (!this.project?.imageUrls) return;
+    if (!this.project?.imageUrls || !this.project?.category?.length) return;
 
-    const basePath = `https://sidearchitecture.github.io/sideAImages/images/projects/${this.selectedCategory}/${this.project.slug}/`;
+    const basePath = `https://sidearchitecture.github.io/sideAImages/images/projects/${this.project.category[0]}/${this.project.slug}/`;
     const paths = this.project.imageUrls.map(img => `${basePath}${img}`);
 
     const valid: string[] = [];
@@ -90,9 +91,6 @@ export class ProjectDetailComponent implements OnInit {
       img.src = path;
     });
   }
-
-  selectedImageIndex: number | null = null;
-  @ViewChild('zoomRef') zoomRef: any;
 
   openLightbox(index: number): void {
     this.selectedImageIndex = index;

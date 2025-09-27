@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Project } from '../models/project.model';
-import { Observable, of } from 'rxjs';
+import {Observable, of, switchMap} from 'rxjs';
 import { tap, catchError } from 'rxjs/operators';
 
 @Injectable({
@@ -43,23 +43,34 @@ export class ProjectService {
 
   private projectCache: { [key: string]: Project } = {};
 
-  getProjectDetail(category: string, slug: string): Observable<Project | undefined> {
-    const cacheKey = `${category}/${slug}`;
-    if (this.projectCache[cacheKey]) {
-      return of(this.projectCache[cacheKey]);
-    }
+  getProjectDetail(slug: string): Observable<Project | undefined> {
+    const rootManifestUrl = 'https://sidearchitecture.github.io/sideAImages/images/projects/manifest.json';
 
-    const url = `https://sidearchitecture.github.io/sideAImages/images/projects/${category}/${slug}/manifest.json`;
-    return this.http.get<Project>(url).pipe(
-      tap(project => {
-        if (project) this.projectCache[cacheKey] = project;
+    return this.http.get<Project[]>(rootManifestUrl).pipe(
+      switchMap((projects: Project[]) => {
+        const match = projects.find(p => p.slug === slug);
+        if (!match || !match.category?.length) {
+          console.warn(`Project with slug "${slug}" not found in root manifest.`);
+          return of(undefined);
+        }
+
+        const category = match.category[0]; // Use first category as canonical path
+        const detailUrl = `https://sidearchitecture.github.io/sideAImages/images/projects/${category}/${slug}/manifest.json`;
+
+        return this.http.get<Project>(detailUrl).pipe(
+          catchError(err => {
+            console.error(`Failed to load manifest for ${slug} in category ${category}:`, err);
+            return of(undefined);
+          })
+        );
       }),
       catchError(err => {
-        console.error(`Failed to load project detail for ${slug}:`, err);
+        console.error('Failed to load root manifest:', err);
         return of(undefined);
       })
     );
   }
+
 
 
 }

@@ -1,9 +1,5 @@
 <span class="float-end">
-  <a
-    class="text-secondary"
-    [routerLink]="['/projects']"
-    [queryParams]="{ category: selectedCategory }"
-  >
+  <a class="text-secondary" [routerLink]="['/projects']">
     <i class="bi bi-arrow-left-circle-fill"></i>
     Back
   </a>
@@ -17,7 +13,8 @@
   <div class="row align-items-center">
     <div class="col-md-4 text-center">
       <img
-        [src]="'https://sidearchitecture.github.io/sideAImages/images/projects/' + selectedCategory + '/' + project.slug + '/' + project.imageUrl"
+        [src]="'https://sidearchitecture.github.io/sideAImages/images/projects/' + (project?.category?.[0] || 'unknown') + '/' + project?.slug + '/' + project?.imageUrl"
+
         [alt]="project.title"
         class="img-fluid project-cover shadow-sm"
       >
@@ -39,11 +36,7 @@
   <div class="row">
     <div class="col-md-6 mb-4" *ngFor="let img of validImages; let i = index">
       <div class="image-wrapper" (click)="openLightbox(i)">
-        <img
-          [src]="img"
-          alt="Project image"
-          class="project-image"
-        >
+        <img [src]="img" alt="Project image" class="project-image">
       </div>
     </div>
   </div>
@@ -52,8 +45,7 @@
 <div class="lightbox-overlay"
      *ngIf="selectedImageIndex !== null"
      (swipeleft)="nextImage()"
-     (swiperight)="prevImage()"
->
+     (swiperight)="prevImage()">
   <div class="lightbox-content">
     <button class="lightbox-close" (click)="closeLightbox()">×</button>
     <button class="lightbox-nav-side left" (click)="prevImage()" [disabled]="selectedImageIndex === 0">‹</button>
@@ -71,11 +63,7 @@
 </div>
 
 <div class="text-center mt-5" *ngIf="validImages.length > 5">
-  <a
-    class="text-secondary"
-    [routerLink]="['/projects']"
-    [queryParams]="{ category: selectedCategory }"
-  >
+  <a class="text-secondary" [routerLink]="['/projects']">
     <i class="bi bi-arrow-left-circle-fill"></i>
     Back
   </a>
