@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { Project } from '../../../models/project.model';
 import { ProjectService } from '../../../services/project.service';
 import { ProjectCategory } from '../../../models/project-category.enum';
@@ -11,7 +11,7 @@ import { FlipperFlagsService } from '../../../services/flipper-flags.service';
   templateUrl: './project-list.component.html',
   styleUrls: ['./project-list.component.scss']
 })
-export class ProjectListComponent implements OnInit {
+export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   allProjects: Project[] = [];
   projects: Project[] = [];
   selectedCategory: string = 'All';
@@ -29,7 +29,7 @@ export class ProjectListComponent implements OnInit {
   showCounts = true;
 
   constructor(
-    private projectService: ProjectService,
+    public projectService: ProjectService,
     private route: ActivatedRoute,
     private router: Router,
     private flipperFlagsService: FlipperFlagsService
@@ -40,40 +40,16 @@ export class ProjectListComponent implements OnInit {
 
     this.projectService.getAllProjects().subscribe(projects => {
       this.allProjects = projects;
-      this.projects = [...this.allProjects];
       this.isLoading = false;
       this.computeCategoryCounts();
 
       this.route.queryParamMap.subscribe(params => {
         const category = params.get('category');
-        if (category && this.filteredCategories.includes(category)) {
-          this.selectedCategory = category;
-        } else {
-          this.selectedCategory = 'All';
-        }
-
+        this.selectedCategory = category && this.filteredCategories.includes(category) ? category : 'All';
         this.searchTerm = this.getCategoryLabel(this.selectedCategory);
         this.lastConfirmedCategory = this.selectedCategory;
-
         this.filterProjects();
       });
-    });
-
-    this.projects = [...this.allProjects];
-    this.computeCategoryCounts();
-
-    this.route.queryParamMap.subscribe(params => {
-      const category = params.get('category');
-      if (category && this.filteredCategories.includes(category)) {
-        this.selectedCategory = category;
-      } else {
-        this.selectedCategory = 'All';
-      }
-
-      this.searchTerm = this.getCategoryLabel(this.selectedCategory);
-      this.lastConfirmedCategory = this.selectedCategory;
-
-      this.filterProjects();
     });
   }
 
@@ -177,14 +153,12 @@ export class ProjectListComponent implements OnInit {
   }
 
   filterProjects(): void {
-    if (this.selectedCategory === 'All') {
-      this.projects = [...this.allProjects];
-    } else {
-      this.projects = this.allProjects.filter(project =>
+    this.projects = this.selectedCategory === 'All'
+      ? [...this.allProjects]
+      : this.allProjects.filter(project =>
         Array.isArray(project.category) &&
         project.category.includes(this.selectedCategory as ProjectCategory)
       );
-    }
   }
 
   getCategoryLabel(cat: string): string {

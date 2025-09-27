@@ -9,5 +9,6 @@ export interface Project {
   category?: ProjectCategory[];
   notes?: string; // 👈 Add this
   imageUrls?: string[];
+  coverImage?: string;
   // imageCount?: number;
 }
