@@ -45,8 +45,22 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
 
       this.route.queryParamMap.subscribe(params => {
         const category = params.get('category');
-        this.selectedCategory = category && this.filteredCategories.includes(category) ? category : 'All';
-        this.searchTerm = this.getCategoryLabel(this.selectedCategory);
+        const search = params.get('search');
+
+        this.selectedCategory = category && this.filteredCategories.includes(category)
+          ? category
+          : (this.filteredCategories.includes('featured') ? 'featured' : 'All');
+
+        // 👇 Add this block right here
+        if (!category) {
+          this.router.navigate([], {
+            relativeTo: this.route,
+            queryParams: { category: this.selectedCategory },
+            queryParamsHandling: 'merge'
+          });
+        }
+
+        this.searchTerm = search ?? this.getCategoryLabel(this.selectedCategory);
         this.lastConfirmedCategory = this.selectedCategory;
         this.filterProjects();
       });
