@@ -17,6 +17,7 @@ export class ProjectListComponent implements OnInit {
   selectedCategory: string = 'All';
   visibleProjects: Project[] = [];
   combinedResults: { type: 'category' | 'project'; value: any }[] = [];
+  isLoading = true;
 
   categoryCounts: { [key: string]: number } = {};
   filteredCategories: string[] = [];
@@ -37,7 +38,27 @@ export class ProjectListComponent implements OnInit {
   ngOnInit(): void {
     document.addEventListener('click', this.handleOutsideClick.bind(this));
 
-    this.allProjects = this.projectService.getAllProjects();
+    this.projectService.getAllProjects().subscribe(projects => {
+      this.allProjects = projects;
+      this.projects = [...this.allProjects];
+      this.isLoading = false;
+      this.computeCategoryCounts();
+
+      this.route.queryParamMap.subscribe(params => {
+        const category = params.get('category');
+        if (category && this.filteredCategories.includes(category)) {
+          this.selectedCategory = category;
+        } else {
+          this.selectedCategory = 'All';
+        }
+
+        this.searchTerm = this.getCategoryLabel(this.selectedCategory);
+        this.lastConfirmedCategory = this.selectedCategory;
+
+        this.filterProjects();
+      });
+    });
+
     this.projects = [...this.allProjects];
     this.computeCategoryCounts();
 
