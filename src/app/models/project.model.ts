@@ -10,5 +10,6 @@ export interface Project {
   notes?: string; // 👈 Add this
   imageUrls?: string[];
   coverImage?: string;
+  projectPath?: string;
   // imageCount?: number;
 }

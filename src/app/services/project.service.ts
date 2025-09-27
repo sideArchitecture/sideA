@@ -28,26 +28,30 @@ export class ProjectService {
    * Resolves correct folder path using root manifest.
    */
   getProjectDetail(slug: string): Observable<Project | undefined> {
-    return this.http.get<Project[]>(this.manifestUrl).pipe(
+    const rootManifestUrl = 'https://sidearchitecture.github.io/sideAImages/images/projects/manifest.json';
+
+    return this.http.get<Project[]>(rootManifestUrl).pipe(
       switchMap((projects: Project[]) => {
         const match = projects.find(p => p.slug === slug);
-        if (!match || !match.category?.length) {
-          console.warn(`⚠️ Project with slug "${slug}" not found in root manifest.`);
+        if (!match || !match.coverImage) {
+          console.warn(`Project with slug "${slug}" not found or missing coverImage.`);
           return of(undefined);
         }
 
-        const category = match.category[0];
-        const detailUrl = `https://sidearchitecture.github.io/sideAImages/images/projects/${category}/${slug}/manifest.json`;
+        // Extract folder path from coverImage URL
+        const folderPath = match.coverImage.split('/').slice(5, 7).join('/');
+        const detailUrl = `https://sidearchitecture.github.io/sideAImages/images/projects/${folderPath}/manifest.json`;
+
 
         return this.http.get<Project>(detailUrl).pipe(
           catchError(err => {
-            console.error(`❌ Failed to load manifest for ${slug} in category ${category}:`, err);
+            console.error(`Failed to load manifest for ${slug} at ${detailUrl}:`, err);
             return of(undefined);
           })
         );
       }),
       catchError(err => {
-        console.error('❌ Failed to load root manifest:', err);
+        console.error('Failed to load root manifest:', err);
         return of(undefined);
       })
     );

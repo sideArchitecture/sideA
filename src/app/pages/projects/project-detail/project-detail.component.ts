@@ -47,20 +47,18 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   loadValidImages(): void {
-    if (!this.project?.imageUrls || !this.project?.category?.length) return;
+    if (!this.project?.imageUrls?.length) return;
 
-    const basePath = `https://sidearchitecture.github.io/sideAImages/images/projects/${this.project.category[0]}/${this.project.slug}/`;
-    const paths = this.project.imageUrls.map(img => `${basePath}${img}`);
-
+    const imageCount = this.project.imageUrls.length;
     const valid: string[] = [];
     let loadedCount = 0;
 
-    paths.forEach(path => {
+    this.project.imageUrls.forEach(path => {
       const img = new Image();
       img.onload = () => {
         valid.push(path);
         loadedCount++;
-        if (loadedCount === paths.length) {
+        if (loadedCount === imageCount) {
           this.validImages = [...valid];
           setTimeout(() => {
             gsap.from('.project-image', {
@@ -75,7 +73,7 @@ export class ProjectDetailComponent implements OnInit {
       };
       img.onerror = () => {
         loadedCount++;
-        if (loadedCount === paths.length) {
+        if (loadedCount === imageCount) {
           this.validImages = [...valid];
           setTimeout(() => {
             gsap.from('.project-image', {
