@@ -7,15 +7,24 @@ import { Observable, of, switchMap, catchError } from 'rxjs';
   providedIn: 'root'
 })
 export class ProjectService {
-  private readonly manifestUrl = 'https://sidearchitecture.github.io/sideAImages/images/projects/manifest.json';
+  private readonly baseManifestUrl = 'https://sidearchitecture.github.io/sideAImages/images/projects/manifest.json';
 
   constructor(private http: HttpClient) {}
 
   /**
-   * Fetches all projects from the root manifest.
+   * Appends a cache-busting query param to any URL.
+   */
+  private bustCache(url: string): string {
+    const timestamp = Date.now();
+    return `${url}?v=${timestamp}`;
+  }
+
+  /**
+   * Fetches all projects from the root manifest with cache busting.
    */
   getAllProjects(): Observable<Project[]> {
-    return this.http.get<Project[]>(this.manifestUrl).pipe(
+    const url = this.bustCache(this.baseManifestUrl);
+    return this.http.get<Project[]>(url).pipe(
       catchError(err => {
         console.error('❌ Failed to load project manifest:', err);
         return of([]);
@@ -28,7 +37,9 @@ export class ProjectService {
    * Uses projectPath from root manifest for accurate folder resolution.
    */
   getProjectDetail(slug: string): Observable<Project | undefined> {
-    return this.http.get<Project[]>(this.manifestUrl).pipe(
+    const rootUrl = this.bustCache(this.baseManifestUrl);
+
+    return this.http.get<Project[]>(rootUrl).pipe(
       switchMap((projects: Project[]) => {
         const match = projects.find(p => p.slug === slug);
         if (!match || !match.projectPath) {
@@ -36,7 +47,9 @@ export class ProjectService {
           return of(undefined);
         }
 
-        const detailUrl = `https://sidearchitecture.github.io/sideAImages/images/projects/${match.projectPath}/manifest.json`;
+        const detailUrl = this.bustCache(
+          `https://sidearchitecture.github.io/sideAImages/images/projects/${match.projectPath}/manifest.json`
+        );
 
         return this.http.get<Project>(detailUrl).pipe(
           catchError(err => {
