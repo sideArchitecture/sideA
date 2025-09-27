@@ -23,8 +23,11 @@ export class ProjectDetailComponent implements OnInit {
     private router: Router
   ) {}
 
+  selectedCategory: string | null = null;
+
   ngOnInit(): void {
     const slug = this.route.snapshot.paramMap.get('id');
+    this.selectedCategory = this.route.snapshot.queryParamMap.get('category');
 
     if (slug) {
       this.projectService.getProjectDetail(slug).subscribe(data => {
@@ -36,6 +39,7 @@ export class ProjectDetailComponent implements OnInit {
       this.isLoading = false;
     }
   }
+
 
   ngAfterViewInit(): void {
     gsap.from('.project-profile', {

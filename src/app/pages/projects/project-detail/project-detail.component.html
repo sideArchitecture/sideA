@@ -1,8 +1,11 @@
 <span class="float-end">
-  <a class="text-secondary" [routerLink]="['/projects']">
+  <a class="text-secondary"
+     [routerLink]="['/projects']"
+     [queryParams]="{ category: selectedCategory }">
     <i class="bi bi-arrow-left-circle-fill"></i>
     Back
   </a>
+
 </span>
 
 <div *ngIf="isLoading" class="text-center mt-5">
@@ -62,8 +65,13 @@
 </div>
 
 <div class="text-center mt-5" *ngIf="validImages.length > 5">
-  <a class="text-secondary" [routerLink]="['/projects']">
-    <i class="bi bi-arrow-left-circle-fill"></i>
-    Back
-  </a>
+
+<a class="text-secondary"
+   [routerLink]="['/projects']"
+   [queryParams]="{ category: selectedCategory }">
+  <i class="bi bi-arrow-left-circle-fill"></i>
+  Back
+</a>
 </div>
+
+
