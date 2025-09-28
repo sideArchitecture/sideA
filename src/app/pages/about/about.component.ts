@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {gsap} from "gsap";
+import { Title } from '@angular/platform-browser';
+
 
 @Component({
   selector: 'app-about',
@@ -8,9 +10,11 @@ import {gsap} from "gsap";
 })
 export class AboutComponent implements OnInit {
 
-  constructor() { }
+  constructor( private titleService: Title) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle('About | SideA Architecture');
+
   }
 
 
