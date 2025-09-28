@@ -1,3 +1,5 @@
+<div *ngIf="isLoading == false">
+
 <span class="float-end">
   <a class="text-secondary"
      [routerLink]="['/projects']"
@@ -73,5 +75,37 @@
   Back
 </a>
 </div>
+
+</div>
+
+
+<div *ngIf="isLoading == true">
+
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+  <br/>
+
+
+
+
+  <div class="text-center text-muted"><h5>Loading, Please wait..
+    <!--    <span class="spinner-border text-secondary" role="status">-->
+    <!--      <span class="visually-hidden">Loading...</span>-->
+    <!--    </span>-->
+
+    <div class="spinner-grow text-secondary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+
+  </h5>
+  </div>
+
+</div>
+
+
 
 
