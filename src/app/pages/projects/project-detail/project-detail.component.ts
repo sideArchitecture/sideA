@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
 import { gsap } from 'gsap';
+import {Title} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-project-detail',
@@ -20,12 +21,14 @@ export class ProjectDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private projectService: ProjectService,
-    private router: Router
+    private router: Router,
+    private titleService: Title,
   ) {}
 
   selectedCategory: string | null = null;
 
   ngOnInit(): void {
+
     const slug = this.route.snapshot.paramMap.get('id');
     this.selectedCategory = this.route.snapshot.queryParamMap.get('category');
 
@@ -38,10 +41,14 @@ export class ProjectDetailComponent implements OnInit {
     } else {
       this.isLoading = false;
     }
+
+    this.titleService.setTitle(`${slug} | SideA Architecture`);
+
   }
 
 
   ngAfterViewInit(): void {
+
     gsap.from('.project-profile', {
       opacity: 0,
       y: 40,

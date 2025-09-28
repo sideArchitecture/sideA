@@ -5,6 +5,7 @@ import {ProjectCategory} from '../../../models/project-category.enum';
 import {ActivatedRoute, Router} from '@angular/router';
 import {gsap} from 'gsap';
 import {FlipperFlagsService} from '../../../services/flipper-flags.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-project-list',
@@ -32,11 +33,14 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     public projectService: ProjectService,
     private route: ActivatedRoute,
     private router: Router,
-    private flipperFlagsService: FlipperFlagsService
+    private flipperFlagsService: FlipperFlagsService,
+    private titleService: Title,
   ) {
   }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Projects | SideA Architecture');
+
     document.addEventListener('click', this.handleOutsideClick.bind(this));
 
     this.projectService.getAllProjects().subscribe(projects => {

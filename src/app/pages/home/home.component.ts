@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {FlipperFlagsService} from "../../services/flipper-flags.service";
-
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -9,9 +9,14 @@ import {FlipperFlagsService} from "../../services/flipper-flags.service";
 export class HomeComponent implements OnInit {
   isImageLoaded = false;
 
-  constructor(private flipperFlagsService: FlipperFlagsService) { }
+  constructor(
+    private flipperFlagsService: FlipperFlagsService,
+    private titleService: Title
+
+  ) { }
 
   ngOnInit(): void {
+    this.titleService.setTitle('Home | SideA Architecture');
   }
 
   isNewDashBoardEnabled(){
