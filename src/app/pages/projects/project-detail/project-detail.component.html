@@ -9,21 +9,24 @@
   </a>
 
 </span>
+  <br/>
 
-<div *ngIf="isLoading" class="text-center mt-5">
+<div *ngIf="isLoading" class=" mt-5">
   <p class="text-muted">Loading project details...</p>
 </div>
 
 <div class="container mt-5 project-profile" *ngIf="project && !isLoading">
   <div class="row align-items-center">
-    <div class="col-md-4 text-center">
+    <div class="col-md-3 ">
       <img
         [src]="project.imageUrl"
         [alt]="project.title"
         class="img-fluid project-cover shadow-sm"
       >
+      <br/>
+      <br/>
     </div>
-    <div class="col-md-8">
+    <div class="col-md-9">
       <h2 class="text-secondary">{{ project.title }}</h2>
       <p class="text-secondary justify-text custom-text">
         {{ project.description }}
