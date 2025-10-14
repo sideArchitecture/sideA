@@ -9,6 +9,7 @@ export enum ProjectCategory {
   Branding = 'branding',
   HealthCare = 'healthcare',
   Commercial = 'commercial',
+  More = 'more',
 }
 
 /*
@@ -25,6 +26,7 @@ export enum ProjectCategory {
   07 Branding = 'branding',
   08 HealthCare = 'healthcare',
   09 Commercial = 'commercial',
+  10 More = 'more',
 }
 
 */
