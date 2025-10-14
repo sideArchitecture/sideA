@@ -2,12 +2,15 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Project } from '../models/project.model';
 import { Observable, of, switchMap, catchError } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ProjectService {
-  private readonly baseManifestUrl = 'https://sidearchitecture.github.io/sideAImages/images/projects/manifest.json';
+  // private readonly baseManifestUrl = 'https://sidearchitecture.github.io/sideAImages/images/projects/manifest.json';
+  private readonly baseManifestUrl = `${environment.imageBaseUrl}/manifest.json`;
+
 
   constructor(private http: HttpClient) {}
 
@@ -47,9 +50,14 @@ export class ProjectService {
           return of(undefined);
         }
 
+        // const detailUrl = this.bustCache(
+        //   `https://sidearchitecture.github.io/sideAImages/images/projects/${match.projectPath}/manifest.json`
+        // );
+
         const detailUrl = this.bustCache(
-          `https://sidearchitecture.github.io/sideAImages/images/projects/${match.projectPath}/manifest.json`
+          `${environment.imageBaseUrl}/${match.projectPath}/manifest.json`
         );
+
 
         return this.http.get<Project>(detailUrl).pipe(
           catchError(err => {

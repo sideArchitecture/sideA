@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  flipperFlagsFile: '/assets/flipper-model.dev.json'
+  flipperFlagsFile: '/assets/flipper-model.dev.json',
+  imageBaseUrl: 'http://localhost:8081/projects'
 };
 
 /*
