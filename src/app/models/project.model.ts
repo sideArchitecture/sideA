@@ -11,5 +11,11 @@ export interface Project {
   imageUrls?: string[];
   coverImage?: string;
   projectPath?: string;
+  year?: string;
+  client?: string;
+  designStyle?: string;
+  builtStatus?: string;
+  location?: string;
+
   // imageCount?: number;
 }
