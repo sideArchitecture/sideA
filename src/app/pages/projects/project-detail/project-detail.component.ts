@@ -61,7 +61,7 @@ export class ProjectDetailComponent implements OnInit {
 
   getCoverImageUrl(url: string): string {
     const isDev = !environment.production;
-    const localBase = 'http://localhost:8081/images/projects';
+    const localBase = 'http://localhost:8081/projects';
     return isDev
       ? url.replace('https://sidearchitecture.github.io/sideAImages/images/projects', localBase)
       : url;
