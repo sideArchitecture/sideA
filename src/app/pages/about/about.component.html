@@ -89,20 +89,34 @@
 <!--      <br/>-->
       <br/>
 
-      <!-- Contact Info -->
-      <span class="h6 text-secondary">
-        <i class="bi bi-envelope h5">  </i>
+      <div>
+        <!-- Email -->
+        <span class="h6 text-secondary">
+          <i class="bi bi-envelope h5"> </i>
+          info@sidea.co.in
+          <i
+            class="bi bi-copy ms-2 text-primary"
+            style="cursor: pointer;"
+            (click)="copyEmail('info@sidea.co.in')"
+            title="Copy to clipboard"
+          ></i>
+          <span *ngIf="copiedEmail" class="ms-2 text-success">Copied!</span>
+        </span>
 
-        info@sidea.co.in
-        <i
-          class="bi bi-copy ms-2 text-primary"
-          style="cursor: pointer;"
-          (click)="copyEmail('info@sidea.co.in')"
-          title="Copy to clipboard"
-        ></i>
-        <span *ngIf="copied" class="ms-2 text-success">Copied!</span>
-      </span>
+        <!-- Phone -->
+        <span class="h6 text-secondary float-end">
+          <i class="bi bi-telephone h5"></i>
+          +91 888 296 8076
+          <i
+            class="bi bi-copy ms-2 text-primary"
+            style="cursor: pointer;"
+            (click)="copyEmail('+918882968076')"
+            title="Copy to clipboard"
+          ></i>
+          <span *ngIf="copiedPhone" class="ms-2 text-success">Copied!</span>
+        </span>
 
+      </div>
 
 
     </div>

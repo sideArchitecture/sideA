@@ -36,18 +36,20 @@ export class AboutComponent implements OnInit {
 
 
 
-  copied: boolean = false;
+  copiedEmail: boolean = false;
+  copiedPhone: boolean = false;
 
   copyEmail(email: string): void {
     navigator.clipboard.writeText(email).then(() => {
-      this.copied = true;
-
-      // Hide message after 2 seconds
-      setTimeout(() => {
-        this.copied = false;
-      }, 2000);
+      if (email.includes('@')) {
+        this.copiedEmail = true;
+        setTimeout(() => this.copiedEmail = false, 2000);
+      } else {
+        this.copiedPhone = true;
+        setTimeout(() => this.copiedPhone = false, 2000);
+      }
     }).catch(err => {
-      console.error('Failed to copy email:', err);
+      console.error('Failed to copy:', err);
     });
   }
 
