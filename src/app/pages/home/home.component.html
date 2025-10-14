@@ -16,7 +16,22 @@
 </div>
 
 
+<!--<div class="container mt-4">-->
+<!--  <app-home-page-carousel></app-home-page-carousel>-->
+
+<!--</div>-->
+
 <div class="container mt-4">
   <app-home-page-carousel></app-home-page-carousel>
+</div>
 
+<!-- Show only in mobile view (below carousel) -->
+<div class="text-center mt-3 d-md-none">
+  <a
+    class="btn btn-outline-primary"
+    [routerLink]="['/projects']"
+    [queryParams]="{ category: 'featured' }"
+  >
+    View All Projects
+  </a>
 </div>
