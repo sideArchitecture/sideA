@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {gsap} from 'gsap';
 import {FlipperFlagsService} from '../../../services/flipper-flags.service';
 import { Title } from '@angular/platform-browser';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-project-list',
@@ -81,6 +82,18 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
       stagger: 0.1
     });
   }
+
+  getCoverImageUrl(url: string | undefined): string {
+    if (!url) return ''; // or return a fallback image URL if you prefer
+
+    const isDev = !environment.production;
+    const localBase = 'http://localhost:8081/projects';
+    return isDev
+      ? url.replace('https://sidearchitecture.github.io/sideAImages/images/projects', localBase)
+      : url;
+  }
+
+
 
   animateCards(): void {
     setTimeout(() => {
