@@ -65,6 +65,7 @@
 <!--principal architect-->
 <div class="container mt-5 principal-profile">
   <div class="row align-items-center">
+
     <!-- Profile Image -->
     <div class="col-md-4 text-center">
       <img
@@ -89,46 +90,51 @@
         elevate it.
       </p>
 
+
 <!--      <br/>-->
       <br/>
 
-      <div>
-        <!-- Email -->
-        <span class="h6 text-secondary">
-          <i class="bi bi-envelope h5"></i>
-          <a
-            href="mailto:info@sidea.co.in?subject=Enquiry%20-%20Architectural%20Design%20Work"
-            class="text-secondary text-decoration-none"
-          >
-            info@sidea.co.in
-          </a>
-          <i
-            class="bi bi-copy ms-2 text-primary"
-            style="cursor: pointer;"
-            (click)="copyEmail('info@sidea.co.in')"
-            title="Copy to clipboard"
-          ></i>
-          <span *ngIf="copiedEmail" class="ms-2 text-success">Copied!</span>
-        </span>
+      <div class="row">
+        <div class="col-12 col-md-5 mb-3">
+          <!-- Email -->
+          <span class="h6 text-secondary">
+            <i class="bi bi-envelope h5"></i>
+            <a
+              href="mailto:info@sidea.co.in?subject=Enquiry%20-%20Architectural%20Design%20Work"
+              class="text-secondary text-decoration-none"
+            >
+              info@sidea.co.in
+            </a>
+            <i
+              class="bi bi-copy ms-2 text-primary"
+              style="cursor: pointer;"
+              (click)="copyEmail('info@sidea.co.in')"
+              title="Copy to clipboard"
+            ></i>
+            <span *ngIf="copiedEmail" class="ms-2 text-success">Copied!</span>
+          </span>
+        </div>
 
+        <div class="col-12 col-md-1 d-none d-md-block"></div> <!-- Spacer only on medium+ -->
 
-
-        <!-- Phone -->
-        <span class="h6 text-secondary float-end">
-          <i class="bi bi-telephone h5"></i>
-          <a href="tel:+918882968076" class="text-secondary text-decoration-none">
-            +91 888 296 8076
-          </a>
-          <i
-            class="bi bi-copy ms-2 text-primary"
-            style="cursor: pointer;"
-            (click)="copyEmail('+918882968076')"
-            title="Copy to clipboard"
-          ></i>
-          <span *ngIf="copiedPhone" class="ms-2 text-success">Copied!</span>
-        </span>
-
+        <div class="col-12 col-md-6 mb-3">
+          <!-- Phone -->
+          <span class="h6 text-secondary">
+            <i class="bi bi-telephone h5"></i>
+            <a href="tel:+918882968076" class="text-secondary text-decoration-none">
+              +91 888 296 8076
+            </a>
+            <i
+              class="bi bi-copy ms-2 text-primary"
+              style="cursor: pointer;"
+              (click)="copyEmail('+918882968076')"
+              title="Copy to clipboard"
+            ></i>
+            <span *ngIf="copiedPhone" class="ms-2 text-success">Copied!</span>
+          </span>
+        </div>
       </div>
+
 
 
     </div>
