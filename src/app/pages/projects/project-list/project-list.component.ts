@@ -154,13 +154,14 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   selectCategory(item: { type: 'category' | 'project'; value: any }): void {
     if (item.type === 'category') {
-      this.selectedCategory = item.value;
-      this.lastConfirmedCategory = item.value;
-      this.searchTerm = this.getCategoryLabel(item.value);
-      this.filterProjects();
+      const category = item.value;
+
+      this.router.navigate(['/projects'], {
+        queryParams: { category }
+      });
     } else {
       this.router.navigate(['/projects', item.value.id], {
-        queryParams: {category: this.selectedCategory}
+        queryParams: { category: this.selectedCategory }
       });
     }
 
