@@ -26,6 +26,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   visibleProjects: Project[] = [];
   combinedResults: { type: 'category' | 'project'; value: any }[] = [];
   isLoading = true;
+  highlightedProjectId: string | null = null;
 
   categoryCounts: { [key: string]: number } = {};
   filteredCategories: string[] = [];
@@ -92,6 +93,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     const scrollY = window.scrollY;
     sessionStorage.setItem('scrollRestorePending', 'true');
     sessionStorage.setItem('scrollY', scrollY.toString());
+    sessionStorage.setItem('highlightProjectId', project.id); // ✅ NEW
     console.log('Stored scrollY:', scrollY);
 
     this.router.navigate(['/projects', project.id], {
