@@ -61,7 +61,7 @@ export class ProjectDetailComponent implements OnInit {
 
   getCoverImageUrl(url: string): string {
     const isDev = !environment.production;
-    const localBase = 'http://localhost:8081/projects';
+    const localBase = environment.imageBaseUrl;;
     return isDev
       ? url.replace('https://sidearchitecture.github.io/sideAImages/images/projects', localBase)
       : url;
@@ -76,7 +76,8 @@ export class ProjectDetailComponent implements OnInit {
     let loadedCount = 0;
 
     const isDev = !environment.production;
-    const localBase = 'http://localhost:8081/projects';
+    const localBase = environment.imageBaseUrl;
+    // const localBase = 'http://localhost:8081/projects';
 
     this.project.imageUrls.forEach((path, index) => {
         const rewrittenPath = isDev

@@ -163,7 +163,8 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   getCoverImageUrl(url: string | undefined): string {
     if (!url) return '';
     const isDev = !environment.production;
-    const localBase = 'http://localhost:8081/projects';
+    const localBase = environment.imageBaseUrl;
+    // const localBase = 'http://localhost:8081/projects';
     return isDev
       ? url.replace('https://sidearchitecture.github.io/sideAImages/images/projects', localBase)
       : url;
