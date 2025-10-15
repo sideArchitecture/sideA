@@ -29,7 +29,7 @@
         </div>
         <div class="col-md-1"></div>
         <div class="col-md-7">
-          <h2 class="text-secondary">{{ project.title }}</h2>
+          <h2 class="text-secondary">{{ project.title | titlecase }}</h2>
           <p class="text-secondary justify-text custom-text">
             {{ project.description }}
           </p>
@@ -45,11 +45,12 @@
   <br/>
 
   <div class="text-secondary">
-    <p *ngIf="project?.client"><strong>Client:</strong> {{project?.client}}</p>
-    <p *ngIf="project?.designStyle"><strong>Design Style:</strong> {{project?.designStyle}}</p>
-    <p *ngIf="project?.builtStatus"><strong>Status:</strong> {{project?.builtStatus}}</p>
+    <p *ngIf="project?.client"><strong>Client:</strong> {{project?.client | titlecase}}</p>
+    <p *ngIf="project?.designStyle"><strong>Design Style:</strong> {{project?.designStyle | titlecase}}</p>
+    <p *ngIf="project?.builtStatus"><strong>Status:</strong> {{project?.builtStatus | titlecase}}</p>
     <p *ngIf="project?.year"><strong>Year:</strong> {{project?.year}}</p>
-    <p *ngIf="project?.location"><strong>Location:</strong> {{project?.location}}</p>
+    <p *ngIf="project?.location"><strong>Location:</strong> {{project?.location | titlecase}}</p>
+
 <!--    <p *ngIf="project?.category"><strong>Category:</strong> {{project?.category}}</p>-->
   </div>
 
