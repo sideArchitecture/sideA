@@ -30,23 +30,29 @@ export class ProjectDetailComponent implements OnInit {
   selectedCategory: string | null = null;
 
   ngOnInit(): void {
-
     const slug = this.route.snapshot.paramMap.get('id');
     this.selectedCategory = this.route.snapshot.queryParamMap.get('category');
 
     if (slug) {
       this.projectService.getProjectDetail(slug).subscribe(data => {
-        this.project = data;
-        this.isLoading = false;
-        this.loadValidImages();
+        if (data) {
+          this.project = data;
+          this.isLoading = false;
+          this.loadValidImages();
+
+          const title = data.title ?? slug;
+          this.titleService.setTitle(`${title} | SideA Architecture`);
+        } else {
+          this.isLoading = false;
+          this.titleService.setTitle(`Project Not Found | SideA Architecture`);
+        }
       });
     } else {
       this.isLoading = false;
+      this.titleService.setTitle(`Project Not Found | SideA Architecture`);
     }
-
-    this.titleService.setTitle(`${slug} | SideA Architecture`);
-
   }
+
 
 
   ngAfterViewInit(): void {
