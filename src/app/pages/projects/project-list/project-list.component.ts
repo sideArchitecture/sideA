@@ -107,7 +107,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
         Array.isArray(project.category) &&
         project.category.includes(this.selectedCategory as ProjectCategory)
       );
-    this.isLoading = false;
+    // this.isLoading = false;
 
     this.animateCards();
 
@@ -129,7 +129,11 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
         setTimeout(restoreScrollIfReady, 50);
       }
     };
-    this.isLoading = false;
+    setTimeout(() => {
+      this.isLoading = false;
+      restoreScrollIfReady();
+    }, 300); // 300ms minimum loading time
+
 
     restoreScrollIfReady();
   }
