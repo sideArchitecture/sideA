@@ -58,7 +58,7 @@ export class ProjectService {
           `${environment.imageBaseUrl}/${match.projectPath}/manifest.json`
         );
 
-        console.log("**detailUrl**", `${environment.imageBaseUrl}/${match.projectPath}/manifest.json`);
+        // console.log("**detailUrl**", `${environment.imageBaseUrl}/${match.projectPath}/manifest.json`);
 
         return this.http.get<Project>(detailUrl).pipe(
           catchError(err => {
