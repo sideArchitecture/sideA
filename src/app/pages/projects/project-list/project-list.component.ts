@@ -220,27 +220,35 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   filterCategoryOptions(): void {
-    const term = this.searchTerm.toLowerCase();
+    const term = this.searchTerm.toLowerCase().trim();
 
     const matchedCategories = this.filteredCategories.filter(cat =>
       this.getCategoryLabel(cat).toLowerCase().includes(term)
     );
 
-    const matchedProjects = this.allProjects.filter(project =>
-      project.title.toLowerCase().includes(term)
-    );
+    // ✅ Only search projects when user typed something
+    const matchedProjects = term
+      ? this.allProjects.filter(project =>
+        project.title.toLowerCase().includes(term)
+      )
+      : [];
 
     this.visibleCategories = matchedCategories;
     this.visibleProjects = matchedProjects;
 
     this.combinedResults = [
-      ...matchedCategories.map(cat => ({ type: 'category' as const, value: cat })),
-      ...matchedProjects.map(project => ({ type: 'project' as const, value: project }))
+      ...matchedCategories.map(cat => ({
+        type: 'category' as const,
+        value: cat
+      })),
+      ...matchedProjects.map(project => ({
+        type: 'project' as const,
+        value: project
+      }))
     ];
 
     this.showDropdown = true;
   }
-
   handleOutsideClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
     if (!target.closest('.position-relative')) {
