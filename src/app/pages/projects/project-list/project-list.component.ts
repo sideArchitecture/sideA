@@ -134,7 +134,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       this.isLoading = false;
       restoreScrollIfReady();
-    }, 700); // 300ms minimum loading time
+    }, 0); // 300ms minimum loading time
 
 
     // restoreScrollIfReady();
