@@ -9,6 +9,7 @@ export enum ProjectCategory {
   Branding = 'branding',
   HealthCare = 'healthcare',
   Commercial = 'commercial',
+  // GraphicDesign = 'graphicDesign',
   More = 'more',
 }
 
