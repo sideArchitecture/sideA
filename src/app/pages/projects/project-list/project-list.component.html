@@ -15,7 +15,10 @@
             placeholder="Search category / projects"
           />
 
-          <ul class="list-group position-absolute w-100 z-3" *ngIf="showDropdown">
+          <ul
+            class="list-group position-absolute w-100 z-3 border rounded shadow-sm"
+            *ngIf="showDropdown"
+          >
             <li class="list-group-item fw-bold text-muted" *ngIf="visibleCategories.length > 0">
 <!--              <i class="bi bi-tags me-2"></i>-->
               Categories:
