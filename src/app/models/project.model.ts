@@ -10,6 +10,7 @@ export interface Project {
   notes?: string; // 👈 Add this
   imageUrls?: string[];
   coverImage?: string;
+  brochureLink?: string;
   projectPath?: string;
   year?: string;
   client?: string;

@@ -68,6 +68,7 @@ export class ProjectDetailComponent implements OnInit {
 
   getCategoryDisplay(categories: ProjectCategory[]): string {
     return categories
+      .filter(category => category !== 'featured')
       .map(category => this.toTitleCase(category))
       .join(', ');
   }

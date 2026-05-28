@@ -54,6 +54,21 @@
       <strong>Category:</strong>
       {{ getCategoryDisplay(project?.category ?? []) }}
     </p>
+<!--    <p *ngIf="project?.brochureLink"><strong>Brochure:</strong> {{project?.brochureLink}}</p>-->
+<!--    <a *ngIf="project?.brochureLink" href={{project?.brochureLink}}> <strong>Check Brochure</strong> </a>-->
+
+    <a
+      *ngIf="project?.brochureLink"
+      [href]="project?.brochureLink"
+      target="_blank"
+      rel="noopener noreferrer"
+      class="text-secondary "
+      style="text-decoration: none"
+    >
+      <i class="bi bi-file-earmark-pdf-fill"></i>
+      <strong> Open Brochure</strong>
+    </a>
+
 
 <!--    <p *ngIf="project?.category"><strong>Category:</strong> {{project?.category}}</p>-->
   </div>
