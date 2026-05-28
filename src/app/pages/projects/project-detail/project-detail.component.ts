@@ -5,6 +5,7 @@ import { Project } from '../../../models/project.model';
 import { gsap } from 'gsap';
 import {Title} from "@angular/platform-browser";
 import {environment} from "../../../../environments/environment";
+import {ProjectCategory} from "../../../models/project-category.enum";
 
 
 @Component({
@@ -63,6 +64,19 @@ export class ProjectDetailComponent implements OnInit {
       duration: 1,
       ease: 'power2.out'
     });
+  }
+
+  getCategoryDisplay(categories: ProjectCategory[]): string {
+    return categories
+      .map(category => this.toTitleCase(category))
+      .join(', ');
+  }
+
+  toTitleCase(value: string): string {
+    return value
+      .replace(/_/g, ' ')
+      .toLowerCase()
+      .replace(/\b\w/g, char => char.toUpperCase());
   }
 
   getCoverImageUrl(url: string): string {

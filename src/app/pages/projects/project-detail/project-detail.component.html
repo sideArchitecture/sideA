@@ -50,6 +50,10 @@
     <p *ngIf="project?.builtStatus"><strong>Status:</strong> {{project?.builtStatus | titlecase}}</p>
     <p *ngIf="project?.year"><strong>Year:</strong> {{project?.year}}</p>
     <p *ngIf="project?.location"><strong>Location:</strong> {{project?.location}}</p>
+    <p *ngIf="project?.category?.length">
+      <strong>Category:</strong>
+      {{ getCategoryDisplay(project?.category ?? []) }}
+    </p>
 
 <!--    <p *ngIf="project?.category"><strong>Category:</strong> {{project?.category}}</p>-->
   </div>
