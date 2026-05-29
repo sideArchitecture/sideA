@@ -5,6 +5,7 @@ export interface Project {
   title: string;
   imageUrl: string;
   slug?: string;
+  slugHex?: string;
   description?: string;
   category?: ProjectCategory[];
   notes?: string; // 👈 Add this

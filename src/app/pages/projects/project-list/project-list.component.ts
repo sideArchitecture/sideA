@@ -96,7 +96,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     sessionStorage.setItem('highlightProjectId', project.id); // ✅ NEW
     console.log('Stored scrollY:', scrollY);
 
-    this.router.navigate(['/projects', project.id], {
+    this.router.navigate(['/projects', project.slugHex], {
       queryParams: { category: this.selectedCategory }
     });
   }

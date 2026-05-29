@@ -30,8 +30,23 @@ export class ProjectDetailComponent implements OnInit {
 
   selectedCategory: string | null = null;
 
+  fromHex1(hex: string): string {
+    return Buffer.from(hex, 'base64url').toString('utf8');
+  }
+
+  fromHex(slug: string): string {
+    const padded = slug + '='.repeat((4 - slug.length % 4) % 4);
+
+    return atob(
+      padded
+        .replace(/-/g, '+')
+        .replace(/_/g, '/')
+    );
+  }
+
   ngOnInit(): void {
-    const slug = this.route.snapshot.paramMap.get('id');
+    const slugHex = this.route.snapshot.paramMap.get('id') ?? '';
+    var slug = this.fromHex(slugHex);
     this.selectedCategory = this.route.snapshot.queryParamMap.get('category');
 
     if (slug) {
