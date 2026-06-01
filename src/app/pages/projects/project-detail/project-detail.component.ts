@@ -6,6 +6,7 @@ import { gsap } from 'gsap';
 import {Title} from "@angular/platform-browser";
 import {environment} from "../../../../environments/environment";
 import {ProjectCategory} from "../../../models/project-category.enum";
+import {FlipperFlagsService} from "../../../services/flipper-flags.service";
 
 
 @Component({
@@ -26,6 +27,8 @@ export class ProjectDetailComponent implements OnInit {
     private projectService: ProjectService,
     private router: Router,
     private titleService: Title,
+    private flipperFlagsService: FlipperFlagsService,
+
   ) {}
 
   selectedCategory: string | null = null;
@@ -45,8 +48,10 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    var isUrlBase64Enabled= this.flipperFlagsService.isEnabled('urlBase64');
+
     const slugHex = this.route.snapshot.paramMap.get('id') ?? '';
-    var slug = this.fromHex(slugHex);
+    var slug = isUrlBase64Enabled == true ?   this.fromHex(slugHex) : slugHex;
     this.selectedCategory = this.route.snapshot.queryParamMap.get('category');
 
     if (slug) {

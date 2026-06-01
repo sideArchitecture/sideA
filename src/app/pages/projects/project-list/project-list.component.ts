@@ -95,11 +95,21 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     sessionStorage.setItem('scrollY', scrollY.toString());
     sessionStorage.setItem('highlightProjectId', project.id); // ✅ NEW
     console.log('Stored scrollY:', scrollY);
+    var isUrlBase64Enabled= this.flipperFlagsService.isEnabled('urlBase64');
 
-    this.router.navigate(['/projects', project.slugHex], {
-      queryParams: { category: this.selectedCategory }
-    });
+    if(isUrlBase64Enabled){
+      this.router.navigate(['/projects', project.slugHex], {
+        queryParams: { category: this.selectedCategory }
+      });
+    }else{
+      this.router.navigate(['/projects', project.slug], {
+        queryParams: { category: this.selectedCategory }
+      });
+    }
+
+
   }
+
 
   filterProjects(): void {
     this.isLoading = true;
@@ -152,9 +162,17 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
       sessionStorage.setItem('scrollY', scrollY.toString());
       console.log('Stored scrollY:', scrollY);
 
-      this.router.navigate(['/projects', item.value.slugHex], {
-        queryParams: { category: this.selectedCategory }
-      });
+      var isUrlBase64Enabled= this.flipperFlagsService.isEnabled('urlBase64');
+
+      if(isUrlBase64Enabled){
+        this.router.navigate(['/projects', item.value.slugHex], {
+          queryParams: { category: this.selectedCategory }
+        });
+      }else{
+        this.router.navigate(['/projects', item.value.slug], {
+          queryParams: { category: this.selectedCategory }
+        });
+      }
     }
 
     this.showDropdown = false;
@@ -289,6 +307,9 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   isSearchProjectsEnabled(): boolean {
     return this.flipperFlagsService.isEnabled('searchProjects');
   }
+
+
+
 
   ngOnDestroy(): void {
     document.removeEventListener('click', this.handleOutsideClick.bind(this));
