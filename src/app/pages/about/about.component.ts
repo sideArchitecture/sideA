@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {gsap} from "gsap";
 import { Title } from '@angular/platform-browser';
+import {FlipperFlagsService} from "../../services/flipper-flags.service";
 
 
 @Component({
@@ -10,7 +11,10 @@ import { Title } from '@angular/platform-browser';
 })
 export class AboutComponent implements OnInit {
 
-  constructor( private titleService: Title) { }
+  constructor( private titleService: Title,
+               private flipperFlagsService: FlipperFlagsService,
+
+               ) { }
 
   ngOnInit(): void {
     this.titleService.setTitle('About | SideA Architecture');
@@ -32,6 +36,19 @@ export class AboutComponent implements OnInit {
       duration: 5,
       ease: 'power2.out'
     });
+  }
+
+  isProfilePhotoUpdateEnabled(): boolean {
+    return this.flipperFlagsService.isEnabled('profilePhotoUpdate');
+  }
+
+  profilePhotoUrl(){
+    var profilePhotoUpdateEnabled = this.flipperFlagsService.isEnabled('profilePhotoUpdate');
+    if(profilePhotoUpdateEnabled){
+      return "../../../assets/images/people/principal-architect.jpg"
+    }else{
+      return "../../../assets/images/people/principal-architect3.jpg"
+    }
   }
 
 
