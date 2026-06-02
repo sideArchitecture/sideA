@@ -1,7 +1,7 @@
 {
-  "searchProjects": false,
+  "searchProjects": true,
   "urlBase64": false,
-  "profilePhotoUpdate": false
+  "profilePhotoUpdate": true
 
 
 }
