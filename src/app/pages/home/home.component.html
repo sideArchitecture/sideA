@@ -25,21 +25,7 @@
   <app-home-page-carousel></app-home-page-carousel>
 </div>
 <br/>
-<!-- Show only in mobile view (below carousel) -->
-<div class="text-center mt-3 ">
-<!--<div class="text-center mt-3 d-md-none">-->
-  <a
-    class="btn btn-outline-secondary"
-    [routerLink]="['/projects']"
-    [queryParams]="{ category: 'All' }"
-  >
-    View All Projects
-  </a>
-</div>
 
-<br/>
-<br/>
-<br/>
 
 <!--&lt;!&ndash; video 1: &ndash;&gt;-->
 <!--<div class="container mt-4">-->
@@ -102,3 +88,26 @@
 <!--<br/>-->
 <!--<br/>-->
 <!--<br/>-->
+
+<div class="container text-center py-5">
+  <p class="fs-5 fst-italic text-secondary mb-2">
+    “Less is more.”
+  </p>
+  <small class="text-muted">
+    — Ludwig Mies van der Rohe
+  </small>
+</div>
+<br/>
+
+
+<!-- Show only in mobile view (below carousel) -->
+<div class="text-center pb-5">
+  <a
+    class="btn btn-outline-dark px-4"
+    [routerLink]="['/projects']"
+    [queryParams]="{ category: 'All' }">
+    Explore Projects
+  </a>
+</div>
+<br/>
+<br/>
