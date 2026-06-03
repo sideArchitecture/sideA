@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-navbar-main',
@@ -6,6 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./navbar-main.component.scss']
 })
 export class NavbarMainComponent {
+
+  constructor(public router: Router) {}
 
   toggleNavbar() {
     const navbarCollapse = document.getElementById('navbarNav');
