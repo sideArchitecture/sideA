@@ -71,4 +71,8 @@ export class AboutComponent implements OnInit {
   }
 
 
+
+  isClientsListDisplayEnabled(): boolean {
+    return this.flipperFlagsService.isEnabled('searchProjects');
+  }
 }

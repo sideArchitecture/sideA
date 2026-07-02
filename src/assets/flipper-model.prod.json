@@ -1,7 +1,7 @@
 {
   "searchProjects": true,
   "urlBase64": true,
-  "profilePhotoUpdate": true
-
+  "profilePhotoUpdate": true,
+  "displayClientList" : false
 
 }
