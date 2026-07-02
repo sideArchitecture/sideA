@@ -1,6 +1,6 @@
 {
   "searchProjects": true,
-  "urlBase64": false,
+  "urlBase64": true,
   "profilePhotoUpdate": true
 
 
