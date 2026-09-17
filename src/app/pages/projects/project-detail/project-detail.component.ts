@@ -17,6 +17,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   project: Project | undefined;
   validImages: string[] = [];
   isLoading = true;
+  isGalleryLoading = false;
   selectedImageIndex: number | null = null;
   selectedCategory: string | null = null;
 
@@ -88,7 +89,8 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
       .replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
-  getCoverImageUrl(url: string): string {
+  getCoverImageUrl(url: string | undefined): string {
+    if (!url) return '';
     const isDev = !environment.production;
     const localBase = environment.imageBaseUrl;
     return isDev
@@ -97,8 +99,12 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   }
 
   loadValidImages(): void {
-    if (!this.project?.imageUrls?.length) return;
+    if (!this.project?.imageUrls?.length) {
+      this.isGalleryLoading = false;
+      return;
+    }
 
+    this.isGalleryLoading = true;
     const imageCount = this.project.imageUrls.length;
     const valid: (string | null)[] = new Array(imageCount).fill(null);
     let loadedCount = 0;
@@ -117,6 +123,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
         loadedCount++;
         if (loadedCount === imageCount) {
           this.validImages = valid.filter(Boolean) as string[];
+          this.isGalleryLoading = false;
           this.animateImages();
         }
       };
@@ -124,6 +131,7 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
         loadedCount++;
         if (loadedCount === imageCount) {
           this.validImages = valid.filter(Boolean) as string[];
+          this.isGalleryLoading = false;
           this.animateImages();
         }
       };

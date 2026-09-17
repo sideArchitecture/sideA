@@ -102,14 +102,19 @@
     </div>
   </div>
 
-  <!-- Gallery Grid Section -->
-  <div *ngIf="validImages.length > 0" class="project-gallery-section">
+  <!-- Gallery Section -->
+  <div *ngIf="project.imageUrls?.length" class="project-gallery-section mb-5">
     <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-2">
       <h4 class="text-secondary fw-semibold mb-0">Project Gallery</h4>
-      <span class="text-muted small">{{ validImages.length }} Photographs</span>
+      <span class="text-muted small" *ngIf="!isGalleryLoading">{{ validImages.length }} Photographs</span>
+      <span class="text-muted small d-inline-flex align-items-center gap-1" *ngIf="isGalleryLoading">
+        <span class="spinner-border spinner-border-sm text-secondary" role="status"></span>
+        <span>Loading photos...</span>
+      </span>
     </div>
 
-    <div class="row g-4">
+    <!-- Gallery Grid (Loaded State) -->
+    <div class="row g-4" *ngIf="!isGalleryLoading && validImages.length > 0">
       <div class="col-md-6" *ngFor="let img of validImages; let i = index">
         <div class="image-wrapper shadow-sm" (click)="openLightbox(i)">
           <img [src]="img" [alt]="project.title + ' photo ' + (i + 1)" class="project-image">
@@ -118,6 +123,15 @@
           </div>
         </div>
       </div>
+    </div>
+
+    <!-- Gallery Loading Placeholder (When fetching network images in production) -->
+    <div *ngIf="isGalleryLoading" class="text-center py-5 bg-light rounded-4 border shadow-sm my-3">
+      <div class="spinner-border text-secondary mb-3" role="status" style="width: 2.5rem; height: 2.5rem;">
+        <span class="visually-hidden">Loading photographs...</span>
+      </div>
+      <h6 class="text-secondary fw-bold mb-1">Loading High-Resolution Photographs</h6>
+      <p class="text-muted small mb-0">Fetching architectural visuals from server, please wait...</p>
     </div>
   </div>
 
