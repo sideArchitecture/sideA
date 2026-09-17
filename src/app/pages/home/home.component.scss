@@ -52,6 +52,17 @@
     pointer-events: auto;
   }
 
+  .hero-top-badge {
+    font-size: 0.74rem;
+    letter-spacing: 0.16em;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.85);
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+
   .hero-main-heading {
     font-family: 'Qanelas', sans-serif;
     font-size: clamp(2.4rem, 5.5vw, 4.2rem);
@@ -283,7 +294,7 @@
   }
 }
 
-// Philosophy Section (Section 6)
+// Philosophy / Closing Section (Section 6)
 .philosophy-section {
   background: radial-gradient(circle at 50% 50%, #1c232b 0%, #0d1217 100%);
   min-height: 85vh;

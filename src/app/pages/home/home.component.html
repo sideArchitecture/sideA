@@ -30,10 +30,10 @@
       class="nav-dot-wrapper d-flex align-items-center"
       [class.active]="activeSectionIndex === projects.length + 1"
       (click)="scrollToSection(projects.length + 1)"
-      title="Studio Philosophy"
+      title="Let's Collaborate"
     >
-      <span class="nav-label me-2">Philosophy &amp; Work</span>
-      <button class="nav-dot" aria-label="Go to Studio Philosophy"></button>
+      <span class="nav-label me-2">Connect &amp; Collaborate</span>
+      <button class="nav-dot" aria-label="Go to Connect &amp; Collaborate"></button>
     </div>
   </nav>
 
@@ -52,7 +52,7 @@
       <div class="row justify-content-center">
         <div class="col-lg-9 col-xl-8">
           <div class="d-inline-flex align-items-center gap-2 mb-3">
-            <span class="badge bg-white bg-opacity-15 text-white text-uppercase px-3 py-2 letter-spacing-2 rounded-pill shadow-sm">
+            <span class="hero-top-badge text-uppercase px-3 py-1 rounded-pill">
               Architecture &bull; Spatial Design &bull; Urbanism
             </span>
           </div>
@@ -164,7 +164,7 @@
     </div>
   </section>
 
-  <!-- Section: Studio Philosophy & Final Call to Action -->
+  <!-- Section 6: Closing Collaboration & Architecture Statement -->
   <section
     #sectionRef
     class="fullscreen-project-section philosophy-section position-relative d-flex align-items-center"
@@ -174,37 +174,37 @@
       <div class="row justify-content-center">
         <div class="col-lg-8">
           <span class="badge bg-white bg-opacity-10 text-white text-uppercase px-3 py-2 mb-4 letter-spacing-2">
-            Studio Ideal Architecture
+            Studio Ideal Architecture &bull; SIDE A
           </span>
 
-          <blockquote class="display-5 fw-light fst-italic mb-4 philosophy-quote">
+          <blockquote class="display-5 fw-light fst-italic mb-3 philosophy-quote">
             &ldquo;Less is more.&rdquo;
           </blockquote>
 
-          <p class="text-white-50 lead mb-5">
+          <p class="text-white-50 lead mb-4">
             &mdash; Ludwig Mies van der Rohe
           </p>
 
           <p class="lead text-white-75 mb-5 philosophy-text">
-            At <strong>SIDE A</strong>, architecture is storytelling &mdash; an evolving dialogue between form, light, and soul. We embrace minimalism as an art of precision, curating spaces that whisper elegance and purpose.
+            Every meaningful structure begins with a conversation. From private sanctuaries to civic landmarks, we transform bold visions into enduring, purposeful spaces. Let&rsquo;s create something extraordinary together.
           </p>
 
           <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
             <a
-              [routerLink]="['/projects']"
-              [queryParams]="{ category: 'All' }"
+              routerLink="/about"
               class="btn btn-light rounded-pill px-5 py-3 fw-medium d-inline-flex align-items-center gap-2 shadow"
             >
-              <span>Explore All Projects</span>
-              <i class="bi bi-grid-fill"></i>
+              <span>Connect with Studio</span>
+              <i class="bi bi-envelope-paper-heart"></i>
             </a>
 
             <a
-              routerLink="/about"
+              [routerLink]="['/projects']"
+              [queryParams]="{ category: 'All' }"
               class="btn btn-outline-light rounded-pill px-5 py-3 fw-medium d-inline-flex align-items-center gap-2"
             >
-              <span>About The Studio</span>
-              <i class="bi bi-arrow-right"></i>
+              <span>View Full Portfolio</span>
+              <i class="bi bi-grid-fill"></i>
             </a>
           </div>
         </div>
