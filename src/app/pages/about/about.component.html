@@ -1,185 +1,251 @@
-<div class="container-fluid px-3 px-md-4 px-lg-5 py-4 py-md-5 about-page-container">
+<div class="about-fullpage-container">
 
-  <!-- Section 1: Firm Manifesto & Profile Section -->
-  <section class="firm-profile mb-5">
-    <div class="text-center mb-4">
-      <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-2 mb-2 tracking-wide rounded-pill">
-        Studio Profile
-      </span>
-      <h1 class="display-5 text-dark fw-bold studio-heading mb-1 text-uppercase">
-        Studio I Deal Architecture
-      </h1>
-      <span class="fs-5 text-muted fw-light">(SIDE A)</span>
+  <!-- Right Floating Vertical Navigation Rail (Adaptive) -->
+  <nav class="about-side-nav-rail d-none d-lg-flex flex-column align-items-center gap-3" aria-label="About Navigation">
+    <div
+      class="nav-dot-wrapper d-flex align-items-center"
+      [class.active]="activeSectionIndex === 0"
+      (click)="scrollToSection(0)"
+      title="Studio Profile & Manifesto"
+    >
+      <span class="nav-label me-2">Profile &amp; Vision</span>
+      <button class="nav-dot" aria-label="Go to Studio Profile"></button>
     </div>
 
-    <div class="manifesto-card p-4 p-md-5 rounded-4 bg-light shadow-sm mx-auto">
-      <p class="manifesto-lead text-secondary mb-3">
-        At <strong class="text-dark">SIDE A</strong>, architecture is storytelling &mdash; an evolving dialogue between form and soul. We embrace minimalism, not as a restriction but as an art of precision, curating spaces that whisper elegance and purpose.
-      </p>
+    <div
+      class="nav-dot-wrapper d-flex align-items-center"
+      [class.active]="activeSectionIndex === 1"
+      (click)="scrollToSection(1)"
+      title="Guiding Architectural Pillars"
+    >
+      <span class="nav-label me-2">Our Pillars</span>
+      <button class="nav-dot" aria-label="Go to Architectural Pillars"></button>
+    </div>
 
-      <p class="manifesto-body text-secondary mb-0">
-        Inspired by the transformation of nature, our designs breathe life into built environments, where simplicity meets profound beauty. We dream, design, and redefine, shaping a world where architecture is more than a structure &mdash; <strong class="text-dark">it is an experience.</strong>
-      </p>
+    <div
+      class="nav-dot-wrapper d-flex align-items-center"
+      [class.active]="activeSectionIndex === 2"
+      (click)="scrollToSection(2)"
+      title="Principal Architect & Contact"
+    >
+      <span class="nav-label me-2">Leadership &amp; Contact</span>
+      <button class="nav-dot" aria-label="Go to Leadership Profile"></button>
+    </div>
+  </nav>
+
+  <!-- SECTION 1: Firm Manifesto & Studio Profile -->
+  <section
+    #sectionRef
+    class="about-snap-section firm-profile-section d-flex align-items-center justify-content-center"
+    data-section-index="0"
+  >
+    <div class="container-fluid px-3 px-md-4 px-lg-5 text-center section-content-box">
+      <div class="text-center mb-4">
+        <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-2 mb-2 tracking-wide rounded-pill">
+          Studio Profile
+        </span>
+        <h1 class="display-5 text-dark fw-bold studio-heading mb-1 text-uppercase">
+          Studio I Deal Architecture
+        </h1>
+        <div class="fs-5 text-muted fw-light mb-3">(SIDE A)</div>
+      </div>
+
+      <div class="manifesto-card p-4 p-md-5 rounded-4 bg-light shadow-sm mx-auto">
+        <p class="manifesto-lead text-secondary mb-3">
+          At <strong class="text-dark">SIDE A</strong>, architecture is storytelling &mdash; an evolving dialogue between form and soul. We embrace minimalism, not as a restriction but as an art of precision, curating spaces that whisper elegance and purpose.
+        </p>
+
+        <p class="manifesto-body text-secondary mb-0">
+          Inspired by the transformation of nature, our designs breathe life into built environments, where simplicity meets profound beauty. We dream, design, and redefine, shaping a world where architecture is more than a structure &mdash; <strong class="text-dark">it is an experience.</strong>
+        </p>
+      </div>
+
+      <!-- Scroll cue to Pillars -->
+      <div class="scroll-cue mt-4 text-muted d-none d-md-block" (click)="scrollToSection(1)">
+        <span class="scroll-text text-uppercase small letter-spacing-2">Explore Pillars</span>
+        <div class="scroll-mouse-icon mt-1">
+          <div class="scroll-wheel"></div>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- Section 2: Core Studio Pillars -->
-  <section class="studio-pillars-section mb-5">
-    <div class="text-center mb-4">
-      <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-1 mb-2 tracking-wide rounded-pill">
-        Guiding Principles
-      </span>
-      <h2 class="h3 fw-bold text-dark mb-1">Our Architectural Pillars</h2>
-    </div>
+  <!-- SECTION 2: Core Studio Pillars -->
+  <section
+    #sectionRef
+    class="about-snap-section pillars-snap-section d-flex align-items-center justify-content-center"
+    data-section-index="1"
+  >
+    <div class="container-fluid px-3 px-md-4 px-lg-5 section-content-box text-center">
+      <div class="text-center mb-4">
+        <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-2 mb-2 tracking-wide rounded-pill">
+          Guiding Principles
+        </span>
+        <h2 class="h3 fw-bold text-dark mb-1">Our Architectural Pillars</h2>
+      </div>
 
-    <div class="row g-4 justify-content-center">
-      <div class="col-md-4">
-        <div class="card pillar-card h-100 p-4 border-0 rounded-4 shadow-sm bg-light">
-          <div class="pillar-icon-box mb-3">
-            <i class="bi bi-compass fs-2 text-secondary"></i>
+      <div class="row g-4 justify-content-center max-w-cards mx-auto">
+        <div class="col-md-4">
+          <div class="card pillar-card h-100 p-4 border-0 rounded-4 shadow-sm bg-light text-start">
+            <div class="pillar-icon-box mb-3">
+              <i class="bi bi-compass fs-2 text-secondary"></i>
+            </div>
+            <h5 class="fw-bold text-dark mb-2">Form &amp; Soul</h5>
+            <p class="text-muted small mb-0">
+              Storytelling through responsive architecture, anchoring each space to its natural landscape, cultural roots, and human context.
+            </p>
           </div>
-          <h5 class="fw-bold text-dark mb-2">Form &amp; Soul</h5>
-          <p class="text-muted small mb-0">
-            Storytelling through responsive architecture, anchoring each space to its natural landscape, cultural roots, and human context.
-          </p>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card pillar-card h-100 p-4 border-0 rounded-4 shadow-sm bg-light text-start">
+            <div class="pillar-icon-box mb-3">
+              <i class="bi bi-bounding-box-circles fs-2 text-secondary"></i>
+            </div>
+            <h5 class="fw-bold text-dark mb-2">Art of Precision</h5>
+            <p class="text-muted small mb-0">
+              Minimalism as a discipline of intent—where volume, materiality, natural light, and clean lines achieve effortless balance.
+            </p>
+          </div>
+        </div>
+
+        <div class="col-md-4">
+          <div class="card pillar-card h-100 p-4 border-0 rounded-4 shadow-sm bg-light text-start">
+            <div class="pillar-icon-box mb-3">
+              <i class="bi bi-buildings fs-2 text-secondary"></i>
+            </div>
+            <h5 class="fw-bold text-dark mb-2">Living Experience</h5>
+            <p class="text-muted small mb-0">
+              Designing immersive, functional environments that transcend static geometry to nurture and elevate everyday human life.
+            </p>
+          </div>
         </div>
       </div>
 
-      <div class="col-md-4">
-        <div class="card pillar-card h-100 p-4 border-0 rounded-4 shadow-sm bg-light">
-          <div class="pillar-icon-box mb-3">
-            <i class="bi bi-bounding-box-circles fs-2 text-secondary"></i>
-          </div>
-          <h5 class="fw-bold text-dark mb-2">Art of Precision</h5>
-          <p class="text-muted small mb-0">
-            Minimalism as a discipline of intent—where volume, materiality, natural light, and clean lines achieve effortless balance.
-          </p>
-        </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="card pillar-card h-100 p-4 border-0 rounded-4 shadow-sm bg-light">
-          <div class="pillar-icon-box mb-3">
-            <i class="bi bi-buildings fs-2 text-secondary"></i>
-          </div>
-          <h5 class="fw-bold text-dark mb-2">Living Experience</h5>
-          <p class="text-muted small mb-0">
-            Designing immersive, functional environments that transcend static geometry to nurture and elevate everyday human life.
-          </p>
+      <!-- Scroll cue to Leadership -->
+      <div class="scroll-cue mt-4 text-muted d-none d-md-block" (click)="scrollToSection(2)">
+        <span class="scroll-text text-uppercase small letter-spacing-2">Meet Leadership</span>
+        <div class="scroll-mouse-icon mt-1">
+          <div class="scroll-wheel"></div>
         </div>
       </div>
     </div>
   </section>
 
-  <hr class="my-5 border-secondary opacity-25"/>
-
-  <!-- Section 3: Principal Architect Profile & Contact Anchor -->
-  <section id="leadership" class="principal-profile mb-5 pt-2">
-    <div class="card profile-main-card border-0 rounded-4 shadow-sm p-4 p-md-5 bg-light mx-auto">
-      <div class="row align-items-center g-4">
-        <!-- Profile Image -->
-        <div class="col-lg-4 text-center">
-          <div class="architect-photo-wrapper d-inline-block">
-            <img
-              [src]="profilePhotoUrl()"
-              alt="Portrait of Principal Architect Vijay Kumar D"
-              aria-label="Principal Architect Vijay Kumar D"
-              class="img-fluid rounded-4 shadow"
-            >
+  <!-- SECTION 3: Principal Architect Profile & Contact -->
+  <section
+    #sectionRef
+    id="leadership"
+    class="about-snap-section leadership-snap-section d-flex align-items-center justify-content-center"
+    data-section-index="2"
+  >
+    <div class="container-fluid px-3 px-md-4 px-lg-5 section-content-box">
+      <div class="card profile-main-card border-0 rounded-4 shadow-sm p-4 p-md-5 bg-light mx-auto">
+        <div class="row align-items-center g-4">
+          <!-- Profile Image -->
+          <div class="col-lg-4 text-center">
+            <div class="architect-photo-wrapper d-inline-block">
+              <img
+                [src]="profilePhotoUrl()"
+                alt="Portrait of Principal Architect Vijay Kumar D"
+                aria-label="Principal Architect Vijay Kumar D"
+                class="img-fluid rounded-4 shadow"
+              >
+            </div>
           </div>
-        </div>
 
-        <!-- Profile Details -->
-        <div class="col-lg-8 ps-lg-4 text-start">
-          <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-1 mb-2 tracking-wide rounded-pill">
-            Leadership
-          </span>
-          <h2 class="text-dark fw-bold mb-1">Ar. Vijay Kumar D</h2>
-          <div class="text-muted fw-medium mb-3">Principal Architect &bull; Alumnus, SPA Delhi</div>
+          <!-- Profile Details -->
+          <div class="col-lg-8 ps-lg-4 text-start">
+            <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-1 mb-2 tracking-wide rounded-pill">
+              Leadership
+            </span>
+            <h2 class="text-dark fw-bold mb-1">Ar. Vijay Kumar D</h2>
+            <div class="text-muted fw-medium mb-3">Principal Architect &bull; Alumnus, SPA Delhi</div>
 
-          <p class="text-secondary custom-text mb-4">
-            A visionary architect with a decade of experience shaping spatial narratives across public, private, and residential landscapes. A graduate of <strong>SPA Delhi</strong>, he is an explorer of form, function, and emotion&mdash;crafting spaces that transcend mere structures into living, breathing expressions of art. His expertise lies in seamlessly blending modern aesthetics with minimalistic philosophy, creating spaces that not only house life but elevate it.
-          </p>
+            <p class="text-secondary custom-text mb-4">
+              A visionary architect with a decade of experience shaping spatial narratives across public, private, and residential landscapes. A graduate of <strong>SPA Delhi</strong>, he is an explorer of form, function, and emotion&mdash;crafting spaces that transcend mere structures into living, breathing expressions of art. His expertise lies in seamlessly blending modern aesthetics with minimalistic philosophy, creating spaces that not only house life but elevate it.
+            </p>
 
-          <div class="row g-3">
-            <div class="col-sm-6">
-              <!-- Email Box -->
-              <div class="contact-pill d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
-                <div class="d-flex align-items-center text-truncate me-2">
-                  <i class="bi bi-envelope fs-5 text-secondary me-2"></i>
-                  <a
-                    href="mailto:info@sidea.co.in?subject=Enquiry%20-%20Architectural%20Design%20Work"
-                    class="text-secondary text-decoration-none fw-medium small text-truncate"
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <!-- Email Box -->
+                <div class="contact-pill d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
+                  <div class="d-flex align-items-center text-truncate me-2">
+                    <i class="bi bi-envelope fs-5 text-secondary me-2"></i>
+                    <a
+                      href="mailto:info@sidea.co.in?subject=Enquiry%20-%20Architectural%20Design%20Work"
+                      class="text-secondary text-decoration-none fw-medium small text-truncate"
+                    >
+                      info@sidea.co.in
+                    </a>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-link text-secondary p-0 copy-btn"
+                    (click)="copyEmail('info@sidea.co.in')"
+                    title="Copy email to clipboard"
                   >
-                    info@sidea.co.in
-                  </a>
+                    <i class="bi bi-clipboard" *ngIf="!copiedEmail"></i>
+                    <i class="bi bi-check-lg text-success" *ngIf="copiedEmail"></i>
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-link text-secondary p-0 copy-btn"
-                  (click)="copyEmail('info@sidea.co.in')"
-                  title="Copy email to clipboard"
-                >
-                  <i class="bi bi-clipboard" *ngIf="!copiedEmail"></i>
-                  <i class="bi bi-check-lg text-success" *ngIf="copiedEmail"></i>
-                </button>
               </div>
-            </div>
 
-            <div class="col-sm-6">
-              <!-- Phone Box -->
-              <div class="contact-pill d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
-                <div class="d-flex align-items-center text-truncate me-2">
-                  <i class="bi bi-telephone fs-5 text-secondary me-2"></i>
-                  <a href="tel:+918882968076" class="text-secondary text-decoration-none fw-medium small text-truncate">
-                    +91 888 296 8076
-                  </a>
+              <div class="col-sm-6">
+                <!-- Phone Box -->
+                <div class="contact-pill d-flex align-items-center justify-content-between p-3 rounded-3 bg-white border">
+                  <div class="d-flex align-items-center text-truncate me-2">
+                    <i class="bi bi-telephone fs-5 text-secondary me-2"></i>
+                    <a href="tel:+918882968076" class="text-secondary text-decoration-none fw-medium small text-truncate">
+                      +91 888 296 8076
+                    </a>
+                  </div>
+                  <button
+                    type="button"
+                    class="btn btn-sm btn-link text-secondary p-0 copy-btn"
+                    (click)="copyEmail('+918882968076')"
+                    title="Copy phone to clipboard"
+                  >
+                    <i class="bi bi-clipboard" *ngIf="!copiedPhone"></i>
+                    <i class="bi bi-check-lg text-success" *ngIf="copiedPhone"></i>
+                  </button>
                 </div>
-                <button
-                  type="button"
-                  class="btn btn-sm btn-link text-secondary p-0 copy-btn"
-                  (click)="copyEmail('+918882968076')"
-                  title="Copy phone to clipboard"
-                >
-                  <i class="bi bi-clipboard" *ngIf="!copiedPhone"></i>
-                  <i class="bi bi-check-lg text-success" *ngIf="copiedPhone"></i>
-                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <!-- Clients List (Feature Flagged) -->
-  <div *ngIf="isClientsListDisplayEnabled()">
-    <hr class="my-5 border-secondary opacity-25"/>
-    <div class="text-center">
-      <h3 class="text-dark mb-4">Our Clients</h3>
-      <div class="row justify-content-center">
-        <div class="col-4 col-md-2 mb-4">
-          <i class="bi bi-google display-4 text-secondary"></i>
-          <div class="small text-muted mt-2">Google</div>
-        </div>
-        <div class="col-4 col-md-2 mb-4">
-          <i class="bi bi-meta display-4 text-secondary"></i>
-          <div class="small text-muted mt-2">Meta</div>
-        </div>
-        <div class="col-4 col-md-2 mb-4">
-          <i class="bi bi-microsoft display-4 text-secondary"></i>
-          <div class="small text-muted mt-2">Microsoft</div>
-        </div>
-        <div class="col-4 col-md-2 mb-4">
-          <i class="bi bi-amd display-4 text-secondary"></i>
-          <div class="small text-muted mt-2">AMD</div>
-        </div>
-        <div class="col-4 col-md-2 mb-4">
-          <i class="bi bi-nvidia display-4 text-secondary"></i>
-          <div class="small text-muted mt-2">NVIDIA</div>
+      <!-- Clients List (Feature Flagged) -->
+      <div *ngIf="isClientsListDisplayEnabled()" class="mt-4 pt-2">
+        <div class="text-center">
+          <h4 class="text-dark mb-3 small text-uppercase tracking-wide">Our Clients</h4>
+          <div class="row justify-content-center">
+            <div class="col-4 col-md-2 mb-2">
+              <i class="bi bi-google fs-3 text-secondary"></i>
+              <div class="small text-muted">Google</div>
+            </div>
+            <div class="col-4 col-md-2 mb-2">
+              <i class="bi bi-meta fs-3 text-secondary"></i>
+              <div class="small text-muted">Meta</div>
+            </div>
+            <div class="col-4 col-md-2 mb-2">
+              <i class="bi bi-microsoft fs-3 text-secondary"></i>
+              <div class="small text-muted">Microsoft</div>
+            </div>
+            <div class="col-4 col-md-2 mb-2">
+              <i class="bi bi-amd fs-3 text-secondary"></i>
+              <div class="small text-muted">AMD</div>
+            </div>
+            <div class="col-4 col-md-2 mb-2">
+              <i class="bi bi-nvidia fs-3 text-secondary"></i>
+              <div class="small text-muted">NVIDIA</div>
+            </div>
+          </div>
         </div>
       </div>
+
     </div>
-  </div>
+  </section>
 
 </div>

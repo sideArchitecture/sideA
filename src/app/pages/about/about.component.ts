@@ -1,4 +1,12 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  OnDestroy,
+  ElementRef,
+  ViewChildren,
+  QueryList
+} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { gsap } from 'gsap';
 import { Title } from '@angular/platform-browser';
@@ -9,9 +17,13 @@ import { FlipperFlagsService } from '../../services/flipper-flags.service';
   templateUrl: './about.component.html',
   styleUrls: ['./about.component.scss']
 })
-export class AboutComponent implements OnInit, AfterViewInit {
+export class AboutComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChildren('sectionRef') sectionRefs!: QueryList<ElementRef<HTMLElement>>;
+
+  activeSectionIndex = 0;
   copiedEmail = false;
   copiedPhone = false;
+  private observer?: IntersectionObserver;
 
   constructor(
     private route: ActivatedRoute,
@@ -24,6 +36,8 @@ export class AboutComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.setupIntersectionObserver();
+
     gsap.from('.firm-profile', {
       opacity: 0,
       y: 30,
@@ -58,6 +72,41 @@ export class AboutComponent implements OnInit, AfterViewInit {
           }
         }, 300);
       }
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.observer) {
+      this.observer.disconnect();
+    }
+  }
+
+  scrollToSection(index: number): void {
+    const sections = this.sectionRefs?.toArray();
+    if (sections && sections[index]) {
+      sections[index].nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  }
+
+  private setupIntersectionObserver(): void {
+    this.observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const indexAttr = entry.target.getAttribute('data-section-index');
+            if (indexAttr !== null) {
+              this.activeSectionIndex = parseInt(indexAttr, 10);
+            }
+          }
+        });
+      },
+      {
+        threshold: 0.5
+      }
+    );
+
+    this.sectionRefs?.forEach((section) => {
+      this.observer?.observe(section.nativeElement);
     });
   }
 
