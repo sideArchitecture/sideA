@@ -42,6 +42,7 @@ interface WireframeMesh {
   rotX: number;
   rotY: number;
   rotZ: number;
+  scale?: number;
 }
 
 @Component({
@@ -244,7 +245,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentRotX += (this.targetRotX - this.currentRotX) * 0.05;
         this.currentRotY += (this.targetRotY - this.currentRotY) * 0.05;
 
-        // Render Canvas 1 (First Section: Blueprint Grid + 3D Wireframe Lines + Mouse tracking + Particles)
+        // Render Canvas 1 (Hero: Blueprint Grid + Offset Side 3D Wireframe Lines + Mouse Tracking)
         if (canvas1) {
           const ctx1 = canvas1.getContext('2d');
           if (ctx1) {
@@ -255,7 +256,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
 
-        // Render Canvas 2 (Last Section: Mouse Animation with Floating Coordinate Particles & Ambient Cursor Light only)
+        // Render Canvas 2 (Closing: Mouse Animation with Floating Coordinate Particles & Ambient Cursor Light only)
         if (canvas2) {
           const ctx2 = canvas2.getContext('2d');
           if (ctx2) {
@@ -273,29 +274,29 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initMeshes(): void {
-    // Primary Tower / Cantilevered Structure (Section 0 Lines)
+    // 1. Primary Tower / Cantilevered Structure (Offset to Right Flank)
     const tower: WireframeMesh = {
-      center: { x: 190, y: -10, z: 0 },
+      center: { x: 420, y: -20, z: 0 },
       rotX: 0,
       rotY: 0,
       rotZ: 0,
       vertices: [
-        { x: -100, y: -160, z: -80 },
-        { x: 100, y: -160, z: -80 },
-        { x: 100, y: 160, z: -80 },
-        { x: -100, y: 160, z: -80 },
-        { x: -100, y: -160, z: 80 },
-        { x: 100, y: -160, z: 80 },
-        { x: 100, y: 160, z: 80 },
-        { x: -100, y: 160, z: 80 },
-        { x: -160, y: -80, z: 140 },
-        { x: 160, y: -80, z: 140 },
-        { x: 160, y: -40, z: 140 },
-        { x: -160, y: -40, z: 140 },
-        { x: -160, y: -80, z: -20 },
-        { x: 160, y: -80, z: -20 },
-        { x: 160, y: -40, z: -20 },
-        { x: -160, y: -40, z: -20 }
+        { x: -90, y: -150, z: -70 },
+        { x: 90, y: -150, z: -70 },
+        { x: 90, y: 150, z: -70 },
+        { x: -90, y: 150, z: -70 },
+        { x: -90, y: -150, z: 70 },
+        { x: 90, y: -150, z: 70 },
+        { x: 90, y: 150, z: 70 },
+        { x: -90, y: 150, z: 70 },
+        { x: -140, y: -70, z: 120 },
+        { x: 140, y: -70, z: 120 },
+        { x: 140, y: -30, z: 120 },
+        { x: -140, y: -30, z: 120 },
+        { x: -140, y: -70, z: -20 },
+        { x: 140, y: -70, z: -20 },
+        { x: 140, y: -30, z: -20 },
+        { x: -140, y: -30, z: -20 }
       ],
       edges: [
         [0, 1], [1, 2], [2, 3], [3, 0],
@@ -308,19 +309,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       ]
     };
 
-    // Secondary Floating Polyhedron Pavilion
+    // 2. Floating Polyhedron Pavilion (Offset to Top-Left Flank)
     const pavilion: WireframeMesh = {
-      center: { x: -220, y: 30, z: 40 },
+      center: { x: -440, y: -130, z: 30 },
       rotX: 0,
       rotY: 0,
       rotZ: 0,
       vertices: [
-        { x: -80, y: -80, z: -80 },
-        { x: 80, y: -80, z: -80 },
-        { x: 80, y: 80, z: -80 },
-        { x: -80, y: 80, z: -80 },
-        { x: 0, y: -130, z: 0 },
-        { x: 0, y: 130, z: 0 }
+        { x: -75, y: -75, z: -75 },
+        { x: 75, y: -75, z: -75 },
+        { x: 75, y: 75, z: -75 },
+        { x: -75, y: 75, z: -75 },
+        { x: 0, y: -120, z: 0 },
+        { x: 0, y: 120, z: 0 }
       ],
       edges: [
         [0, 1], [1, 2], [2, 3], [3, 0],
@@ -337,8 +338,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.closingParticles = [];
     for (let i = 0; i < 45; i++) {
       this.particles.push({
-        x: (Math.random() - 0.5) * 800,
-        y: (Math.random() - 0.5) * 600,
+        x: (Math.random() - 0.5) * 850,
+        y: (Math.random() - 0.5) * 650,
         z: (Math.random() - 0.5) * 400,
         vx: (Math.random() - 0.5) * 0.4,
         vy: (Math.random() - 0.5) * 0.4
@@ -354,7 +355,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private drawArchitecturalGrid(ctx: CanvasRenderingContext2D, width: number, height: number, time: number): void {
-    ctx.strokeStyle = 'rgba(15, 23, 42, 0.05)';
+    ctx.strokeStyle = 'rgba(15, 23, 42, 0.04)';
     ctx.lineWidth = 1;
 
     const gridSize = 60;
@@ -378,7 +379,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private drawCursorAura(ctx: CanvasRenderingContext2D, width: number, height: number): void {
     if (this.mouseX && this.mouseY) {
       const grad = ctx.createRadialGradient(this.mouseX, this.mouseY, 10, this.mouseX, this.mouseY, 280);
-      grad.addColorStop(0, 'rgba(30, 64, 175, 0.05)');
+      grad.addColorStop(0, 'rgba(30, 64, 175, 0.045)');
       grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
@@ -396,6 +397,9 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const cy = height / 2;
     const fov = 450;
 
+    // Dynamically scale horizontal offset according to screen width
+    const sideOffset = Math.max(340, width * 0.34);
+
     meshes.forEach((mesh, index) => {
       const autoRotY = time * 0.15 * (index === 0 ? 1 : -1);
       const autoRotX = Math.sin(time * 0.2) * 0.1;
@@ -403,10 +407,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       const totalRotX = this.currentRotX + autoRotX;
       const totalRotY = this.currentRotY + autoRotY;
 
+      // Position index 0 on the Right flank, index 1 on the Top-Left flank
+      const posX = index === 0 ? sideOffset : -sideOffset;
+      const posY = index === 0 ? -20 : -140;
+
       // Project vertices to 2D
       const projected: { x: number; y: number; z: number }[] = mesh.vertices.map((v) => {
-        let x = v.x + mesh.center.x;
-        let y = v.y + mesh.center.y;
+        let x = v.x + posX;
+        let y = v.y + posY;
         let z = v.z + mesh.center.z;
 
         // Rotate Y
@@ -431,14 +439,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       });
 
       // Draw Edges (Crisp graphite lines)
-      ctx.lineWidth = 1.3;
+      ctx.lineWidth = 1.2;
       mesh.edges.forEach(([i, j]) => {
         const p1 = projected[i];
         const p2 = projected[j];
         if (!p1 || !p2) return;
 
         const avgZ = (p1.z + p2.z) / 2;
-        const alpha = Math.max(0.18, Math.min(0.75, 0.5 - avgZ / 800));
+        const alpha = Math.max(0.18, Math.min(0.7, 0.45 - avgZ / 800));
 
         ctx.strokeStyle = `rgba(30, 41, 59, ${alpha})`;
         ctx.beginPath();
@@ -449,10 +457,10 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // Draw Vertex Nodes
       projected.forEach((p) => {
-        const nodeAlpha = Math.max(0.3, Math.min(0.9, 0.7 - p.z / 600));
+        const nodeAlpha = Math.max(0.25, Math.min(0.85, 0.65 - p.z / 600));
         ctx.fillStyle = `rgba(15, 23, 42, ${nodeAlpha})`;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 2.2, 0, Math.PI * 2);
         ctx.fill();
       });
     });
@@ -471,17 +479,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       p.x += p.vx;
       p.y += p.vy;
 
-      if (p.x < -425) p.x = 425;
-      if (p.x > 425) p.x = -425;
-      if (p.y < -325) p.y = 325;
-      if (p.y > 325) p.y = -325;
+      if (p.x < -450) p.x = 450;
+      if (p.x > 450) p.x = -450;
+      if (p.y < -350) p.y = 350;
+      if (p.y > 350) p.y = -350;
 
       const px = cx + p.x + this.currentRotY * 130;
       const py = cy + p.y + this.currentRotX * 130;
 
-      ctx.fillStyle = 'rgba(71, 85, 105, 0.45)';
+      ctx.fillStyle = 'rgba(71, 85, 105, 0.4)';
       ctx.beginPath();
-      ctx.arc(px, py, 1.8, 0, Math.PI * 2);
+      ctx.arc(px, py, 1.6, 0, Math.PI * 2);
       ctx.fill();
     });
   }
