@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream
 <div class="container-fluid px-3 px-md-5 py-4 projects-page-container" *ngIf="!isLoading">
+=======
+<div class="container py-4 projects-page-container" *ngIf="!isLoading">
+>>>>>>> Stashed changes
 
   <!-- Portfolio Header -->
   <div class="portfolio-header text-center mb-5">
@@ -94,11 +98,19 @@
     </div>
   </div>
 
+<<<<<<< Updated upstream
   <!-- Projects Grid (Expands smoothly on 4K & large screens) -->
   <div class="row g-4" *ngIf="projects.length > 0">
     <div class="col-xxl-3 col-xl-4 col-md-6 col-12" *ngFor="let project of projects">
       <div
         class="card project-card h-100 border rounded-4 shadow-sm"
+=======
+  <!-- Projects Grid -->
+  <div class="row g-4" *ngIf="projects.length > 0">
+    <div class="col-lg-4 col-md-6" *ngFor="let project of projects">
+      <div
+        class="card project-card h-100 border-0 rounded-4 shadow-sm"
+>>>>>>> Stashed changes
         [class.highlighted]="project.id === highlightedProjectId"
         (click)="navigateToProject(project)"
       >
@@ -116,23 +128,39 @@
         </div>
 
         <!-- Card Body -->
+<<<<<<< Updated upstream
         <div class="card-body p-4 d-flex flex-column justify-content-between bg-white">
+=======
+        <div class="card-body p-4 d-flex flex-column justify-content-between">
+>>>>>>> Stashed changes
           <div>
             <div class="d-flex align-items-center gap-2 text-muted small mb-2" *ngIf="project.location || project.year">
               <span *ngIf="project.location"><i class="bi bi-geo-alt me-1"></i>{{ project.location }}</span>
               <span *ngIf="project.year">&bull; {{ project.year }}</span>
             </div>
 
+<<<<<<< Updated upstream
             <h5 class="card-title text-dark fw-bold mb-2 project-card-title">
               {{ project.title }}
             </h5>
 
             <p class="card-text text-secondary small project-card-desc mb-3" *ngIf="project.description">
+=======
+            <h5 class="card-title text-secondary fw-bold mb-2 project-card-title">
+              {{ project.title }}
+            </h5>
+
+            <p class="card-text text-muted small project-card-desc mb-3" *ngIf="project.description">
+>>>>>>> Stashed changes
               {{ project.description }}
             </p>
           </div>
 
+<<<<<<< Updated upstream
           <div class="project-card-footer pt-3 border-top d-flex align-items-center justify-content-between">
+=======
+          <div class="project-card-footer pt-2 border-top d-flex align-items-center justify-content-between">
+>>>>>>> Stashed changes
             <span class="explore-text small fw-semibold text-secondary">Explore Project</span>
             <i class="bi bi-arrow-right text-secondary explore-icon"></i>
           </div>
