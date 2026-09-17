@@ -6,19 +6,19 @@ This checklist outlines the roadmap for enhancing the user experience, starting 
 
 ## 1. Home Page UX Enhancements
 
-### 1.1 Hero & Carousel Presentation
-- [x] **1.1.1** Full-bleed / Cinematic Layout: Modernize carousel dimensions, aspect ratio, and framing for high-impact architectural visuals.
-- [x] **1.1.2** Smooth Transitions & Visual Motion: Integrate refined transitions (e.g., cross-fade, subtle zoom/pan with GSAP or CSS).
-- [x] **1.1.3** Slide Content Overlays: Add elegant typography overlays (project title, category tag, location, and direct view link) to each slide.
-- [x] **1.1.4** Carousel Controls & Touch Gestures: Sleek, minimal pagination indicators, subtle next/prev controls, and touch swipe gestures for mobile.
+### 1.1 Fullscreen Immersive Scroll & Storytelling Presentation
+- [x] **1.1.1** Full-Viewport Architectural Sections: Full-bleed project visuals with synchronized dark glass navbar styling.
+- [x] **1.1.2** Clean Metadata & Typography Overlays: Polished metadata row (Location, Year, Category tag, Design Style) without clutter or serial number distractions.
+- [x] **1.1.3** Side Navigation & Scroll Cue: Minimalist floating vertical progress rail and animated scroll indicator prompt.
+- [x] **1.1.4** Direct Project Navigation: Seamless links to individual project detail pages respecting route configurations.
 
 ### 1.2 Dynamic Image & Asset Sourcing
 - [ ] **1.2.1** Image Server Integration: Connect home carousel dynamically to the image server / project manifests rather than hardcoded static paths.
 - [ ] **1.2.2** Performance & Lazy Loading: Implement progressive image loading, responsive image resolutions, and blur-up/skeleton placeholders.
 
 ### 1.3 Studio Introduction & Philosophy Section
-- [ ] **1.3.1** Studio Vision Statement: Create a clean, architectural typography-focused introductory section establishing the studio's ethos.
-- [ ] **1.3.2** Architectural Quote Section: Redesign the Mies van der Rohe quote component with modern typography and subtle accents.
+- [x] **1.3.1** Studio Vision Statement: Create a clean, architectural typography-focused introductory section establishing the studio's ethos.
+- [x] **1.3.2** Architectural Quote Section: Redesign the Mies van der Rohe quote component with modern typography and subtle accents.
 
 ### 1.4 Featured Projects Showcase Grid
 - [ ] **1.4.1** Curated Projects Grid: Add a teaser section beneath the hero highlighting 3–4 signature architectural projects.
@@ -30,7 +30,7 @@ This checklist outlines the roadmap for enhancing the user experience, starting 
 - [ ] **1.5.2** Video Grid / Carousel: Clean tabbed or slider interface to switch between project walk-through videos seamlessly.
 
 ### 1.6 Page-level Polish & Responsiveness
-- [ ] **1.6.1** Navbar & Hero Integration: Transparent/floating navbar on scroll or seamless hero integration.
+- [x] **1.6.1** Navbar & Hero Integration: Translucent dark glass navbar with blur effect synchronized with hero visuals.
 - [ ] **1.6.2** Mobile & Tablet UX Optimization: Spacing, typography scaling, and tap-target optimization across all mobile viewports.
 - [ ] **1.6.3** Code Cleanup: Remove obsolete commented-out code and test blocks from home component template.
 

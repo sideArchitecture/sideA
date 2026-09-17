@@ -9,7 +9,7 @@
       (click)="scrollToSection(i)"
       [title]="project.title"
     >
-      <span class="nav-label me-2">{{ project.number }} {{ project.title }}</span>
+      <span class="nav-label me-2">{{ project.title }}</span>
       <button class="nav-dot" [attr.aria-label]="'Go to ' + project.title"></button>
     </div>
 
@@ -42,22 +42,18 @@
       <div class="project-scrim-overlay"></div>
     </div>
 
-    <!-- Section Number & Category Watermark (Top Left) -->
-    <div class="section-top-header position-absolute start-0 top-0 p-4 p-md-5 d-flex align-items-center gap-3">
-      <span class="project-num-badge">{{ project.number }}</span>
-      <span class="project-category-tag text-uppercase">{{ project.category }}</span>
-    </div>
-
     <!-- Section Main Content (Bottom Left) -->
     <div class="container position-relative h-100 d-flex flex-column justify-content-end pb-5">
       <div class="project-content-card text-white">
-        <!-- Metadata Row -->
+        <!-- Metadata Row (Location, Year, Category Tag, Design Style) -->
         <div class="project-meta-row d-flex align-items-center gap-3 flex-wrap mb-2 text-white-50 small">
           <span class="meta-item"><i class="bi bi-geo-alt me-1 text-light"></i> {{ project.location }}</span>
           <span class="meta-bullet">&bull;</span>
           <span class="meta-item"><i class="bi bi-calendar3 me-1 text-light"></i> {{ project.year }}</span>
-          <span *ngIf="project.builtStatus" class="meta-bullet">&bull;</span>
-          <span *ngIf="project.builtStatus" class="meta-item">{{ project.builtStatus }}</span>
+          <span class="meta-bullet">&bull;</span>
+          <span class="meta-category-badge text-uppercase">
+            {{ project.category }}
+          </span>
           <span *ngIf="project.designStyle" class="meta-bullet">&bull;</span>
           <span *ngIf="project.designStyle" class="meta-item">{{ project.designStyle }}</span>
         </div>
