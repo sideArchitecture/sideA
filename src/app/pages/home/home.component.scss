@@ -23,7 +23,60 @@
   }
 }
 
-// Background image & gradient scrim
+// Interactive 3D Blueprint Section (Section 0)
+.interactive-blueprint-section {
+  background: radial-gradient(circle at 50% 40%, #151b22 0%, #090d12 100%);
+  justify-content: center !important;
+  cursor: crosshair;
+
+  .blueprint-interactive-canvas {
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .blueprint-vignette-scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: radial-gradient(
+      ellipse at center,
+      transparent 0%,
+      rgba(9, 13, 18, 0.4) 60%,
+      rgba(9, 13, 18, 0.85) 100%
+    );
+    pointer-events: none;
+  }
+
+  .hero-intro-content {
+    z-index: 3;
+    pointer-events: auto;
+  }
+
+  .hero-main-heading {
+    font-family: 'Qanelas', sans-serif;
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    letter-spacing: -0.02em;
+    line-height: 1.12;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
+  }
+
+  .hero-lead-manifesto {
+    max-width: 680px;
+    font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .btn-explore-hero {
+    transition: all 0.25s ease;
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.2) !important;
+    }
+  }
+}
+
+// Background image & gradient scrim for project slides
 .project-bg-wrapper {
   position: absolute;
   top: 0;

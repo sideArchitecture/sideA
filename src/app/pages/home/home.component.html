@@ -2,11 +2,23 @@
 
   <!-- Right Floating Vertical Navigation Rail -->
   <nav class="side-nav-rail d-none d-lg-flex flex-column align-items-center gap-3" aria-label="Project Navigation">
+    <!-- Intro Vision Dot -->
+    <div
+      class="nav-dot-wrapper d-flex align-items-center"
+      [class.active]="activeSectionIndex === 0"
+      (click)="scrollToSection(0)"
+      title="Studio Vision & Interactive Space"
+    >
+      <span class="nav-label me-2">Studio Vision</span>
+      <button class="nav-dot" aria-label="Go to Studio Vision"></button>
+    </div>
+
+    <!-- Projects 1 to 5 Dots -->
     <div
       *ngFor="let project of projects; let i = index"
       class="nav-dot-wrapper d-flex align-items-center"
-      [class.active]="activeSectionIndex === i"
-      (click)="scrollToSection(i)"
+      [class.active]="activeSectionIndex === i + 1"
+      (click)="scrollToSection(i + 1)"
       [title]="project.title"
     >
       <span class="nav-label me-2">{{ project.title }}</span>
@@ -16,21 +28,80 @@
     <!-- Final Philosophy Section Dot -->
     <div
       class="nav-dot-wrapper d-flex align-items-center"
-      [class.active]="activeSectionIndex === projects.length"
-      (click)="scrollToSection(projects.length)"
+      [class.active]="activeSectionIndex === projects.length + 1"
+      (click)="scrollToSection(projects.length + 1)"
       title="Studio Philosophy"
     >
-      <span class="nav-label me-2">Philosophy & Work</span>
+      <span class="nav-label me-2">Philosophy &amp; Work</span>
       <button class="nav-dot" aria-label="Go to Studio Philosophy"></button>
     </div>
   </nav>
 
-  <!-- Fullscreen Project Sections -->
+  <!-- SECTION 0: Interactive 3D Architectural Blueprint Canvas Hero -->
+  <section
+    #sectionRef
+    class="fullscreen-project-section interactive-blueprint-section position-relative d-flex align-items-center justify-content-center"
+    data-section-index="0"
+  >
+    <!-- Interactive Canvas Background -->
+    <canvas #blueprintCanvas class="blueprint-interactive-canvas position-absolute top-0 start-0 w-100 h-100"></canvas>
+    <div class="blueprint-vignette-scrim"></div>
+
+    <!-- Central Editorial Studio Content -->
+    <div class="container position-relative z-3 text-center text-white hero-intro-content py-5">
+      <div class="row justify-content-center">
+        <div class="col-lg-9 col-xl-8">
+          <div class="d-inline-flex align-items-center gap-2 mb-3">
+            <span class="badge bg-white bg-opacity-15 text-white text-uppercase px-3 py-2 letter-spacing-2 rounded-pill shadow-sm">
+              Architecture &bull; Spatial Design &bull; Urbanism
+            </span>
+          </div>
+
+          <h1 class="display-3 fw-bold hero-main-heading mb-3">
+            Architecture is Storytelling
+          </h1>
+
+          <p class="lead text-white-75 mb-4 hero-lead-manifesto mx-auto">
+            An evolving dialogue between form, light, and soul. We embrace minimalism as an art of precision, sculpting spaces that elevate human experience.
+          </p>
+
+          <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap pt-2">
+            <button
+              type="button"
+              (click)="scrollToSection(1)"
+              class="btn btn-light rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2 shadow btn-explore-hero"
+            >
+              <span>Explore Selected Works</span>
+              <i class="bi bi-arrow-down-circle-fill"></i>
+            </button>
+
+            <a
+              routerLink="/about"
+              class="btn btn-outline-light rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2"
+            >
+              <span>About Studio</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Down Prompt -->
+    <div class="scroll-cue position-absolute start-50 translate-middle-x text-center text-white-50" (click)="scrollToSection(1)">
+      <span class="scroll-text text-uppercase small letter-spacing-2">Scroll to explore</span>
+      <div class="scroll-mouse-icon mt-2">
+        <div class="scroll-wheel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Fullscreen Project Sections (Index 1 to 5) -->
   <section
     #sectionRef
     *ngFor="let project of projects; let i = index"
     class="fullscreen-project-section position-relative"
-    [attr.data-section-index]="i"
+    [attr.data-section-index]="i + 1"
   >
     <!-- Background Architectural Image -->
     <div class="project-bg-wrapper">
@@ -91,21 +162,13 @@
         </div>
       </div>
     </div>
-
-    <!-- Scroll Down Prompt on First Section -->
-    <div *ngIf="i === 0" class="scroll-cue position-absolute start-50 translate-middle-x text-center text-white-50" (click)="scrollToSection(1)">
-      <span class="scroll-text text-uppercase small letter-spacing-2">Scroll to explore</span>
-      <div class="scroll-mouse-icon mt-2">
-        <div class="scroll-wheel"></div>
-      </div>
-    </div>
   </section>
 
-  <!-- Section 6: Studio Philosophy & Final Call to Action -->
+  <!-- Section: Studio Philosophy & Final Call to Action -->
   <section
     #sectionRef
     class="fullscreen-project-section philosophy-section position-relative d-flex align-items-center"
-    [attr.data-section-index]="projects.length"
+    [attr.data-section-index]="projects.length + 1"
   >
     <div class="container py-5 text-center text-white position-relative z-2">
       <div class="row justify-content-center">
