@@ -1,18 +1,12 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
+<nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom sticky-top shadow-sm">
   <div class="container d-flex align-items-center justify-content-between">
     <!-- Brand with Icon -->
-    <a class="navbar-brand d-flex align-items-center" href="#">
+    <a class="navbar-brand d-flex align-items-center" routerLink="/">
       <img src="../../../assets/images/logo/side_a_logo-w.png" alt="Logo" width="40" height="40" class="me-2">
-
-<!--      <span class="h6 text-secondary mb-0">-->
-<!--        <strong class="h5">S</strong>TUDIO <strong class="h5"> I</strong> <strong class="h5"> DE</strong>AL <strong class="h5">A</strong>RCHITECTURE-->
-<!--      </span>-->
 
       <span class="h6 text-secondary mb-0">
         STUDIO I DEAL ARCHITECTURE
       </span>
-
-
     </a>
 
     <!-- Navbar Toggler Button -->
@@ -36,44 +30,18 @@
         </li>
 
         <li class="nav-item">
-<!--          <a class="nav-link" routerLink="/projects" (click)="closeNavbar()">Projects</a>-->
+          <a
+            class="nav-link"
+            [routerLink]="['/projects']"
+            [queryParams]="{ category: 'All' }"
+            [class.active]="router.url.startsWith('/projects')"
+            [class.text-secondary]="router.url.startsWith('/projects')"
+            [class.fw-bold]="router.url.startsWith('/projects')"
+            (click)="closeNavbar()"
+          >
+            Projects
+          </a>
         </li>
-
-
-        <a
-          class="nav-link"
-          [routerLink]="['/projects']"
-          [queryParams]="{ category: 'All' }"
-          [class.active]="router.url.startsWith('/projects')"
-          [class.text-secondary]="router.url.startsWith('/projects')"
-          [class.fw-bold]="router.url.startsWith('/projects')"
-        >
-          Projects
-        </a>
-
-
-<!--        <li class="nav-item">-->
-<!--          <a-->
-<!--            class="nav-link"-->
-<!--            [routerLink]="['/projects']"-->
-<!--            [queryParams]="null"-->
-<!--            (click)="closeNavbar()"-->
-<!--          >-->
-<!--            Projects11-->
-<!--          </a>-->
-
-
-
-
-<!--        </li>-->
-
-
-
-
-<!--        <li class="nav-item">-->
-<!--          <a class="nav-link" routerLink="/people" (click)="closeNavbar()">People</a>-->
-<!--        </li>-->
-
 
         <li class="nav-item">
           <a

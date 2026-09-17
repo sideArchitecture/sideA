@@ -1,197 +1,109 @@
-<br/>
-<br/>
-
-<!--
-
-
-<h1 class="h3 text-secondary">Principal Architect</h1><br/>
-<p class="text-secondary">
-  <strong>Ar. Vijay Kumar D</strong> – a visionary architect with a decade of experience shaping spatial narratives across public,
-  private, and residential landscapes. A graduate of SPA Delhi, he is an explorer of form, function, and
-  emotion—crafting spaces that transcend mere structures into living, breathing expressions of art. His expertise lies
-  in seamlessly blending modern aesthetics with minimalistic philosophy, creating spaces that not only house life but
-  elevate it.
-
-</p>
--->
-
-<div class="firm-profile">
-
-  <div class="text-center">
-    <span class=" h2 text-secondary">
-      <strong class="small h1 ">STUDIO I DEAL ARCHITECTURE </strong>
-    </span>
-    <strong class="small text-secondary">(SIDE A)</strong>
-  </div>
-
-
-<br/>
-<br/>
-
-  <!--
-  <h1 class="h4 text-secondary text-center ">Firm Philosophy
-  <i class="bi bi-lightbulb"></i>
-  </h1>
-  <br/>
-  -->
-
-
-  <p class="  text-secondary justify-text custom-text">
-    At <strong>SIDE A</strong>, architecture is storytelling - an evolving dialogue between form and soul. We embrace minimalism, not as
-    a
-    restriction but as an art of precision, curating spaces that whisper elegance and purpose.
-
-    <br/>
-    <br/>
-    Inspired by the
-    transformation of nature, our designs breathe life into built environments, where simplicity meets profound beauty.
-    We
-    dream, design, and redefine, shaping a world where architecture is more than a structure - <strong>it is an
-    experience.</strong>
-
-  </p>
-
-
-</div>
-
-<br/>
-<hr/>
-<!--<h1 class="h3  text-secondary">Key People:</h1>-->
-<!--<br/>-->
-
-
-<!--principal architect-->
-<div class="container mt-5 principal-profile">
-  <div class="row align-items-center">
-
-    <!-- Profile Image -->
-    <div class="col-md-4 text-center">
-      <img
-        [src]="profilePhotoUrl()"
-        alt="Portrait of Principal Architect Vijay Kumar D"
-        aria-label="Principal Architect Vijay Kumar D"
-        class="img-fluid rounded-circle shadow-sm"
-        style="max-width: 250px;">
-
+<div class="container py-4">
+  <div class="firm-profile">
+    <div class="text-center mb-4">
+      <span class="h2 text-secondary">
+        <strong class="h1">STUDIO I DEAL ARCHITECTURE </strong>
+      </span>
+      <strong class="text-secondary">(SIDE A)</strong>
     </div>
 
-    <!-- Profile Details -->
-    <div class="col-md-8">
-      <br/>
-      <br/>
-      <h2 class="text-secondary">Principal Architect</h2>
-      <p class="text-secondary justify-text custom-text">
-        <strong>Ar. Vijay Kumar D</strong> – a visionary architect with a decade of experience shaping spatial narratives across public,
-        private, and residential landscapes. A graduate of SPA Delhi, he is an explorer of form, function, and
-        emotion—crafting spaces that transcend mere structures into living, breathing expressions of art. His expertise lies
-        in seamlessly blending modern aesthetics with minimalistic philosophy, creating spaces that not only house life but
-        elevate it.
-      </p>
+    <p class="text-secondary justify-text custom-text">
+      At <strong>SIDE A</strong>, architecture is storytelling &mdash; an evolving dialogue between form and soul. We embrace minimalism, not as a restriction but as an art of precision, curating spaces that whisper elegance and purpose.
+      <br/><br/>
+      Inspired by the transformation of nature, our designs breathe life into built environments, where simplicity meets profound beauty. We dream, design, and redefine, shaping a world where architecture is more than a structure &mdash; <strong>it is an experience.</strong>
+    </p>
+  </div>
 
+  <hr class="my-5"/>
 
-<!--      <br/>-->
-      <br/>
-
-      <div class="row">
-        <div class="col-12 col-md-5 mb-3">
-          <!-- Email -->
-          <span class="h6 text-secondary">
-            <i class="bi bi-envelope h5"></i>
-            <a
-              href="mailto:info@sidea.co.in?subject=Enquiry%20-%20Architectural%20Design%20Work"
-              class="text-secondary text-decoration-none"
-            >
-              info@sidea.co.in
-            </a>
-            <i
-              class="bi bi-copy ms-2 text-primary"
-              style="cursor: pointer;"
-              (click)="copyEmail('info@sidea.co.in')"
-              title="Copy to clipboard"
-            ></i>
-            <span *ngIf="copiedEmail" class="ms-2 text-success">Copied!</span>
-          </span>
-        </div>
-
-        <div class="col-12 col-md-1 d-none d-md-block"></div> <!-- Spacer only on medium+ -->
-
-        <div class="col-12 col-md-6 mb-3">
-          <!-- Phone -->
-          <span class="h6 text-secondary">
-            <i class="bi bi-telephone h5"></i>
-            <a href="tel:+918882968076" class="text-secondary text-decoration-none">
-              +91 888 296 8076
-            </a>
-            <i
-              class="bi bi-copy ms-2 text-primary"
-              style="cursor: pointer;"
-              (click)="copyEmail('+918882968076')"
-              title="Copy to clipboard"
-            ></i>
-            <span *ngIf="copiedPhone" class="ms-2 text-success">Copied!</span>
-          </span>
-        </div>
+  <!-- Principal Architect Profile -->
+  <div class="principal-profile">
+    <div class="row align-items-center">
+      <!-- Profile Image -->
+      <div class="col-md-4 text-center mb-4 mb-md-0">
+        <img
+          [src]="profilePhotoUrl()"
+          alt="Portrait of Principal Architect Vijay Kumar D"
+          aria-label="Principal Architect Vijay Kumar D"
+          class="img-fluid rounded-circle shadow-sm"
+          style="max-width: 240px;">
       </div>
 
+      <!-- Profile Details -->
+      <div class="col-md-8">
+        <h2 class="text-secondary mb-3">Principal Architect</h2>
+        <p class="text-secondary justify-text custom-text mb-4">
+          <strong>Ar. Vijay Kumar D</strong> &mdash; a visionary architect with a decade of experience shaping spatial narratives across public, private, and residential landscapes. A graduate of SPA Delhi, he is an explorer of form, function, and emotion&mdash;crafting spaces that transcend mere structures into living, breathing expressions of art. His expertise lies in seamlessly blending modern aesthetics with minimalistic philosophy, creating spaces that not only house life but elevate it.
+        </p>
 
+        <div class="row">
+          <div class="col-12 col-md-5 mb-3">
+            <!-- Email -->
+            <span class="h6 text-secondary d-flex align-items-center">
+              <i class="bi bi-envelope h5 me-2 mb-0"></i>
+              <a
+                href="mailto:info@sidea.co.in?subject=Enquiry%20-%20Architectural%20Design%20Work"
+                class="text-secondary text-decoration-none"
+              >
+                info@sidea.co.in
+              </a>
+              <i
+                class="bi bi-copy ms-2 text-primary"
+                style="cursor: pointer;"
+                (click)="copyEmail('info@sidea.co.in')"
+                title="Copy to clipboard"
+              ></i>
+              <span *ngIf="copiedEmail" class="ms-2 text-success small">Copied!</span>
+            </span>
+          </div>
 
+          <div class="col-12 col-md-6 mb-3">
+            <!-- Phone -->
+            <span class="h6 text-secondary d-flex align-items-center">
+              <i class="bi bi-telephone h5 me-2 mb-0"></i>
+              <a href="tel:+918882968076" class="text-secondary text-decoration-none">
+                +91 888 296 8076
+              </a>
+              <i
+                class="bi bi-copy ms-2 text-primary"
+                style="cursor: pointer;"
+                (click)="copyEmail('+918882968076')"
+                title="Copy to clipboard"
+              ></i>
+              <span *ngIf="copiedPhone" class="ms-2 text-success small">Copied!</span>
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="isClientsListDisplayEnabled()">
+    <hr class="my-5"/>
+    <div class="text-center">
+      <h3 class="text-secondary mb-4">Our Clients</h3>
+      <div class="row justify-content-center">
+        <div class="col-4 col-md-2 mb-4">
+          <i class="bi bi-google display-4 text-secondary"></i>
+          <div class="small text-muted mt-2">Google</div>
+        </div>
+        <div class="col-4 col-md-2 mb-4">
+          <i class="bi bi-meta display-4 text-secondary"></i>
+          <div class="small text-muted mt-2">Meta</div>
+        </div>
+        <div class="col-4 col-md-2 mb-4">
+          <i class="bi bi-microsoft display-4 text-secondary"></i>
+          <div class="small text-muted mt-2">Microsoft</div>
+        </div>
+        <div class="col-4 col-md-2 mb-4">
+          <i class="bi bi-amd display-4 text-secondary"></i>
+          <div class="small text-muted mt-2">AMD</div>
+        </div>
+        <div class="col-4 col-md-2 mb-4">
+          <i class="bi bi-nvidia display-4 text-secondary"></i>
+          <div class="small text-muted mt-2">NVIDIA</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
-
-
-
-<br/>
-<br/>
-<hr/>
-<br/>
-
-
-<br/>
-
-
-
-
-<div class="container text-center" *ngIf="isClientsListDisplayEnabled()">
-  <h3 class="text-secondary mut">Our Clients</h3>
-
-  <br/>
-
-
-  <div class="row justify-content-center">
-
-    <div class="col-4 col-md-2 mb-4">
-      <i class="bi bi-google display-4 text-secondary"></i>
-      <div class="small text-muted mt-2">Google</div>
-    </div>
-
-    <div class="col-4 col-md-2 mb-4">
-      <i class="bi bi-meta display-4 text-secondary"></i>
-      <div class="small text-muted mt-2">Meta</div>
-    </div>
-
-    <div class="col-4 col-md-2 mb-4">
-      <i class="bi bi-microsoft display-4 text-secondary"></i>
-      <div class="small text-muted mt-2">Microsoft</div>
-    </div>
-
-    <div class="col-4 col-md-2 mb-4">
-      <i class="bi bi-amd display-4 text-secondary"></i>
-      <div class="small text-muted mt-2">AMD</div>
-    </div>
-
-    <div class="col-4 col-md-2 mb-4">
-      <i class="bi bi-nvidia display-4 text-secondary"></i>
-      <div class="small text-muted mt-2">NVIDIA</div>
-    </div>
-
-  </div>
-
-</div>
-
-
-<br/>
-<br/>
-<br/>
-<br/>
-

@@ -1,114 +1,156 @@
-<!--<h2 class="text-secondary">Side Architecture</h2>-->
+<div class="fullpage-experience-container">
 
+  <!-- Right Floating Vertical Navigation Rail -->
+  <nav class="side-nav-rail d-none d-lg-flex flex-column align-items-center gap-3" aria-label="Project Navigation">
+    <div
+      *ngFor="let project of projects; let i = index"
+      class="nav-dot-wrapper d-flex align-items-center"
+      [class.active]="activeSectionIndex === i"
+      (click)="scrollToSection(i)"
+      [title]="project.title"
+    >
+      <span class="nav-label me-2">{{ project.number }} {{ project.title }}</span>
+      <button class="nav-dot" [attr.aria-label]="'Go to ' + project.title"></button>
+    </div>
 
+    <!-- Final Philosophy Section Dot -->
+    <div
+      class="nav-dot-wrapper d-flex align-items-center"
+      [class.active]="activeSectionIndex === projects.length"
+      (click)="scrollToSection(projects.length)"
+      title="Studio Philosophy"
+    >
+      <span class="nav-label me-2">Philosophy & Work</span>
+      <button class="nav-dot" aria-label="Go to Studio Philosophy"></button>
+    </div>
+  </nav>
 
+  <!-- Fullscreen Project Sections -->
+  <section
+    #sectionRef
+    *ngFor="let project of projects; let i = index"
+    class="fullscreen-project-section position-relative"
+    [attr.data-section-index]="i"
+  >
+    <!-- Background Architectural Image -->
+    <div class="project-bg-wrapper">
+      <img
+        [src]="project.imageUrl"
+        [alt]="project.title"
+        class="project-bg-image"
+      />
+      <div class="project-scrim-overlay"></div>
+    </div>
 
+    <!-- Section Number & Category Watermark (Top Left) -->
+    <div class="section-top-header position-absolute start-0 top-0 p-4 p-md-5 d-flex align-items-center gap-3">
+      <span class="project-num-badge">{{ project.number }}</span>
+      <span class="project-category-tag text-uppercase">{{ project.category }}</span>
+    </div>
 
+    <!-- Section Main Content (Bottom Left) -->
+    <div class="container position-relative h-100 d-flex flex-column justify-content-end pb-5">
+      <div class="project-content-card text-white">
+        <!-- Metadata Row -->
+        <div class="project-meta-row d-flex align-items-center gap-3 flex-wrap mb-2 text-white-50 small">
+          <span class="meta-item"><i class="bi bi-geo-alt me-1 text-light"></i> {{ project.location }}</span>
+          <span class="meta-bullet">&bull;</span>
+          <span class="meta-item"><i class="bi bi-calendar3 me-1 text-light"></i> {{ project.year }}</span>
+          <span *ngIf="project.builtStatus" class="meta-bullet">&bull;</span>
+          <span *ngIf="project.builtStatus" class="meta-item">{{ project.builtStatus }}</span>
+          <span *ngIf="project.designStyle" class="meta-bullet">&bull;</span>
+          <span *ngIf="project.designStyle" class="meta-item">{{ project.designStyle }}</span>
+        </div>
 
+        <!-- Project Title -->
+        <h1 class="project-headline display-4 fw-bold mb-3">
+          <a [routerLink]="getProjectRoute(project)" [queryParams]="{ category: 'All' }" class="text-white text-decoration-none project-title-link">
+            {{ project.title }}
+          </a>
+        </h1>
 
+        <!-- Short Description -->
+        <p class="project-narrative lead mb-4 text-white-75">
+          {{ project.description }}
+        </p>
 
-<div *flipperFlag="'newDashboard'">
-  🚀 Welcome to the new dashboard From Component!
+        <!-- CTA Buttons -->
+        <div class="project-cta-group d-flex align-items-center gap-3 flex-wrap">
+          <a
+            [routerLink]="getProjectRoute(project)"
+            [queryParams]="{ category: 'All' }"
+            class="btn btn-light rounded-pill px-4 py-2 fw-medium d-inline-flex align-items-center gap-2 btn-explore-main shadow"
+          >
+            <span>Explore Project</span>
+            <i class="bi bi-arrow-right"></i>
+          </a>
+
+          <a
+            [routerLink]="['/projects']"
+            [queryParams]="{ category: 'All' }"
+            class="btn btn-outline-light rounded-pill px-4 py-2 fw-medium d-inline-flex align-items-center gap-2 btn-all-projects"
+          >
+            <span>All Projects</span>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scroll Down Prompt on First Section -->
+    <div *ngIf="i === 0" class="scroll-cue position-absolute start-50 translate-middle-x text-center text-white-50" (click)="scrollToSection(1)">
+      <span class="scroll-text text-uppercase small letter-spacing-2">Scroll to explore</span>
+      <div class="scroll-mouse-icon mt-2">
+        <div class="scroll-wheel"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 6: Studio Philosophy & Final Call to Action -->
+  <section
+    #sectionRef
+    class="fullscreen-project-section philosophy-section position-relative d-flex align-items-center"
+    [attr.data-section-index]="projects.length"
+  >
+    <div class="container py-5 text-center text-white position-relative z-2">
+      <div class="row justify-content-center">
+        <div class="col-lg-8">
+          <span class="badge bg-white bg-opacity-10 text-white text-uppercase px-3 py-2 mb-4 letter-spacing-2">
+            Studio Ideal Architecture
+          </span>
+
+          <blockquote class="display-5 fw-light fst-italic mb-4 philosophy-quote">
+            &ldquo;Less is more.&rdquo;
+          </blockquote>
+
+          <p class="text-white-50 lead mb-5">
+            &mdash; Ludwig Mies van der Rohe
+          </p>
+
+          <p class="lead text-white-75 mb-5 philosophy-text">
+            At <strong>SIDE A</strong>, architecture is storytelling &mdash; an evolving dialogue between form, light, and soul. We embrace minimalism as an art of precision, curating spaces that whisper elegance and purpose.
+          </p>
+
+          <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+            <a
+              [routerLink]="['/projects']"
+              [queryParams]="{ category: 'All' }"
+              class="btn btn-light rounded-pill px-5 py-3 fw-medium d-inline-flex align-items-center gap-2 shadow"
+            >
+              <span>Explore All Projects</span>
+              <i class="bi bi-grid-fill"></i>
+            </a>
+
+            <a
+              routerLink="/about"
+              class="btn btn-outline-light rounded-pill px-5 py-3 fw-medium d-inline-flex align-items-center gap-2"
+            >
+              <span>About The Studio</span>
+              <i class="bi bi-arrow-right"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
 </div>
-
-<div *ngIf="isNewDashBoardEnabled()">
-  🚀 Welcome to the new dashboard From Directive!
-</div>
-
-
-<!--<div class="container mt-4">-->
-<!--  <app-home-page-carousel></app-home-page-carousel>-->
-
-<!--</div>-->
-
-<div class="container mt-4">
-  <app-home-page-carousel></app-home-page-carousel>
-</div>
-<br/>
-
-
-<!--&lt;!&ndash; video 1: &ndash;&gt;-->
-<!--<div class="container mt-4">-->
-<!--  <span class="text-secondary"><strong>Video:</strong> White Modern Minimal Residence </span>-->
-<!--  <div class="ratio ratio-16x9">-->
-<!--    <iframe-->
-<!--      width="560"-->
-<!--      height="315"-->
-<!--      src="https://www.youtube.com/embed/M92GOnqFQAQ"-->
-<!--      title="White Modern Minimal Residence"-->
-<!--      frameborder="0"-->
-<!--      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
-<!--      allowfullscreen-->
-<!--    ></iframe>-->
-
-<!--  </div>-->
-<!--</div>-->
-
-<!--<br/>-->
-<!--<br/>-->
-<!--<br/>-->
-<!--&lt;!&ndash;video2&ndash;&gt;-->
-<!--<div class="container mt-4">-->
-<!--  <span class="text-secondary"><strong>Video:</strong>  Memorial Ghat</span>-->
-<!--  <div class="ratio ratio-16x9">-->
-<!--    <iframe-->
-<!--      width="560"-->
-<!--      height="315"-->
-<!--      src="https://www.youtube.com/embed/atndI0ye3hs"-->
-<!--      title="MemorialGhat"-->
-<!--      frameborder="0"-->
-<!--      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
-<!--      allowfullscreen-->
-<!--    ></iframe>-->
-
-<!--  </div>-->
-<!--</div>-->
-
-<!--<br/>-->
-<!--<br/>-->
-<!--<br/>-->
-<!--<div class="container mt-4">-->
-<!--  <span class="text-secondary"><strong>Video:</strong> Sunrise Vistara - Residential Apartment </span>-->
-<!--  <div class="ratio ratio-16x9">-->
-<!--    <iframe-->
-<!--      width="560"-->
-<!--      height="315"-->
-<!--      src="https://www.youtube.com/embed/g54nzosPsJQ"-->
-<!--      title="Sunrise Vistara Residential Apartment"-->
-<!--      frameborder="0"-->
-<!--      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"-->
-<!--      allowfullscreen-->
-<!--    ></iframe>-->
-<!--  </div>-->
-<!--</div>-->
-
-
-<!--<br/>-->
-<!--<br/>-->
-<!--<br/>-->
-<!--<br/>-->
-<!--<br/>-->
-
-
-
-<!-- Show only in mobile view (below carousel) -->
-<div class="text-center pb-5">
-  <a
-    class="btn btn-outline-secondary px-4"
-    [routerLink]="['/projects']"
-    [queryParams]="{ category: 'All' }">
-    Explore Projects
-  </a>
-</div>
-
-<div class="container text-center py-5">
-  <p class="lead fst-italic text-secondary mb-2">
-    “Less is more.”
-  </p>
-  <small class="text-muted">
-    — Ludwig Mies van der Rohe
-  </small>
-</div>
-<br/>
-<br/>
-
