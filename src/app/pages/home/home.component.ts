@@ -9,7 +9,7 @@ import {
   OnDestroy,
   NgZone
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { FlipperFlagsService } from '../../services/flipper-flags.service';
 
@@ -146,6 +146,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ];
 
   constructor(
+    private route: ActivatedRoute,
     private flipperFlagsService: FlipperFlagsService,
     private titleService: Title,
     private router: Router,
@@ -154,6 +155,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit(): void {
     this.titleService.setTitle('Home | SideA Architecture');
+
+    // Restore section scroll when returning back from a project details page
+    this.route.queryParamMap.subscribe((params) => {
+      const sectionParam = params.get('section');
+      if (sectionParam !== null && sectionParam !== undefined) {
+        const index = parseInt(sectionParam, 10);
+        if (!isNaN(index)) {
+          setTimeout(() => {
+            this.scrollToSection(index);
+          }, 150);
+        }
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -274,7 +288,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initMeshes(): void {
-    // 1. Primary Tower / Cantilevered Structure (Offset to Right Flank)
     const tower: WireframeMesh = {
       center: { x: 420, y: -20, z: 0 },
       rotX: 0,
@@ -309,7 +322,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       ]
     };
 
-    // 2. Floating Polyhedron Pavilion (Offset to Top-Left Flank)
     const pavilion: WireframeMesh = {
       center: { x: -440, y: -130, z: 30 },
       rotX: 0,
@@ -396,8 +408,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     const cx = width / 2;
     const cy = height / 2;
     const fov = 450;
-
-    // Dynamically scale horizontal offset according to screen width
     const sideOffset = Math.max(340, width * 0.34);
 
     meshes.forEach((mesh, index) => {
@@ -407,29 +417,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       const totalRotX = this.currentRotX + autoRotX;
       const totalRotY = this.currentRotY + autoRotY;
 
-      // Position index 0 on the Right flank, index 1 on the Top-Left flank
       const posX = index === 0 ? sideOffset : -sideOffset;
       const posY = index === 0 ? -20 : -140;
 
-      // Project vertices to 2D
       const projected: { x: number; y: number; z: number }[] = mesh.vertices.map((v) => {
         let x = v.x + posX;
         let y = v.y + posY;
         let z = v.z + mesh.center.z;
 
-        // Rotate Y
         const cosY = Math.cos(totalRotY);
         const sinY = Math.sin(totalRotY);
         const x1 = x * cosY - z * sinY;
         const z1 = z * cosY + x * sinY;
 
-        // Rotate X
         const cosX = Math.cos(totalRotX);
         const sinX = Math.sin(totalRotX);
         const y2 = y * cosX - z1 * sinX;
         const z2 = z1 * cosX + y * sinX;
 
-        // Perspective scale
         const scale = fov / (fov + z2 + 200);
         return {
           x: cx + x1 * scale,
@@ -438,7 +443,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         };
       });
 
-      // Draw Edges (Crisp graphite lines)
       ctx.lineWidth = 1.2;
       mesh.edges.forEach(([i, j]) => {
         const p1 = projected[i];
@@ -455,7 +459,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         ctx.stroke();
       });
 
-      // Draw Vertex Nodes
       projected.forEach((p) => {
         const nodeAlpha = Math.max(0.25, Math.min(0.85, 0.65 - p.z / 600));
         ctx.fillStyle = `rgba(15, 23, 42, ${nodeAlpha})`;

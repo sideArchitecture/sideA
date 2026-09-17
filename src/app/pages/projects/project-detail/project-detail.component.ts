@@ -20,6 +20,8 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
   isGalleryLoading = false;
   selectedImageIndex: number | null = null;
   selectedCategory: string | null = null;
+  fromSource: string | null = null;
+  fromSection: string | null = null;
 
   @ViewChild('zoomRef') zoomRef: any;
 
@@ -45,6 +47,8 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
     const slugHex = this.route.snapshot.paramMap.get('id') ?? '';
     const slug = isUrlBase64Enabled ? this.fromHex(slugHex) : slugHex;
     this.selectedCategory = this.route.snapshot.queryParamMap.get('category');
+    this.fromSource = this.route.snapshot.queryParamMap.get('from');
+    this.fromSection = this.route.snapshot.queryParamMap.get('section');
 
     if (slug) {
       this.projectService.getProjectDetail(slug).subscribe((data) => {
@@ -73,6 +77,21 @@ export class ProjectDetailComponent implements OnInit, AfterViewInit {
       duration: 0.8,
       ease: 'power2.out'
     });
+  }
+
+  getBackRoute(): string[] {
+    return this.fromSource === 'home' ? ['/'] : ['/projects'];
+  }
+
+  getBackQueryParams(): any {
+    if (this.fromSource === 'home') {
+      return this.fromSection ? { section: this.fromSection } : {};
+    }
+    return { category: this.selectedCategory || 'All' };
+  }
+
+  getBackLabel(): string {
+    return this.fromSource === 'home' ? 'Back to Home' : 'Back to Projects';
   }
 
   getCategoryDisplay(categories: ProjectCategory[]): string {

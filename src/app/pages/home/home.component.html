@@ -132,7 +132,11 @@
 
         <!-- Project Title -->
         <h1 class="project-headline display-4 fw-bold mb-3">
-          <a [routerLink]="getProjectRoute(project)" [queryParams]="{ category: 'All' }" class="text-white text-decoration-none project-title-link">
+          <a
+            [routerLink]="getProjectRoute(project)"
+            [queryParams]="{ from: 'home', section: i + 1 }"
+            class="text-white text-decoration-none project-title-link"
+          >
             {{ project.title }}
           </a>
         </h1>
@@ -146,7 +150,7 @@
         <div class="project-cta-group d-flex align-items-center gap-3 flex-wrap">
           <a
             [routerLink]="getProjectRoute(project)"
-            [queryParams]="{ category: 'All' }"
+            [queryParams]="{ from: 'home', section: i + 1 }"
             class="btn btn-light rounded-pill px-4 py-2 fw-medium d-inline-flex align-items-center gap-2 btn-explore-main shadow"
           >
             <span>Explore Project</span>

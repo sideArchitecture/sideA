@@ -1,14 +1,14 @@
 <div *ngIf="!isLoading && project" class="container-fluid px-3 px-md-5 py-4 project-detail-page">
 
-  <!-- Top Navigation (Back Button on Top Right) -->
+  <!-- Top Navigation (Context-aware Back Button on Top Right) -->
   <div class="d-flex justify-content-end mb-4">
     <a
       class="text-secondary text-decoration-none fw-medium d-inline-flex align-items-center gap-2 btn-back-link"
-      [routerLink]="['/projects']"
-      [queryParams]="{ category: selectedCategory || 'All' }"
+      [routerLink]="getBackRoute()"
+      [queryParams]="getBackQueryParams()"
     >
       <i class="bi bi-arrow-left-circle-fill fs-5"></i>
-      <span>Back to Projects</span>
+      <span>{{ getBackLabel() }}</span>
     </a>
   </div>
 
@@ -139,11 +139,11 @@
   <div class="text-center mt-5 pt-4">
     <a
       class="text-secondary text-decoration-none fw-medium d-inline-flex align-items-center gap-2 btn-back-link"
-      [routerLink]="['/projects']"
-      [queryParams]="{ category: selectedCategory || 'All' }"
+      [routerLink]="getBackRoute()"
+      [queryParams]="getBackQueryParams()"
     >
       <i class="bi bi-arrow-left-circle-fill fs-5"></i>
-      <span>Back to Projects</span>
+      <span>{{ getBackLabel() }}</span>
     </a>
   </div>
 
