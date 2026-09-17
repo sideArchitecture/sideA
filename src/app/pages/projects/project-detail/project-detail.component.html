@@ -12,10 +12,10 @@
     </a>
   </div>
 
-  <!-- Top Profile Row (Aligned with 7 / 5 column grid) -->
-  <div class="row g-4 mb-5 align-items-start project-profile-card">
-    <!-- Left: Image (col-lg-7, flush left with Architectural Concept) -->
-    <div class="col-lg-7">
+  <!-- Top Profile Row (Image flush left, Text snugly centered beside it) -->
+  <div class="row align-items-center mb-5 project-profile-card">
+    <!-- Left: Image (flush left) -->
+    <div class="col-md-auto mb-3 mb-md-0">
       <div class="project-cover-container">
         <img
           [src]="getCoverImageUrl(project.imageUrl)"
@@ -25,27 +25,29 @@
       </div>
     </div>
 
-    <!-- Right: Title & Description (col-lg-5, flush left with Project Details card) -->
-    <div class="col-lg-5">
-      <div *ngIf="project.category?.length" class="mb-2">
-        <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-2 py-1">
-          {{ getCategoryDisplay(project.category ?? []) }}
-        </span>
+    <!-- Right: Text (Snug beside image, vertically centered) -->
+    <div class="col-md ps-md-4">
+      <div class="project-header-text">
+        <div *ngIf="project.category?.length" class="mb-2">
+          <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-2 py-1">
+            {{ getCategoryDisplay(project.category ?? []) }}
+          </span>
+        </div>
+
+        <h1 class="h2 text-secondary fw-bold mb-2">
+          {{ project.title }}
+        </h1>
+
+        <p class="text-secondary custom-text justify-text lead fs-6 mb-0" style="max-width: 620px;">
+          {{ project.description }}
+        </p>
       </div>
-
-      <h1 class="h2 text-secondary fw-bold mb-3">
-        {{ project.title }}
-      </h1>
-
-      <p class="text-secondary custom-text justify-text lead fs-6 mb-0">
-        {{ project.description }}
-      </p>
     </div>
   </div>
 
-  <!-- Architectural Concept & Project Specs Row (7 / 5 column grid) -->
+  <!-- Architectural Concept & Project Specs Row -->
   <div class="row g-4 mb-5">
-    <!-- Left Column: Story / Notes (col-lg-7) -->
+    <!-- Left Column: Story / Notes -->
     <div class="col-lg-7" *ngIf="project.notes">
       <h4 class="text-secondary fw-semibold mb-3">Architectural Concept</h4>
       <p class="text-secondary lead fs-6 project-notes-text justify-text custom-text">
@@ -53,7 +55,7 @@
       </p>
     </div>
 
-    <!-- Right Column: Specs Card (col-lg-5) -->
+    <!-- Right Column: Specs Card -->
     <div [class.col-lg-5]="project.notes" [class.col-lg-8]="!project.notes" [class.mx-auto]="!project.notes">
       <div class="card border-0 shadow-sm rounded-4 p-4 bg-light project-specs-card">
         <h5 class="text-secondary fw-bold mb-3 border-bottom pb-2">Project Details</h5>

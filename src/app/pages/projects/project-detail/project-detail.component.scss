@@ -16,16 +16,21 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  width: 100%;
 }
 
 .project-cover {
-  max-width: 320px;
+  max-width: 300px;
   width: 100%;
   height: auto;
   border-radius: 12px;
   object-fit: cover;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+.project-header-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .custom-text {
