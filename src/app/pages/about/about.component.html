@@ -1,38 +1,45 @@
-<div class="container-fluid px-3 px-md-5 py-4 about-page-container">
+<div class="container-fluid px-3 px-md-4 px-lg-5 py-4 py-md-5 about-page-container">
 
-  <!-- Firm Manifesto & Profile Section -->
+  <!-- Section 1: Firm Manifesto & Profile Section -->
   <section class="firm-profile mb-5">
     <div class="text-center mb-4">
-      <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-1 mb-2 tracking-wide">
+      <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-2 mb-2 tracking-wide rounded-pill">
         Studio Profile
       </span>
-      <h1 class="display-5 text-secondary fw-bold studio-heading mb-1">
-        STUDIO I DEAL ARCHITECTURE
+      <h1 class="display-5 text-dark fw-bold studio-heading mb-1 text-uppercase">
+        Studio I Deal Architecture
       </h1>
       <span class="fs-5 text-muted fw-light">(SIDE A)</span>
     </div>
 
     <div class="manifesto-card p-4 p-md-5 rounded-4 bg-light shadow-sm mx-auto">
-      <p class="manifesto-lead text-secondary justify-text mb-4">
+      <p class="manifesto-lead text-secondary mb-3">
         At <strong class="text-dark">SIDE A</strong>, architecture is storytelling &mdash; an evolving dialogue between form and soul. We embrace minimalism, not as a restriction but as an art of precision, curating spaces that whisper elegance and purpose.
       </p>
 
-      <p class="manifesto-body text-secondary justify-text mb-0">
+      <p class="manifesto-body text-secondary mb-0">
         Inspired by the transformation of nature, our designs breathe life into built environments, where simplicity meets profound beauty. We dream, design, and redefine, shaping a world where architecture is more than a structure &mdash; <strong class="text-dark">it is an experience.</strong>
       </p>
     </div>
   </section>
 
-  <!-- Core Studio Pillars -->
+  <!-- Section 2: Core Studio Pillars -->
   <section class="studio-pillars-section mb-5">
-    <div class="row g-4">
+    <div class="text-center mb-4">
+      <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-1 mb-2 tracking-wide rounded-pill">
+        Guiding Principles
+      </span>
+      <h2 class="h3 fw-bold text-dark mb-1">Our Architectural Pillars</h2>
+    </div>
+
+    <div class="row g-4 justify-content-center">
       <div class="col-md-4">
         <div class="card pillar-card h-100 p-4 border-0 rounded-4 shadow-sm bg-light">
           <div class="pillar-icon-box mb-3">
             <i class="bi bi-compass fs-2 text-secondary"></i>
           </div>
-          <h5 class="fw-bold text-secondary mb-2">Form &amp; Soul</h5>
-          <p class="text-muted small mb-0 justify-text">
+          <h5 class="fw-bold text-dark mb-2">Form &amp; Soul</h5>
+          <p class="text-muted small mb-0">
             Storytelling through responsive architecture, anchoring each space to its natural landscape, cultural roots, and human context.
           </p>
         </div>
@@ -43,8 +50,8 @@
           <div class="pillar-icon-box mb-3">
             <i class="bi bi-bounding-box-circles fs-2 text-secondary"></i>
           </div>
-          <h5 class="fw-bold text-secondary mb-2">Art of Precision</h5>
-          <p class="text-muted small mb-0 justify-text">
+          <h5 class="fw-bold text-dark mb-2">Art of Precision</h5>
+          <p class="text-muted small mb-0">
             Minimalism as a discipline of intent—where volume, materiality, natural light, and clean lines achieve effortless balance.
           </p>
         </div>
@@ -55,8 +62,8 @@
           <div class="pillar-icon-box mb-3">
             <i class="bi bi-buildings fs-2 text-secondary"></i>
           </div>
-          <h5 class="fw-bold text-secondary mb-2">Living Experience</h5>
-          <p class="text-muted small mb-0 justify-text">
+          <h5 class="fw-bold text-dark mb-2">Living Experience</h5>
+          <p class="text-muted small mb-0">
             Designing immersive, functional environments that transcend static geometry to nurture and elevate everyday human life.
           </p>
         </div>
@@ -64,14 +71,14 @@
     </div>
   </section>
 
-  <br class="my-5 border-secondary opacity-25"/>
+  <hr class="my-5 border-secondary opacity-25"/>
 
-  <!-- Principal Architect Profile -->
+  <!-- Section 3: Principal Architect Profile -->
   <section class="principal-profile mb-5">
-    <div class="card profile-main-card border-0 rounded-4 shadow-sm p-4 p-md-5 bg-light">
-      <div class="row align-items-center">
+    <div class="card profile-main-card border-0 rounded-4 shadow-sm p-4 p-md-5 bg-light mx-auto">
+      <div class="row align-items-center g-4">
         <!-- Profile Image -->
-        <div class="col-md-4 text-center mb-4 mb-md-0">
+        <div class="col-lg-4 text-center">
           <div class="architect-photo-wrapper d-inline-block">
             <img
               [src]="profilePhotoUrl()"
@@ -83,14 +90,14 @@
         </div>
 
         <!-- Profile Details -->
-        <div class="col-md-8 ps-md-4">
-          <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-1 mb-2 tracking-wide">
+        <div class="col-lg-8 ps-lg-4 text-start">
+          <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-1 mb-2 tracking-wide rounded-pill">
             Leadership
           </span>
-          <h2 class="text-secondary fw-bold mb-1">Ar. Vijay Kumar D</h2>
+          <h2 class="text-dark fw-bold mb-1">Ar. Vijay Kumar D</h2>
           <div class="text-muted fw-medium mb-3">Principal Architect &bull; Alumnus, SPA Delhi</div>
 
-          <p class="text-secondary justify-text custom-text mb-4">
+          <p class="text-secondary custom-text mb-4">
             A visionary architect with a decade of experience shaping spatial narratives across public, private, and residential landscapes. A graduate of <strong>SPA Delhi</strong>, he is an explorer of form, function, and emotion&mdash;crafting spaces that transcend mere structures into living, breathing expressions of art. His expertise lies in seamlessly blending modern aesthetics with minimalistic philosophy, creating spaces that not only house life but elevate it.
           </p>
 
@@ -149,7 +156,7 @@
   <div *ngIf="isClientsListDisplayEnabled()">
     <hr class="my-5 border-secondary opacity-25"/>
     <div class="text-center">
-      <h3 class="text-secondary mb-4">Our Clients</h3>
+      <h3 class="text-dark mb-4">Our Clients</h3>
       <div class="row justify-content-center">
         <div class="col-4 col-md-2 mb-4">
           <i class="bi bi-google display-4 text-secondary"></i>
