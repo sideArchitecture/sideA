@@ -3,13 +3,13 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-  padding: 0.3rem 0;
-  min-height: 48px;
+  padding: 0.55rem 0;
+  min-height: 56px;
   transition: all 0.3s ease;
   z-index: 1050;
 
   .brand-logo {
-    height: 30px;
+    height: 36px;
     width: auto;
     object-fit: contain;
   }
@@ -19,15 +19,15 @@
     font-weight: 600;
     letter-spacing: 0.06em;
     color: #333333;
-    font-size: 0.88rem;
+    font-size: 0.92rem;
   }
 
   .nav-link {
     color: #555555;
     font-weight: 500;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
     letter-spacing: 0.03em;
-    padding: 0.25rem 0.75rem;
+    padding: 0.35rem 0.85rem;
     border-radius: 50rem;
     transition: all 0.2s ease;
 
@@ -47,7 +47,7 @@
     .navbar-collapse {
       background: #ffffff;
       border-radius: 0.75rem;
-      padding: 0.75rem 1rem;
+      padding: 0.85rem 1rem;
       margin-top: 0.5rem;
       border: 1px solid rgba(0, 0, 0, 0.08);
       box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);

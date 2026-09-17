@@ -8,15 +8,15 @@
 .fullscreen-project-section {
   position: relative;
   width: 100%;
-  min-height: calc(100vh - 48px);
-  height: calc(100vh - 48px);
+  min-height: calc(100vh - 56px);
+  height: calc(100vh - 56px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 
   @media (max-width: 768px) {
-    min-height: calc(100vh - 48px);
+    min-height: calc(100vh - 56px);
     height: auto;
     padding-top: 3.5rem;
     padding-bottom: 2rem;

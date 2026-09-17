@@ -1,16 +1,91 @@
-.custom-text {
-  font-family:  'Qanelas', sans-serif;
-  font-size: 20px;
+.about-page-container {
+  max-width: 1040px;
 }
 
-.client-logo {
-  max-height: 60px;
-  opacity: 0.7;
-  transition: all 0.3s ease;
-  filter: grayscale(100%);
+.tracking-wide {
+  letter-spacing: 0.12em;
+  font-size: 0.72rem;
+  font-weight: 600;
 }
 
-.client-logo:hover {
-  opacity: 1;
-  filter: grayscale(0%);
+.studio-heading {
+  font-family: 'Qanelas', sans-serif;
+  letter-spacing: -0.01em;
+}
+
+.manifesto-card {
+  max-width: 860px;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  .manifesto-lead {
+    font-size: 1.15rem;
+    line-height: 1.8;
+    font-weight: 400;
+  }
+
+  .manifesto-body {
+    font-size: 1rem;
+    line-height: 1.75;
+    color: #555555;
+  }
+}
+
+.pillar-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid rgba(0, 0, 0, 0.05) !important;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08) !important;
+  }
+
+  .pillar-icon-box {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.04);
+    border-radius: 12px;
+  }
+}
+
+.profile-main-card {
+  border: 1px solid rgba(0, 0, 0, 0.05);
+
+  .architect-photo-wrapper {
+    max-width: 250px;
+    img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+      aspect-ratio: 1 / 1;
+    }
+  }
+
+  .custom-text {
+    font-size: 0.98rem;
+    line-height: 1.75;
+    color: #444444;
+  }
+
+  .contact-pill {
+    transition: all 0.2s ease;
+    &:hover {
+      border-color: #adb5bd !important;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    }
+  }
+
+  .copy-btn {
+    text-decoration: none;
+    transition: transform 0.15s ease;
+    &:hover {
+      transform: scale(1.15);
+    }
+  }
+}
+
+.justify-text {
+  text-align: justify;
 }

@@ -42,4 +42,7 @@ This checklist outlines the roadmap for enhancing the user experience, starting 
   - [x] High-impact Cover Image Hero Banner with typography overlay (title, subtitle, category tag, location, year).
   - [x] Structured architectural narrative and project specifications card.
   - [x] Interactive photographs gallery grid with pinch-zoom fullscreen lightbox.
-- [ ] **2.3** About Us & Studio Profile Enhancements.
+- [x] **2.3** About Us & Studio Profile Enhancements:
+  - [x] Studio manifesto card matching home page philosophy typography.
+  - [x] 3-pillar architectural principles grid (Form & Soul, Art of Precision, Living Experience).
+  - [x] Principal Architect profile with clean interactive contact pills (email & phone copy feedback).
