@@ -47,10 +47,15 @@
                 <span *ngIf="slide.year" class="year-tag text-white-50 small d-none d-sm-inline-flex align-items-center gap-1">
                   &bull; {{ slide.year }}
                 </span>
+                <span *ngIf="slide.builtStatus" class="status-tag text-white-50 small d-none d-md-inline-flex align-items-center gap-1">
+                  &bull; {{ slide.builtStatus }}
+                </span>
               </div>
 
               <h2 class="slide-title text-white fw-bold display-6 mb-2">
-                {{ slide.title }}
+                <a [routerLink]="getProjectRoute(slide)" [queryParams]="{ category: 'All' }" class="text-white text-decoration-none slide-title-link">
+                  {{ slide.title }}
+                </a>
               </h2>
 
               <p *ngIf="slide.description" class="slide-description text-white-50 lead mb-3 d-none d-md-block">
@@ -59,11 +64,11 @@
 
               <div class="slide-actions d-flex align-items-center gap-3 pt-1">
                 <a
-                  [routerLink]="['/projects']"
+                  [routerLink]="getProjectRoute(slide)"
                   [queryParams]="{ category: 'All' }"
                   class="btn btn-light rounded-pill px-4 py-2 fw-medium d-inline-flex align-items-center gap-2 btn-explore shadow-sm"
                 >
-                  <span>Explore Project</span>
+                  <span>View Project</span>
                   <i class="bi bi-arrow-right"></i>
                 </a>
               </div>

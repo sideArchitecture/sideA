@@ -1,4 +1,6 @@
 import { Component, OnInit, OnDestroy, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { FlipperFlagsService } from '../../../services/flipper-flags.service';
 
 export interface CarouselSlide {
   id: number;
@@ -7,8 +9,12 @@ export interface CarouselSlide {
   category: string;
   location?: string;
   year?: string;
+  client?: string;
+  designStyle?: string;
+  builtStatus?: string;
   description?: string;
-  projectSlug?: string;
+  slug: string;
+  slugHex: string;
 }
 
 @Component({
@@ -23,52 +29,69 @@ export class HomePageCarouselComponent implements OnInit, AfterViewInit, OnDestr
     {
       id: 1,
       imageUrl: 'assets/images/home_page_carousel/sidea_photos2/1.jpg',
-      title: 'White Modern Minimal Residence',
-      category: 'Residential Architecture',
-      location: 'Pune, India',
-      year: '2024',
-      description: 'Clean geometric lines, monolithic white facades, and expansive natural daylight integration.',
-      projectSlug: 'white-modern-minimal-residence'
+      title: 'Adali Cultural Center',
+      category: 'Institutional & Hospitality',
+      location: 'Palakonda, AP',
+      year: '2018',
+      client: 'Govt. of Andhra Pradesh',
+      designStyle: 'Contemporary Chalet',
+      builtStatus: 'Unbuilt',
+      description: 'Chalet-inspired cultural sanctuary crafted for the Government of Andhra Pradesh in Palakonda.',
+      slug: 'HOSPITALITY-001-ADALI-RESORT',
+      slugHex: 'SE9TUElUQUxJVFktMDAxLUFEQUxJLVJFU09SVA'
     },
     {
       id: 2,
       imageUrl: 'assets/images/home_page_carousel/sidea_photos2/2.jpg',
-      title: 'Memorial Ghat Sanctuary',
-      category: 'Public & Cultural Space',
-      location: 'Maharashtra, India',
-      year: '2023',
-      description: 'Serene public architecture blending native landscape, spiritual reflection, and local stone craftsmanship.',
-      projectSlug: 'memorial-ghat'
+      title: 'Girijana Commercial Complex',
+      category: 'Commercial Architecture',
+      location: 'Palakonda, AP',
+      year: '2019',
+      client: 'Govt. of Andhra Pradesh',
+      designStyle: 'Contemporary',
+      builtStatus: 'Built',
+      description: 'Contemporary commercial hub and community marketplace for the Govt. of Andhra Pradesh.',
+      slug: 'COMMERCIAL-001-GCC',
+      slugHex: 'Q09NTUVSQ0lBTC0wMDEtR0ND'
     },
     {
       id: 3,
       imageUrl: 'assets/images/home_page_carousel/sidea_photos2/3.jpg',
-      title: 'Sunrise Vistara',
-      category: 'Contemporary Housing',
-      location: 'Pune, India',
-      year: '2023',
-      description: 'Harmonious multi-dwelling layout designed with cross-ventilation and elevated green terraces.',
-      projectSlug: 'sunrise-vistara'
+      title: 'Memorial Ghat',
+      category: 'Monument & Public Space',
+      location: 'Kadapa, AP',
+      year: '2022',
+      designStyle: 'Neo Classical',
+      builtStatus: 'Unbuilt',
+      description: 'Neo-classical riverside monumental landscape and serene civic reflection space.',
+      slug: 'MORE-001-MEMORIAL-DESIGN',
+      slugHex: 'TU9SRS0wMDEtTUVNT1JJQUwtREVTSUdO'
     },
     {
       id: 4,
       imageUrl: 'assets/images/home_page_carousel/sidea_photos2/4.jpg',
-      title: 'Monochrome Living Concepts',
-      category: 'Interior & Form Design',
-      location: 'Pune, India',
-      year: '2024',
-      description: 'Minimal material palettes, custom spatial volumes, and seamless indoor-outdoor connectivity.',
-      projectSlug: 'monochrome-living'
+      title: 'TUDA Conference Hall',
+      category: 'Civic & Office Interiors',
+      location: 'Tirupati, AP',
+      year: '2018',
+      designStyle: 'Modern',
+      builtStatus: 'Built',
+      description: 'Modern administrative conference hall and civic interior design for Tirupati Urban Development Authority.',
+      slug: 'OFFICE-002-TUDA-CONFERENCE',
+      slugHex: 'T0ZGSUNFLTAwMi1UVURBLUNPTkZFUkVOQ0U'
     },
     {
       id: 5,
       imageUrl: 'assets/images/home_page_carousel/sidea_photos2/5.jpg',
-      title: 'Studio Pavilion & Courtyards',
-      category: 'Commercial & Institutional',
-      location: 'Pune, India',
-      year: '2024',
-      description: 'Dynamic workspace architecture celebrating raw textures, courtyard biophilia, and climatic shading.',
-      projectSlug: 'studio-pavilion'
+      title: 'Sunrise Vistara',
+      category: 'Residential Architecture',
+      location: 'Visakhapatnam, AP',
+      year: '2023',
+      designStyle: 'Contemporary',
+      builtStatus: 'Built',
+      description: 'Contemporary multi-residential living emphasizing natural daylight and coastal cross-ventilation.',
+      slug: 'RESIDENCE-003-SUNRISE-VISTARA',
+      slugHex: 'UkVTSURFTkNFLTAwMy1TVU5SSVNFLVZJU1RBUkE'
     }
   ];
 
@@ -77,9 +100,23 @@ export class HomePageCarouselComponent implements OnInit, AfterViewInit, OnDestr
   private touchEndX = 0;
   private carouselListener?: (e: any) => void;
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private flipperFlagsService: FlipperFlagsService
+  ) { }
 
   ngOnInit(): void {
+  }
+
+  getProjectRoute(slide: CarouselSlide): string[] {
+    const isUrlBase64Enabled = this.flipperFlagsService.isEnabled('urlBase64');
+    return ['/projects', isUrlBase64Enabled ? slide.slugHex : slide.slug];
+  }
+
+  navigateToProject(slide: CarouselSlide): void {
+    this.router.navigate(this.getProjectRoute(slide), {
+      queryParams: { category: 'All' }
+    });
   }
 
   ngAfterViewInit(): void {
