@@ -156,16 +156,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     this.titleService.setTitle('Home | SideA Architecture');
 
-    // Restore section scroll when returning back from a project details page
+    // Handle return navigation (via on-page Back button or browser Back button)
     this.route.queryParamMap.subscribe((params) => {
       const sectionParam = params.get('section');
+      const storedSection = sessionStorage.getItem('navigated_from_home_section');
+
+      let targetIndex: number | null = null;
       if (sectionParam !== null && sectionParam !== undefined) {
-        const index = parseInt(sectionParam, 10);
-        if (!isNaN(index)) {
-          setTimeout(() => {
-            this.scrollToSection(index);
-          }, 150);
-        }
+        targetIndex = parseInt(sectionParam, 10);
+      } else if (storedSection !== null) {
+        targetIndex = parseInt(storedSection, 10);
+      }
+
+      if (targetIndex !== null && !isNaN(targetIndex)) {
+        sessionStorage.removeItem('navigated_from_home_section');
+        setTimeout(() => {
+          this.scrollToSection(targetIndex!);
+        }, 180);
       }
     });
   }
@@ -173,6 +180,18 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.setupIntersectionObserver();
     this.initInteractiveCanvases();
+
+    // Secondary check in case view elements initialize after route subscription
+    const storedSection = sessionStorage.getItem('navigated_from_home_section');
+    if (storedSection !== null) {
+      const targetIndex = parseInt(storedSection, 10);
+      if (!isNaN(targetIndex)) {
+        sessionStorage.removeItem('navigated_from_home_section');
+        setTimeout(() => {
+          this.scrollToSection(targetIndex);
+        }, 220);
+      }
+    }
   }
 
   ngOnDestroy(): void {
@@ -187,6 +206,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   getProjectRoute(project: FullpageProject): string[] {
     const isUrlBase64Enabled = this.flipperFlagsService.isEnabled('urlBase64');
     return ['/projects', isUrlBase64Enabled ? project.slugHex : project.slug];
+  }
+
+  onProjectClick(sectionIndex: number): void {
+    // Record current section in sessionStorage so browser Back button also returns to this slide
+    sessionStorage.setItem('navigated_from_home_section', String(sectionIndex));
   }
 
   scrollToSection(index: number): void {
@@ -204,6 +228,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
             const indexAttr = entry.target.getAttribute('data-section-index');
             if (indexAttr !== null) {
               this.activeSectionIndex = parseInt(indexAttr, 10);
+              // Track current active section for session persistence
+              sessionStorage.setItem('home_last_active_section', String(this.activeSectionIndex));
             }
           }
         });

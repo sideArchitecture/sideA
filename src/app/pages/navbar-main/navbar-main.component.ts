@@ -50,6 +50,7 @@ export class NavbarMainComponent {
 
   onLogoClick(event: MouseEvent): void {
     this.closeNavbar();
+    sessionStorage.removeItem('navigated_from_home_section');
     if (this.router.url === '/' || this.router.url.startsWith('/#')) {
       event.preventDefault();
       this.scrollToTop();
@@ -62,6 +63,7 @@ export class NavbarMainComponent {
 
   onHomeClick(event: MouseEvent): void {
     this.closeNavbar();
+    sessionStorage.removeItem('navigated_from_home_section');
     if (this.router.url === '/' || this.router.url.startsWith('/#')) {
       event.preventDefault();
       this.scrollToTop();
