@@ -2,10 +2,10 @@
 
   <!-- Portfolio Header -->
   <div class="portfolio-header text-center mb-5">
-    <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-1 mb-2 tracking-wide">
+    <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-1 mb-2 tracking-wide rounded-pill">
       Portfolio &amp; Archives
     </span>
-    <h1 class="display-5 text-secondary fw-bold portfolio-heading mb-2">
+    <h1 class="display-5 text-dark fw-bold portfolio-heading mb-2">
       Selected Works
     </h1>
     <p class="text-muted lead fs-6 mb-0 mx-auto portfolio-subtitle">
@@ -35,7 +35,7 @@
         </div>
       </div>
 
-      <!-- Quick Search Bar -->
+      <!-- Quick Search Bar with Instant Real-Time Filtering -->
       <div class="col-lg-4" *ngIf="isSearchProjectsEnabled()">
         <div class="position-relative search-box-wrapper">
           <div class="input-group">
@@ -46,10 +46,19 @@
               type="text"
               class="form-control border-start-0 ps-0 shadow-none search-input"
               [(ngModel)]="searchTerm"
-              (input)="filterCategoryOptions()"
+              (input)="onSearchInput()"
               (click)="onInputClick()"
               placeholder="Search projects or categories..."
             />
+            <button
+              *ngIf="searchTerm"
+              class="btn bg-white border-start-0 text-muted"
+              type="button"
+              (click)="clearSearch()"
+              aria-label="Clear search"
+            >
+              <i class="bi bi-x-circle-fill"></i>
+            </button>
           </div>
 
           <!-- Autocomplete Dropdown -->
@@ -145,9 +154,11 @@
   <div *ngIf="projects.length === 0" class="text-center py-5 my-5 bg-light rounded-4">
     <i class="bi bi-folder2-open display-3 text-muted mb-3 d-block"></i>
     <h5 class="text-secondary fw-bold">No Projects Found</h5>
-    <p class="text-muted small mb-4">No projects match the selected criteria.</p>
-    <button class="btn btn-outline-secondary rounded-pill px-4" (click)="selectCategoryName('All')">
-      View All Projects
+    <p class="text-muted small mb-4">
+      No projects match the keyword <strong *ngIf="searchTerm">&ldquo;{{ searchTerm }}&rdquo;</strong> in <strong>{{ selectedCategory === 'All' ? 'All Projects' : selectedCategory }}</strong>.
+    </p>
+    <button class="btn btn-dark rounded-pill px-4" (click)="clearSearch(); selectCategoryName('All')">
+      Clear Filters &amp; View All
     </button>
   </div>
 

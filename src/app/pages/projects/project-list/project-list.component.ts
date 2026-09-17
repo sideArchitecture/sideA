@@ -6,7 +6,6 @@ import {
 } from '@angular/core';
 import { Project } from '../../../models/project.model';
 import { ProjectService } from '../../../services/project.service';
-import { ProjectCategory } from '../../../models/project-category.enum';
 import { ActivatedRoute, Router } from '@angular/router';
 import { gsap } from 'gsap';
 import { FlipperFlagsService } from '../../../services/flipper-flags.service';
@@ -48,19 +47,19 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.titleService.setTitle('Projects | SideA Architecture');
     document.addEventListener('click', this.handleOutsideClick.bind(this));
 
-    this.projectService.getAllProjects().subscribe(projects => {
+    this.projectService.getAllProjects().subscribe((projects) => {
       this.allProjects = projects || [];
       this.isLoading = false;
       this.computeCategoryCounts();
 
-      this.route.queryParamMap.subscribe(params => {
+      this.route.queryParamMap.subscribe((params) => {
         const categoryParam = params.get('category');
-        const search = params.get('search');
+        const searchParam = params.get('search');
 
         let matchedCategory = 'All';
         if (categoryParam) {
           const found = this.filteredCategories.find(
-            c => c.toLowerCase() === categoryParam.toLowerCase()
+            (c) => c.toLowerCase() === categoryParam.toLowerCase()
           );
           if (found) {
             matchedCategory = found;
@@ -78,7 +77,10 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
           });
         }
 
-        this.searchTerm = search ?? '';
+        if (searchParam !== null && searchParam !== undefined) {
+          this.searchTerm = searchParam;
+        }
+
         this.lastConfirmedCategory = this.selectedCategory;
         this.filterProjects();
       });
@@ -108,15 +110,31 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   filterProjects(): void {
-    if (this.selectedCategory === 'All') {
-      this.projects = [...this.allProjects];
-    } else {
-      this.projects = this.allProjects.filter(project =>
-        Array.isArray(project.category) &&
-        project.category.some(c => c.toLowerCase() === this.selectedCategory.toLowerCase())
-      );
+    const term = this.searchTerm.toLowerCase().trim();
+
+    // 1. Filter by Category
+    let list = this.selectedCategory === 'All'
+      ? [...this.allProjects]
+      : this.allProjects.filter((project) =>
+          Array.isArray(project.category) &&
+          project.category.some((c) => c.toLowerCase() === this.selectedCategory.toLowerCase())
+        );
+
+    // 2. Real-time Filter by Search Term
+    if (term) {
+      list = list.filter((p) => {
+        const titleMatch = p.title && p.title.toLowerCase().includes(term);
+        const locationMatch = p.location && p.location.toLowerCase().includes(term);
+        const descMatch = p.description && p.description.toLowerCase().includes(term);
+        const clientMatch = p.client && p.client.toLowerCase().includes(term);
+        const styleMatch = p.designStyle && p.designStyle.toLowerCase().includes(term);
+        const catMatch = Array.isArray(p.category) && p.category.some((c) => c.toLowerCase().includes(term));
+
+        return titleMatch || locationMatch || descMatch || clientMatch || styleMatch || catMatch;
+      });
     }
 
+    this.projects = list;
     this.animateCards();
 
     const restoreScrollIfReady = () => {
@@ -137,16 +155,47 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(restoreScrollIfReady, 50);
   }
 
-  selectCategoryName(category: string): void {
+  onSearchInput(): void {
+    this.filterProjects();
+    this.filterCategoryOptions();
+  }
+
+  clearSearch(): void {
     this.searchTerm = '';
     this.showDropdown = false;
-    this.router.navigate(['/projects'], {
-      queryParams: { category }
+    this.filterProjects();
+  }
+
+  selectCategoryName(category: string): void {
+    if (this.selectedCategory === category && !this.searchTerm) return;
+    this.selectedCategory = category;
+    this.showDropdown = false;
+
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: { category: this.selectedCategory },
+      queryParamsHandling: 'merge'
     });
+
+    const cards = document.querySelectorAll('.project-card');
+    if (cards.length > 0) {
+      gsap.to('.project-card', {
+        opacity: 0,
+        y: -8,
+        duration: 0.16,
+        ease: 'power2.in',
+        onComplete: () => {
+          this.filterProjects();
+        }
+      });
+    } else {
+      this.filterProjects();
+    }
   }
 
   selectCategory(item: { type: 'category' | 'project'; value: any }): void {
     if (item.type === 'category') {
+      this.searchTerm = '';
       this.selectCategoryName(item.value);
     } else {
       const scrollY = window.scrollY;
@@ -178,7 +227,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   getPrimaryCategory(project: Project): string {
     if (!project.category || !project.category.length) return '';
-    const nonFeatured = project.category.find(c => c !== 'featured');
+    const nonFeatured = project.category.find((c) => c !== 'featured');
     const cat = nonFeatured || project.category[0];
     return cat ? cat.replace(/_/g, ' ') : '';
   }
@@ -188,9 +237,9 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
       gsap.fromTo(
         '.project-card',
         { opacity: 0, y: 15 },
-        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.04 }
+        { opacity: 1, y: 0, duration: 0.35, ease: 'power2.out', stagger: 0.03 }
       );
-    }, 50);
+    }, 30);
   }
 
   computeCategoryCounts(): void {
@@ -208,7 +257,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.categoryCounts = counts;
 
     const sorted = Object.keys(counts)
-      .filter(cat => cat !== 'All')
+      .filter((cat) => cat !== 'All')
       .sort((a, b) => {
         const indexA = this.getSortIndexForCategory(a);
         const indexB = this.getSortIndexForCategory(b);
@@ -223,40 +272,45 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     this.visibleProjects = [];
 
     this.combinedResults = [
-      ...this.visibleCategories.map(cat => ({ type: 'category' as const, value: cat }))
+      ...this.visibleCategories.map((cat) => ({ type: 'category' as const, value: cat }))
     ];
 
-    this.showDropdown = true;
+    if (this.searchTerm) {
+      this.showDropdown = true;
+    }
   }
 
   filterCategoryOptions(): void {
     const term = this.searchTerm.toLowerCase().trim();
 
-    const matchedCategories = this.filteredCategories.filter(cat =>
+    if (!term) {
+      this.showDropdown = false;
+      return;
+    }
+
+    const matchedCategories = this.filteredCategories.filter((cat) =>
       this.getCategoryLabel(cat).toLowerCase().includes(term)
     );
 
-    const matchedProjects = term
-      ? this.allProjects.filter(project =>
-        project.title.toLowerCase().includes(term)
-      )
-      : [];
+    const matchedProjects = this.allProjects.filter((project) =>
+      project.title.toLowerCase().includes(term)
+    );
 
     this.visibleCategories = matchedCategories;
     this.visibleProjects = matchedProjects;
 
     this.combinedResults = [
-      ...matchedCategories.map(cat => ({
+      ...matchedCategories.map((cat) => ({
         type: 'category' as const,
         value: cat
       })),
-      ...matchedProjects.map(project => ({
+      ...matchedProjects.map((project) => ({
         type: 'project' as const,
         value: project
       }))
     ];
 
-    this.showDropdown = true;
+    this.showDropdown = this.combinedResults.length > 0;
   }
 
   handleOutsideClick(event: MouseEvent): void {
@@ -272,7 +326,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
       : cat
         .toLowerCase()
         .split(' ')
-        .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(' ');
 
     if (!this.showCounts) return titleCase;
@@ -286,7 +340,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     return cat
       .toLowerCase()
       .split(' ')
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
   }
 
@@ -295,7 +349,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getSortIndexForCategory(cat: string): number {
-    const matchingProject = this.allProjects.find(p =>
+    const matchingProject = this.allProjects.find((p) =>
       p.projectPath?.toLowerCase().includes(cat.toLowerCase())
     );
 
