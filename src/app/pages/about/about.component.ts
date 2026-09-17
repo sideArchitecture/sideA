@@ -1,4 +1,5 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { gsap } from 'gsap';
 import { Title } from '@angular/platform-browser';
 import { FlipperFlagsService } from '../../services/flipper-flags.service';
@@ -13,6 +14,7 @@ export class AboutComponent implements OnInit, AfterViewInit {
   copiedPhone = false;
 
   constructor(
+    private route: ActivatedRoute,
     private titleService: Title,
     private flipperFlagsService: FlipperFlagsService
   ) {}
@@ -44,6 +46,18 @@ export class AboutComponent implements OnInit, AfterViewInit {
       duration: 0.8,
       delay: 0.4,
       ease: 'power2.out'
+    });
+
+    // Handle scroll to fragment if present (e.g., #leadership or #contact)
+    this.route.fragment.subscribe((fragment) => {
+      if (fragment) {
+        setTimeout(() => {
+          const targetEl = document.getElementById(fragment);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 300);
+      }
     });
   }
 

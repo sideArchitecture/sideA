@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {Router} from "@angular/router";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar-main',
@@ -10,17 +10,37 @@ export class NavbarMainComponent {
 
   constructor(public router: Router) {}
 
-  toggleNavbar() {
+  toggleNavbar(): void {
     const navbarCollapse = document.getElementById('navbarNav');
     if (navbarCollapse) {
-      navbarCollapse.classList.toggle('show'); // Toggle the 'show' class
+      navbarCollapse.classList.toggle('show');
     }
   }
 
-  closeNavbar() {
+  closeNavbar(): void {
     const navbarCollapse = document.getElementById('navbarNav');
     if (navbarCollapse) {
-      navbarCollapse.classList.remove('show'); // Ensure navbar closes when clicking a link
+      navbarCollapse.classList.remove('show');
+    }
+  }
+
+  onLogoClick(event: MouseEvent): void {
+    this.closeNavbar();
+    if (this.router.url === '/' || this.router.url.startsWith('/#')) {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      this.router.navigate(['/']).then(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  }
+
+  onHomeClick(event: MouseEvent): void {
+    this.closeNavbar();
+    if (this.router.url === '/' || this.router.url.startsWith('/#')) {
+      event.preventDefault();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
   }
 }
