@@ -7,10 +7,10 @@ This checklist outlines the roadmap for enhancing the user experience, starting 
 ## 1. Home Page UX Enhancements
 
 ### 1.1 Hero & Carousel Presentation
-- [ ] **1.1.1** Full-bleed / Cinematic Layout: Modernize carousel dimensions, aspect ratio, and framing for high-impact architectural visuals.
-- [ ] **1.1.2** Smooth Transitions & Visual Motion: Integrate refined transitions (e.g., cross-fade, subtle zoom/pan with GSAP or CSS).
-- [ ] **1.1.3** Slide Content Overlays: Add elegant typography overlays (project title, category tag, location, and direct view link) to each slide.
-- [ ] **1.1.4** Carousel Controls & Touch Gestures: Sleek, minimal pagination indicators, subtle next/prev controls, and touch swipe gestures for mobile.
+- [x] **1.1.1** Full-bleed / Cinematic Layout: Modernize carousel dimensions, aspect ratio, and framing for high-impact architectural visuals.
+- [x] **1.1.2** Smooth Transitions & Visual Motion: Integrate refined transitions (e.g., cross-fade, subtle zoom/pan with GSAP or CSS).
+- [x] **1.1.3** Slide Content Overlays: Add elegant typography overlays (project title, category tag, location, and direct view link) to each slide.
+- [x] **1.1.4** Carousel Controls & Touch Gestures: Sleek, minimal pagination indicators, subtle next/prev controls, and touch swipe gestures for mobile.
 
 ### 1.2 Dynamic Image & Asset Sourcing
 - [ ] **1.2.1** Image Server Integration: Connect home carousel dynamically to the image server / project manifests rather than hardcoded static paths.

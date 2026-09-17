@@ -1,17 +1,218 @@
-.carousel-image-container {
+.hero-carousel-wrapper {
   width: 100%;
-  height: 500px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: grey; /* Optional */
+  position: relative;
+
+  .carousel {
+    border-radius: 1.25rem;
+    overflow: hidden;
+  }
 }
 
-.carousel-image {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain; /* Ensures full image is visible */
+.hero-slide-container {
+  position: relative;
+  width: 100%;
+  height: clamp(400px, 68vh, 640px);
+  background-color: #121518;
+  overflow: hidden;
 }
 
+.hero-slide-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 42%;
+  transform: scale(1);
+  transition: transform 6.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
 
-// keep all images with same resolutions say 1980 * xxx
+// Subtle zoom motion on active slide
+.carousel-item.active .hero-slide-image {
+  transform: scale(1.05);
+}
+
+// Architectural scrim gradient overlay
+.hero-overlay-scrim {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(
+    to top,
+    rgba(12, 16, 22, 0.9) 0%,
+    rgba(12, 16, 22, 0.5) 45%,
+    rgba(12, 16, 22, 0.15) 75%,
+    rgba(12, 16, 22, 0.05) 100%
+  );
+  pointer-events: none;
+}
+
+// Caption content & typography
+.hero-slide-caption {
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2.75rem 3.25rem;
+  z-index: 5;
+
+  @media (max-width: 768px) {
+    padding: 1.5rem;
+  }
+
+  .caption-inner {
+    max-width: 740px;
+  }
+
+  .slide-meta {
+    .badge {
+      font-size: 0.72rem;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+  }
+
+  .slide-title {
+    font-size: clamp(1.5rem, 3.2vw, 2.5rem);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+  }
+
+  .slide-description {
+    font-size: clamp(0.9rem, 1.15vw, 1.05rem);
+    line-height: 1.5;
+    max-width: 600px;
+    font-weight: 300;
+  }
+
+  .btn-explore {
+    font-size: 0.88rem;
+    padding: 0.6rem 1.4rem;
+    transition: all 0.25s ease-in-out;
+
+    &:hover {
+      transform: translateX(4px);
+      background-color: #ffffff;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.25) !important;
+    }
+
+    i {
+      transition: transform 0.2s ease;
+    }
+    &:hover i {
+      transform: translateX(3px);
+    }
+  }
+}
+
+// Modern Slide Counter Badge
+.carousel-counter-badge {
+  top: 1.5rem;
+  right: 1.75rem;
+  z-index: 10;
+  background: rgba(15, 20, 25, 0.5);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.35rem 0.85rem;
+  border-radius: 50rem;
+  color: #ffffff;
+  font-family: 'Qanelas', sans-serif;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+
+  .current-num {
+    font-weight: 600;
+    color: #ffffff;
+  }
+  .divider {
+    margin: 0 0.3rem;
+    opacity: 0.4;
+  }
+  .total-num {
+    opacity: 0.6;
+  }
+}
+
+// Minimal Modern Indicators
+.custom-indicators {
+  bottom: 1.25rem;
+  margin-bottom: 0;
+  z-index: 10;
+  gap: 0.5rem;
+
+  .custom-indicator-pill {
+    width: 24px;
+    height: 3.5px;
+    border-radius: 4px;
+    border: none;
+    background-color: rgba(255, 255, 255, 0.35);
+    transition: all 0.35s ease;
+    opacity: 0.7;
+
+    &.active {
+      width: 44px;
+      background-color: #ffffff;
+      opacity: 1;
+    }
+  }
+}
+
+// Sleek Circular Nav Buttons
+.custom-nav-btn {
+  width: auto;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 10;
+
+  &.carousel-control-prev {
+    left: 1.25rem;
+  }
+  &.carousel-control-next {
+    right: 1.25rem;
+  }
+
+  .nav-btn-circle {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(15, 20, 25, 0.45);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 1.15rem;
+    transition: all 0.25s ease;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.95);
+      color: #111111;
+      transform: scale(1.08);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+  }
+}
+
+// Reveal nav controls on hover
+.hero-carousel-wrapper:hover .custom-nav-btn {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .custom-nav-btn {
+    display: none; // Fluid swipe on mobile
+  }
+
+  .custom-indicators .custom-indicator-pill {
+    width: 18px;
+    &.active {
+      width: 28px;
+    }
+  }
+}
