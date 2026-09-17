@@ -78,6 +78,7 @@
 
             <a
               routerLink="/about"
+              (click)="onProjectClick(0)"
               class="btn btn-outline-dark rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2"
             >
               <span>About SIDE A</span>
@@ -162,6 +163,7 @@
           <a
             [routerLink]="['/projects']"
             [queryParams]="{ category: 'All' }"
+            (click)="onProjectClick(i + 1)"
             class="btn btn-outline-light rounded-pill px-4 py-2 fw-medium d-inline-flex align-items-center gap-2 btn-all-projects"
           >
             <span>All Projects</span>
@@ -196,6 +198,7 @@
             <a
               routerLink="/about"
               fragment="leadership"
+              (click)="onProjectClick(projects.length + 1)"
               class="btn btn-dark rounded-pill px-5 py-3 fw-medium d-inline-flex align-items-center gap-2 shadow"
             >
               <span>Connect with SIDE A</span>
@@ -205,6 +208,7 @@
             <a
               [routerLink]="['/projects']"
               [queryParams]="{ category: 'All' }"
+              (click)="onProjectClick(projects.length + 1)"
               class="btn btn-outline-dark rounded-pill px-5 py-3 fw-medium d-inline-flex align-items-center gap-2"
             >
               <span>View Full Portfolio</span>
