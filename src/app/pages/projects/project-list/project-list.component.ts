@@ -2,8 +2,7 @@ import {
   AfterViewInit,
   Component,
   OnDestroy,
-  OnInit,
-  NgZone
+  OnInit
 } from '@angular/core';
 import { Project } from '../../../models/project.model';
 import { ProjectService } from '../../../services/project.service';
@@ -42,8 +41,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private flipperFlagsService: FlipperFlagsService,
-    private titleService: Title,
-    private ngZone: NgZone
+    private titleService: Title
   ) {}
 
   ngOnInit(): void {
@@ -51,23 +49,32 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     document.addEventListener('click', this.handleOutsideClick.bind(this));
 
     this.projectService.getAllProjects().subscribe(projects => {
-      this.allProjects = projects;
+      this.allProjects = projects || [];
       this.isLoading = false;
       this.computeCategoryCounts();
 
       this.route.queryParamMap.subscribe(params => {
-        const category = params.get('category');
+        const categoryParam = params.get('category');
         const search = params.get('search');
 
-        this.selectedCategory = category && this.filteredCategories.includes(category)
-          ? category
-          : (this.filteredCategories.includes('featured') ? 'featured' : 'All');
+        let matchedCategory = 'All';
+        if (categoryParam) {
+          const found = this.filteredCategories.find(
+            c => c.toLowerCase() === categoryParam.toLowerCase()
+          );
+          if (found) {
+            matchedCategory = found;
+          }
+        }
 
-        if (!category) {
+        this.selectedCategory = matchedCategory;
+
+        if (!categoryParam) {
           this.router.navigate([], {
             relativeTo: this.route,
             queryParams: { category: this.selectedCategory },
-            queryParamsHandling: 'merge'
+            queryParamsHandling: 'merge',
+            replaceUrl: true
           });
         }
 
@@ -101,13 +108,14 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   filterProjects(): void {
-    this.isLoading = true;
-    this.projects = this.selectedCategory === 'All'
-      ? [...this.allProjects]
-      : this.allProjects.filter(project =>
+    if (this.selectedCategory === 'All') {
+      this.projects = [...this.allProjects];
+    } else {
+      this.projects = this.allProjects.filter(project =>
         Array.isArray(project.category) &&
-        project.category.includes(this.selectedCategory as ProjectCategory)
+        project.category.some(c => c.toLowerCase() === this.selectedCategory.toLowerCase())
       );
+    }
 
     this.animateCards();
 
@@ -126,10 +134,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
         setTimeout(restoreScrollIfReady, 50);
       }
     };
-    setTimeout(() => {
-      this.isLoading = false;
-      restoreScrollIfReady();
-    }, 0);
+    setTimeout(restoreScrollIfReady, 50);
   }
 
   selectCategoryName(category: string): void {
@@ -180,14 +185,12 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   animateCards(): void {
     setTimeout(() => {
-      gsap.from('.project-card', {
-        opacity: 0,
-        y: 25,
-        duration: 0.6,
-        ease: 'power2.out',
-        stagger: 0.08
-      });
-    }, 10);
+      gsap.fromTo(
+        '.project-card',
+        { opacity: 0, y: 15 },
+        { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.04 }
+      );
+    }, 50);
   }
 
   computeCategoryCounts(): void {
