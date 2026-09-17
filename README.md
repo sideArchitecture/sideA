@@ -21,3 +21,8 @@ ng serve
 
 ## in dev mode to run server
 npm run startdev
+
+
+if images not showin up in dev, map the images url properly at
+`src/environments/environment.ts`
+
