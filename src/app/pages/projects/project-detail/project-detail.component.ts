@@ -1,24 +1,24 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ProjectService } from '../../../services/project.service';
 import { Project } from '../../../models/project.model';
 import { gsap } from 'gsap';
-import {Title} from "@angular/platform-browser";
-import {environment} from "../../../../environments/environment";
-import {ProjectCategory} from "../../../models/project-category.enum";
-import {FlipperFlagsService} from "../../../services/flipper-flags.service";
-
+import { Title } from '@angular/platform-browser';
+import { environment } from '../../../../environments/environment';
+import { ProjectCategory } from '../../../models/project-category.enum';
+import { FlipperFlagsService } from '../../../services/flipper-flags.service';
 
 @Component({
   selector: 'app-project-detail',
   templateUrl: './project-detail.component.html',
   styleUrls: ['./project-detail.component.scss']
 })
-export class ProjectDetailComponent implements OnInit {
+export class ProjectDetailComponent implements OnInit, AfterViewInit {
   project: Project | undefined;
   validImages: string[] = [];
   isLoading = true;
   selectedImageIndex: number | null = null;
+  selectedCategory: string | null = null;
 
   @ViewChild('zoomRef') zoomRef: any;
 
@@ -27,19 +27,11 @@ export class ProjectDetailComponent implements OnInit {
     private projectService: ProjectService,
     private router: Router,
     private titleService: Title,
-    private flipperFlagsService: FlipperFlagsService,
-
+    private flipperFlagsService: FlipperFlagsService
   ) {}
-
-  selectedCategory: string | null = null;
-
-  fromHex1(hex: string): string {
-    return Buffer.from(hex, 'base64url').toString('utf8');
-  }
 
   fromHex(slug: string): string {
     const padded = slug + '='.repeat((4 - slug.length % 4) % 4);
-
     return atob(
       padded
         .replace(/-/g, '+')
@@ -48,14 +40,13 @@ export class ProjectDetailComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    var isUrlBase64Enabled= this.flipperFlagsService.isEnabled('urlBase64');
-
+    const isUrlBase64Enabled = this.flipperFlagsService.isEnabled('urlBase64');
     const slugHex = this.route.snapshot.paramMap.get('id') ?? '';
-    var slug = isUrlBase64Enabled == true ?   this.fromHex(slugHex) : slugHex;
+    const slug = isUrlBase64Enabled ? this.fromHex(slugHex) : slugHex;
     this.selectedCategory = this.route.snapshot.queryParamMap.get('category');
 
     if (slug) {
-      this.projectService.getProjectDetail(slug).subscribe(data => {
+      this.projectService.getProjectDetail(slug).subscribe((data) => {
         if (data) {
           this.project = data;
           this.isLoading = false;
@@ -74,22 +65,19 @@ export class ProjectDetailComponent implements OnInit {
     }
   }
 
-
-
   ngAfterViewInit(): void {
-
-    gsap.from('.project-profile', {
+    gsap.from('.project-profile-card', {
       opacity: 0,
-      y: 40,
-      duration: 1,
+      y: 30,
+      duration: 0.8,
       ease: 'power2.out'
     });
   }
 
   getCategoryDisplay(categories: ProjectCategory[]): string {
     return categories
-      .filter(category => category !== 'featured')
-      .map(category => this.toTitleCase(category))
+      .filter((category) => category !== 'featured')
+      .map((category) => this.toTitleCase(category))
       .join(', ');
   }
 
@@ -97,17 +85,16 @@ export class ProjectDetailComponent implements OnInit {
     return value
       .replace(/_/g, ' ')
       .toLowerCase()
-      .replace(/\b\w/g, char => char.toUpperCase());
+      .replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
   getCoverImageUrl(url: string): string {
     const isDev = !environment.production;
-    const localBase = environment.imageBaseUrl;;
+    const localBase = environment.imageBaseUrl;
     return isDev
       ? url.replace('https://sidearchitecture.github.io/sideAImages/images/projects', localBase)
       : url;
   }
-
 
   loadValidImages(): void {
     if (!this.project?.imageUrls?.length) return;
@@ -118,43 +105,40 @@ export class ProjectDetailComponent implements OnInit {
 
     const isDev = !environment.production;
     const localBase = environment.imageBaseUrl;
-    // const localBase = 'http://localhost:8081/projects';
 
     this.project.imageUrls.forEach((path, index) => {
-        const rewrittenPath = isDev
-          ? path.replace('https://sidearchitecture.github.io/sideAImages/images/projects', localBase)
-          : path;
+      const rewrittenPath = isDev
+        ? path.replace('https://sidearchitecture.github.io/sideAImages/images/projects', localBase)
+        : path;
 
-        const img = new Image();
-        img.onload = () => {
-          valid[index] = rewrittenPath;
-          loadedCount++;
-          if (loadedCount === imageCount) {
-            this.validImages = valid.filter(Boolean) as string[];
-            this.animateImages();
-          }
-        };
-        img.onerror = () => {
-          loadedCount++;
-          if (loadedCount === imageCount) {
-            this.validImages = valid.filter(Boolean) as string[];
-            this.animateImages();
-          }
-        };
-        img.src = rewrittenPath;
-      }
-    );
+      const img = new Image();
+      img.onload = () => {
+        valid[index] = rewrittenPath;
+        loadedCount++;
+        if (loadedCount === imageCount) {
+          this.validImages = valid.filter(Boolean) as string[];
+          this.animateImages();
+        }
+      };
+      img.onerror = () => {
+        loadedCount++;
+        if (loadedCount === imageCount) {
+          this.validImages = valid.filter(Boolean) as string[];
+          this.animateImages();
+        }
+      };
+      img.src = rewrittenPath;
+    });
   }
-
 
   private animateImages(): void {
     setTimeout(() => {
-      gsap.from('.project-image', {
+      gsap.from('.image-wrapper', {
         opacity: 0,
-        scale: 0.95,
-        duration: 2,
+        y: 20,
+        duration: 0.6,
         ease: 'power2.out',
-        stagger: 0.4
+        stagger: 0.15
       });
     }, 10);
   }

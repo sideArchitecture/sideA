@@ -38,5 +38,8 @@ This checklist outlines the roadmap for enhancing the user experience, starting 
 
 ## 2. Projects & Portfolio Experience (Upcoming Milestones)
 - [ ] **2.1** Project Listing & Filter Refinements (masonry layout, smooth filtering, category chips).
-- [ ] **2.2** Project Detail Page & Gallery Viewer (pinch-zoom, high-res full-screen lightbox, architectural drawings section).
+- [x] **2.2** Project Detail Page & Gallery Viewer:
+  - [x] High-impact Cover Image Hero Banner with typography overlay (title, subtitle, category tag, location, year).
+  - [x] Structured architectural narrative and project specifications card.
+  - [x] Interactive photographs gallery grid with pinch-zoom fullscreen lightbox.
 - [ ] **2.3** About Us & Studio Profile Enhancements.

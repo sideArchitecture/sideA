@@ -1,152 +1,163 @@
-<div *ngIf="isLoading == false">
+<div *ngIf="!isLoading && project" class="container py-4 project-detail-page">
 
-<span class="float-end">
-  <a class="text-secondary"
-     [routerLink]="['/projects']"
-     [queryParams]="{ category: selectedCategory }">
-    <i class="bi bi-arrow-left-circle-fill"></i>
-    Back
-  </a>
+  <!-- Top Navigation Bar -->
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <a
+      class="text-secondary text-decoration-none fw-medium d-inline-flex align-items-center gap-2 btn-back-link"
+      [routerLink]="['/projects']"
+      [queryParams]="{ category: selectedCategory || 'All' }"
+    >
+      <i class="bi bi-arrow-left-circle-fill fs-5"></i>
+      <span>Back to Projects</span>
+    </a>
+  </div>
 
-</span>
-  <br/>
+  <!-- Project Profile Header (Image + Title/Description) -->
+  <div class="row align-items-center mb-5 project-profile-card">
+    <!-- Left: Cover Image Display -->
+    <div class="col-md-4 text-center mb-4 mb-md-0">
+      <img
+        [src]="getCoverImageUrl(project.imageUrl)"
+        [alt]="project.title"
+        class="img-fluid project-cover shadow-sm"
+      />
+    </div>
 
-<div *ngIf="isLoading" class=" mt-5">
+    <div class="col-md-1 d-none d-md-block"></div>
+
+    <!-- Right: Title & Description -->
+    <div class="col-md-7">
+      <div *ngIf="project.category?.length" class="mb-2">
+        <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-2 py-1">
+          {{ getCategoryDisplay(project.category ?? []) }}
+        </span>
+      </div>
+
+      <h1 class="h2 text-secondary fw-bold mb-3">
+        {{ project.title }}
+      </h1>
+
+      <p class="text-secondary custom-text justify-text lead fs-6 mb-0">
+        {{ project.description }}
+      </p>
+    </div>
+  </div>
+
+  <!-- Architectural Concept & Project Specs Row -->
+  <div class="row g-4 mb-5">
+    <!-- Left Column: Story / Notes -->
+    <div class="col-lg-7" *ngIf="project.notes">
+      <h4 class="text-secondary fw-semibold mb-3">Architectural Concept</h4>
+      <p class="text-secondary lead fs-6 project-notes-text justify-text custom-text">
+        {{ project.notes }}
+      </p>
+    </div>
+
+    <!-- Right Column: Specs Card -->
+    <div [class.col-lg-5]="project.notes" [class.col-lg-8]="!project.notes" [class.mx-auto]="!project.notes">
+      <div class="card border-0 shadow-sm rounded-4 p-4 bg-light project-specs-card">
+        <h5 class="text-secondary fw-bold mb-3 border-bottom pb-2">Project Details</h5>
+
+        <ul class="list-unstyled mb-0 d-flex flex-column gap-2 text-secondary">
+          <li *ngIf="project.client" class="d-flex justify-content-between">
+            <span class="text-muted">Client:</span>
+            <span class="fw-medium text-end">{{ project.client }}</span>
+          </li>
+          <li *ngIf="project.designStyle" class="d-flex justify-content-between">
+            <span class="text-muted">Design Style:</span>
+            <span class="fw-medium text-end">{{ project.designStyle | titlecase }}</span>
+          </li>
+          <li *ngIf="project.builtStatus" class="d-flex justify-content-between">
+            <span class="text-muted">Status:</span>
+            <span class="fw-medium text-end">{{ project.builtStatus | titlecase }}</span>
+          </li>
+          <li *ngIf="project.year" class="d-flex justify-content-between">
+            <span class="text-muted">Year:</span>
+            <span class="fw-medium text-end">{{ project.year }}</span>
+          </li>
+          <li *ngIf="project.location" class="d-flex justify-content-between">
+            <span class="text-muted">Location:</span>
+            <span class="fw-medium text-end">{{ project.location }}</span>
+          </li>
+          <li *ngIf="project.category?.length" class="d-flex justify-content-between">
+            <span class="text-muted">Category:</span>
+            <span class="fw-medium text-end">{{ getCategoryDisplay(project.category ?? []) }}</span>
+          </li>
+        </ul>
+
+        <div *ngIf="project.brochureLink" class="mt-3 pt-3 border-top text-center">
+          <a
+            [href]="project.brochureLink"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline-secondary rounded-pill w-100 d-inline-flex align-items-center justify-content-center gap-2"
+          >
+            <i class="bi bi-file-earmark-pdf-fill"></i>
+            <span>Open Brochure</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gallery Grid Section -->
+  <div *ngIf="validImages.length > 0" class="project-gallery-section">
+    <div class="d-flex align-items-center justify-content-between mb-4 border-bottom pb-2">
+      <h4 class="text-secondary fw-semibold mb-0">Project Gallery</h4>
+      <span class="text-muted small">{{ validImages.length }} Photographs</span>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-6" *ngFor="let img of validImages; let i = index">
+        <div class="image-wrapper shadow-sm" (click)="openLightbox(i)">
+          <img [src]="img" [alt]="project.title + ' photo ' + (i + 1)" class="project-image">
+          <div class="image-hover-overlay">
+            <i class="bi bi-arrows-fullscreen"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Back Link -->
+  <div class="text-center mt-5 pt-4">
+    <a
+      class="text-secondary text-decoration-none fw-medium d-inline-flex align-items-center gap-2 btn-back-link"
+      [routerLink]="['/projects']"
+      [queryParams]="{ category: selectedCategory || 'All' }"
+    >
+      <i class="bi bi-arrow-left-circle-fill fs-5"></i>
+      <span>Back to Projects</span>
+    </a>
+  </div>
+
+  <!-- Pinch-Zoom Fullscreen Lightbox -->
+  <div class="lightbox-overlay"
+       *ngIf="selectedImageIndex !== null"
+       (swipeleft)="nextImage()"
+       (swiperight)="prevImage()">
+    <div class="lightbox-content">
+      <button class="lightbox-close" (click)="closeLightbox()">&times;</button>
+      <button class="lightbox-nav-side left" (click)="prevImage()" [disabled]="selectedImageIndex === 0">&lsaquo;</button>
+      <button class="lightbox-nav-side right" (click)="nextImage()" [disabled]="selectedImageIndex === validImages.length - 1">&rsaquo;</button>
+
+      <pinch-zoom #zoomRef [disablePan]="false">
+        <img [src]="validImages[selectedImageIndex!]" alt="Full view" class="lightbox-image">
+      </pinch-zoom>
+
+      <div class="lightbox-nav-row">
+        <button class="lightbox-nav-bottom" (click)="prevImage()" [disabled]="selectedImageIndex === 0">&lsaquo;</button>
+        <button class="lightbox-nav-bottom" (click)="nextImage()" [disabled]="selectedImageIndex === validImages.length - 1">&rsaquo;</button>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Loading State -->
+<div *ngIf="isLoading" class="container text-center py-5">
+  <div class="spinner-grow text-secondary my-4" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
   <p class="text-muted">Loading project details...</p>
 </div>
-
-  <div class="row">
-    <div class="container mt-4 project-profile" *ngIf="project && !isLoading">
-      <div class="row align-items-center">
-        <div class="col-md-4 ">
-          <img
-            [src]="getCoverImageUrl(project.imageUrl)"
-            [alt]="project.title"
-            class="img-fluid project-cover shadow-sm"
-          >
-          <br/>
-          <br/>
-        </div>
-        <div class="col-md-1"></div>
-        <div class="col-md-7">
-          <h2 class="text-secondary">{{ project.title  }}</h2>
-          <p class="text-secondary justify-text custom-text">
-            {{ project.description }}
-          </p>
-
-
-        </div>
-      </div>
-    </div>
-  </div>
-
-<div class="container mt-4" *ngIf="project?.notes">
-  <p class="text-muted">{{ project?.notes }}</p>
-  <br/>
-
-  <div class="text-secondary">
-    <p *ngIf="project?.client"><strong>Client:</strong> {{project?.client }}</p>
-    <p *ngIf="project?.designStyle"><strong>Design Style:</strong> {{project?.designStyle | titlecase}}</p>
-    <p *ngIf="project?.builtStatus"><strong>Status:</strong> {{project?.builtStatus | titlecase}}</p>
-    <p *ngIf="project?.year"><strong>Year:</strong> {{project?.year}}</p>
-    <p *ngIf="project?.location"><strong>Location:</strong> {{project?.location}}</p>
-    <p *ngIf="project?.category?.length">
-      <strong>Category:</strong>
-      {{ getCategoryDisplay(project?.category ?? []) }}
-    </p>
-<!--    <p *ngIf="project?.brochureLink"><strong>Brochure:</strong> {{project?.brochureLink}}</p>-->
-<!--    <a *ngIf="project?.brochureLink" href={{project?.brochureLink}}> <strong>Check Brochure</strong> </a>-->
-
-    <a
-      *ngIf="project?.brochureLink"
-      [href]="project?.brochureLink"
-      target="_blank"
-      rel="noopener noreferrer"
-      class="text-secondary "
-      style="text-decoration: none"
-    >
-      <i class="bi bi-file-earmark-pdf-fill"></i>
-      <strong> Open Brochure</strong>
-    </a>
-
-
-<!--    <p *ngIf="project?.category"><strong>Category:</strong> {{project?.category}}</p>-->
-  </div>
-
-  <br/>
-</div>
-
-<div class="container mt-4" *ngIf="validImages.length > 0">
-  <div class="row">
-    <div class="col-md-6 mb-4" *ngFor="let img of validImages; let i = index">
-      <div class="image-wrapper" (click)="openLightbox(i)">
-        <img [src]="img" alt="Project image" class="project-image">
-      </div>
-    </div>
-  </div>
-</div>
-
-<div class="lightbox-overlay"
-     *ngIf="selectedImageIndex !== null"
-     (swipeleft)="nextImage()"
-     (swiperight)="prevImage()">
-  <div class="lightbox-content">
-    <button class="lightbox-close" (click)="closeLightbox()">×</button>
-    <button class="lightbox-nav-side left" (click)="prevImage()" [disabled]="selectedImageIndex === 0">‹</button>
-    <button class="lightbox-nav-side right" (click)="nextImage()" [disabled]="selectedImageIndex === validImages.length - 1">›</button>
-
-    <pinch-zoom #zoomRef [disablePan]="false">
-      <img [src]="validImages[selectedImageIndex!]" alt="Full view" class="lightbox-image">
-    </pinch-zoom>
-
-    <div class="lightbox-nav-row">
-      <button class="lightbox-nav-bottom" (click)="prevImage()" [disabled]="selectedImageIndex === 0">‹</button>
-      <button class="lightbox-nav-bottom" (click)="nextImage()" [disabled]="selectedImageIndex === validImages.length - 1">›</button>
-    </div>
-  </div>
-</div>
-
-<div class="text-center mt-5" *ngIf="validImages.length > 5">
-
-<a class="text-secondary"
-   [routerLink]="['/projects']"
-   [queryParams]="{ category: selectedCategory }">
-  <i class="bi bi-arrow-left-circle-fill"></i>
-  Back
-</a>
-
-  <br/>
-  <br/>
-  <br/>
-  <br/>
-</div>
-
-
-</div>
-
-
-<div *ngIf="isLoading == true">
-
-  <br/>
-  <br/>
-
-
-
-
-  <div class="container text-muted"><h5>Loading, Please wait..
-    <!--    <span class="spinner-border text-secondary" role="status">-->
-    <!--      <span class="visually-hidden">Loading...</span>-->
-    <!--    </span>-->
-
-    <div class="spinner-grow text-secondary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-
-  </h5>
-  </div>
-
-</div>
-
-
-
-
