@@ -42,7 +42,7 @@ export class NavbarMainComponent {
     }
 
     // 3. Fallback scrollIntoView on first section if present
-    const firstSection = document.querySelector('.fullscreen-project-section, .about-snap-section');
+    const firstSection = document.querySelector('.fullscreen-project-section, .about-snap-section, .projects-page-container');
     if (firstSection) {
       firstSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -64,6 +64,21 @@ export class NavbarMainComponent {
     this.closeNavbar();
     if (this.router.url === '/' || this.router.url.startsWith('/#')) {
       event.preventDefault();
+      this.scrollToTop();
+    }
+  }
+
+  onAboutClick(event: MouseEvent): void {
+    this.closeNavbar();
+    if (this.router.url.startsWith('/about')) {
+      event.preventDefault();
+      this.scrollToTop();
+    }
+  }
+
+  onProjectsClick(event: MouseEvent): void {
+    this.closeNavbar();
+    if (this.router.url.startsWith('/projects')) {
       this.scrollToTop();
     }
   }

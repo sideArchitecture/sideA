@@ -40,7 +40,7 @@
             [routerLink]="['/projects']"
             [queryParams]="{ category: 'All' }"
             [class.active]="router.url.startsWith('/projects')"
-            (click)="closeNavbar()"
+            (click)="onProjectsClick($event)"
           >
             Projects
           </a>
@@ -51,7 +51,7 @@
             class="nav-link"
             routerLink="/about"
             routerLinkActive="active"
-            (click)="closeNavbar()"
+            (click)="onAboutClick($event)"
           >
             About Us
           </a>
