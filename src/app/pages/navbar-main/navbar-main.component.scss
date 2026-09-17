@@ -8,18 +8,20 @@
   transition: all 0.3s ease;
   z-index: 1050;
 
-  .brand-logo {
-    height: 36px;
-    width: auto;
-    object-fit: contain;
+  .navbar-brand {
+    padding: 0;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+
+    &:hover {
+      opacity: 0.85;
+      transform: scale(1.02);
+    }
   }
 
-  .brand-title {
-    font-family: 'Qanelas', sans-serif;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    color: #333333;
-    font-size: 0.92rem;
+  .brand-logo {
+    height: 38px;
+    width: auto;
+    object-fit: contain;
   }
 
   .nav-link {
