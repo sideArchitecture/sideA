@@ -1,7 +1,7 @@
 <div *ngIf="!isLoading && project" class="container py-4 project-detail-page">
 
-  <!-- Top Navigation Bar -->
-  <div class="d-flex align-items-center justify-content-between mb-4">
+  <!-- Top Navigation (Back Button on Top Right) -->
+  <div class="d-flex justify-content-end mb-4">
     <a
       class="text-secondary text-decoration-none fw-medium d-inline-flex align-items-center gap-2 btn-back-link"
       [routerLink]="['/projects']"
@@ -12,21 +12,21 @@
     </a>
   </div>
 
-  <!-- Project Profile Header (Image + Title/Description) -->
-  <div class="row align-items-center mb-5 project-profile-card">
-    <!-- Left: Cover Image Display -->
-    <div class="col-md-4 text-center mb-4 mb-md-0">
-      <img
-        [src]="getCoverImageUrl(project.imageUrl)"
-        [alt]="project.title"
-        class="img-fluid project-cover shadow-sm"
-      />
+  <!-- Top Profile Row (Aligned with 7 / 5 column grid) -->
+  <div class="row g-4 mb-5 align-items-start project-profile-card">
+    <!-- Left: Image (col-lg-7, flush left with Architectural Concept) -->
+    <div class="col-lg-7">
+      <div class="project-cover-container">
+        <img
+          [src]="getCoverImageUrl(project.imageUrl)"
+          [alt]="project.title"
+          class="img-fluid project-cover shadow-sm"
+        />
+      </div>
     </div>
 
-    <div class="col-md-1 d-none d-md-block"></div>
-
-    <!-- Right: Title & Description -->
-    <div class="col-md-7">
+    <!-- Right: Title & Description (col-lg-5, flush left with Project Details card) -->
+    <div class="col-lg-5">
       <div *ngIf="project.category?.length" class="mb-2">
         <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-2 py-1">
           {{ getCategoryDisplay(project.category ?? []) }}
@@ -43,9 +43,9 @@
     </div>
   </div>
 
-  <!-- Architectural Concept & Project Specs Row -->
+  <!-- Architectural Concept & Project Specs Row (7 / 5 column grid) -->
   <div class="row g-4 mb-5">
-    <!-- Left Column: Story / Notes -->
+    <!-- Left Column: Story / Notes (col-lg-7) -->
     <div class="col-lg-7" *ngIf="project.notes">
       <h4 class="text-secondary fw-semibold mb-3">Architectural Concept</h4>
       <p class="text-secondary lead fs-6 project-notes-text justify-text custom-text">
@@ -53,7 +53,7 @@
       </p>
     </div>
 
-    <!-- Right Column: Specs Card -->
+    <!-- Right Column: Specs Card (col-lg-5) -->
     <div [class.col-lg-5]="project.notes" [class.col-lg-8]="!project.notes" [class.mx-auto]="!project.notes">
       <div class="card border-0 shadow-sm rounded-4 p-4 bg-light project-specs-card">
         <h5 class="text-secondary fw-bold mb-3 border-bottom pb-2">Project Details</h5>

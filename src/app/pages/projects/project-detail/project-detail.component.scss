@@ -11,9 +11,16 @@
   }
 }
 
-// Cover image
+// Cover image container & image
+.project-cover-container {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+}
+
 .project-cover {
-  max-width: 280px;
+  max-width: 320px;
   width: 100%;
   height: auto;
   border-radius: 12px;
@@ -29,7 +36,7 @@
   text-align: justify;
 }
 
-// Specs card
+// Specs card & Narrative
 .project-specs-card {
   border: 1px solid rgba(0, 0, 0, 0.06);
   background: #fbfbfb;
