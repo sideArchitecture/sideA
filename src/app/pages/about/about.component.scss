@@ -1,5 +1,6 @@
 .about-page-container {
-  max-width: 1040px;
+  max-width: 1440px;
+  margin: 0 auto;
 }
 
 .tracking-wide {
@@ -14,17 +15,17 @@
 }
 
 .manifesto-card {
-  max-width: 860px;
+  max-width: 1040px;
   border: 1px solid rgba(0, 0, 0, 0.05);
 
   .manifesto-lead {
-    font-size: 1.15rem;
+    font-size: 1.18rem;
     line-height: 1.8;
     font-weight: 400;
   }
 
   .manifesto-body {
-    font-size: 1rem;
+    font-size: 1.02rem;
     line-height: 1.75;
     color: #555555;
   }
@@ -54,7 +55,7 @@
   border: 1px solid rgba(0, 0, 0, 0.05);
 
   .architect-photo-wrapper {
-    max-width: 250px;
+    max-width: 280px;
     img {
       width: 100%;
       height: auto;
@@ -64,7 +65,7 @@
   }
 
   .custom-text {
-    font-size: 0.98rem;
+    font-size: 1rem;
     line-height: 1.75;
     color: #444444;
   }
