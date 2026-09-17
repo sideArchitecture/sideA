@@ -37,24 +37,18 @@ This checklist outlines the roadmap for enhancing the user experience, starting 
 
 ---
 
-<<<<<<< Updated upstream
 ## 2. Projects & Portfolio Experience
 - [x] **2.1** Project Listing & Filter Refinements:
   - [x] Architectural portfolio header with curated subtitle.
   - [x] Horizontal category filter pills bar with instant project count badges.
   - [x] Responsive project cards with 4:3 cover images, category tags, location/year metadata, and hover elevation.
-=======
-## 2. Projects & Portfolio Experience (Upcoming Milestones)
-- [x] **2.1** Project Listing & Filter Refinements:
-  - [x] Architectural portfolio header with curated subtitle.
-  - [x] Horizontal category filter pills bar with instant project count badges.
-  - [x] Responsive 3-column project cards with 4:3 cover images, category tags, location/year metadata, and hover elevation.
->>>>>>> Stashed changes
   - [x] Instant search & autocomplete dropdown.
+  - [x] Silky smooth GSAP cross-fade exit/entrance transitions when switching category tags without jerkiness.
 - [x] **2.2** Project Detail Page & Gallery Viewer:
   - [x] Compact cover image card flush-aligned with architectural concept narrative.
   - [x] Snug, vertically-centered project title, category tag, and summary.
   - [x] Structured architectural concept narrative alongside project specifications card.
+  - [x] Dedicated gallery loading spinner placeholder during network downloads in production.
   - [x] Interactive photographs gallery grid with pinch-zoom fullscreen lightbox.
 - [x] **2.3** About Us & Studio Profile Enhancements:
   - [x] Studio manifesto card matching home page philosophy typography.

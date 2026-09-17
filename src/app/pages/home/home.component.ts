@@ -52,6 +52,7 @@ interface WireframeMesh {
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChildren('sectionRef') sectionRefs!: QueryList<ElementRef<HTMLElement>>;
   @ViewChild('blueprintCanvas', { static: false }) canvasRef?: ElementRef<HTMLCanvasElement>;
+  @ViewChild('closingCanvas', { static: false }) closingCanvasRef?: ElementRef<HTMLCanvasElement>;
 
   activeSectionIndex = 0;
   private observer?: IntersectionObserver;
@@ -66,6 +67,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private currentRotY = 0;
   private meshes: WireframeMesh[] = [];
   private particles: { x: number; y: number; z: number; vx: number; vy: number }[] = [];
+  private closingParticles: { x: number; y: number; z: number; vx: number; vy: number }[] = [];
 
   projects: FullpageProject[] = [
     {
@@ -155,7 +157,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.setupIntersectionObserver();
-    this.initInteractiveCanvas();
+    this.initInteractiveCanvases();
   }
 
   ngOnDestroy(): void {
@@ -201,33 +203,36 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  // --- Interactive Architectural Blueprint 3D Canvas ---
-  private initInteractiveCanvas(): void {
-    if (!this.canvasRef?.nativeElement) return;
-    const canvas = this.canvasRef.nativeElement;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-
+  // --- Interactive Architectural 3D Canvases ---
+  private initInteractiveCanvases(): void {
     this.initMeshes();
     this.initParticles();
 
-    const resizeCanvas = () => {
-      canvas.width = canvas.parentElement?.clientWidth || window.innerWidth;
-      canvas.height = canvas.parentElement?.clientHeight || window.innerHeight;
+    const canvas1 = this.canvasRef?.nativeElement;
+    const canvas2 = this.closingCanvasRef?.nativeElement;
+
+    const resizeCanvases = () => {
+      if (canvas1) {
+        canvas1.width = canvas1.parentElement?.clientWidth || window.innerWidth;
+        canvas1.height = canvas1.parentElement?.clientHeight || window.innerHeight;
+      }
+      if (canvas2) {
+        canvas2.width = canvas2.parentElement?.clientWidth || window.innerWidth;
+        canvas2.height = canvas2.parentElement?.clientHeight || window.innerHeight;
+      }
     };
 
-    resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    resizeCanvases();
+    window.addEventListener('resize', resizeCanvases);
 
     // Mouse movement tracking
     const handleMouseMove = (e: MouseEvent) => {
-      const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX - rect.left) / rect.width - 0.5;
-      const y = (e.clientY - rect.top) / rect.height - 0.5;
-      this.targetRotY = x * 0.8;
-      this.targetRotX = -y * 0.8;
-      this.mouseX = e.clientX - rect.left;
-      this.mouseY = e.clientY - rect.top;
+      const x = e.clientX / window.innerWidth - 0.5;
+      const y = e.clientY / window.innerHeight - 0.5;
+      this.targetRotY = x * 0.85;
+      this.targetRotX = -y * 0.85;
+      this.mouseX = e.clientX;
+      this.mouseY = e.clientY;
     };
 
     window.addEventListener('mousemove', handleMouseMove);
@@ -239,16 +244,26 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentRotX += (this.targetRotX - this.currentRotX) * 0.05;
         this.currentRotY += (this.targetRotY - this.currentRotY) * 0.05;
 
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Render Canvas 1 (First Section: Blueprint Grid + 3D Wireframe Lines + Mouse tracking + Particles)
+        if (canvas1) {
+          const ctx1 = canvas1.getContext('2d');
+          if (ctx1) {
+            ctx1.clearRect(0, 0, canvas1.width, canvas1.height);
+            this.drawArchitecturalGrid(ctx1, canvas1.width, canvas1.height, time);
+            this.drawWireframeMeshes(ctx1, this.meshes, canvas1.width, canvas1.height, time);
+            this.drawParticles(ctx1, this.particles, canvas1.width, canvas1.height);
+          }
+        }
 
-        // Background subtle grid
-        this.drawArchitecturalGrid(ctx, canvas.width, canvas.height, time);
-
-        // 3D Wireframe Architectural Structures
-        this.drawWireframeMeshes(ctx, canvas.width, canvas.height, time);
-
-        // Floating blueprint coordinate nodes
-        this.drawParticles(ctx, canvas.width, canvas.height);
+        // Render Canvas 2 (Last Section: Mouse Animation with Floating Coordinate Particles & Ambient Cursor Light only)
+        if (canvas2) {
+          const ctx2 = canvas2.getContext('2d');
+          if (ctx2) {
+            ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+            this.drawCursorAura(ctx2, canvas2.width, canvas2.height);
+            this.drawParticles(ctx2, this.closingParticles, canvas2.width, canvas2.height);
+          }
+        }
 
         this.animFrameId = requestAnimationFrame(render);
       };
@@ -258,14 +273,13 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   private initMeshes(): void {
-    // 1. Primary Tower / Cantilevered Structure
+    // Primary Tower / Cantilevered Structure (Section 0 Lines)
     const tower: WireframeMesh = {
-      center: { x: 180, y: 0, z: 0 },
+      center: { x: 190, y: -10, z: 0 },
       rotX: 0,
       rotY: 0,
       rotZ: 0,
       vertices: [
-        // Base Box
         { x: -100, y: -160, z: -80 },
         { x: 100, y: -160, z: -80 },
         { x: 100, y: 160, z: -80 },
@@ -274,7 +288,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         { x: 100, y: -160, z: 80 },
         { x: 100, y: 160, z: 80 },
         { x: -100, y: 160, z: 80 },
-        // Cantilever Upper Slab
         { x: -160, y: -80, z: 140 },
         { x: 160, y: -80, z: 140 },
         { x: 160, y: -40, z: 140 },
@@ -285,22 +298,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         { x: -160, y: -40, z: -20 }
       ],
       edges: [
-        // Box edges
         [0, 1], [1, 2], [2, 3], [3, 0],
         [4, 5], [5, 6], [6, 7], [7, 4],
         [0, 4], [1, 5], [2, 6], [3, 7],
-        // Cantilever edges
         [8, 9], [9, 10], [10, 11], [11, 8],
         [12, 13], [13, 14], [14, 15], [15, 12],
         [8, 12], [9, 13], [10, 14], [11, 15],
-        // Connecting supports
         [2, 10], [3, 11], [6, 14], [7, 15]
       ]
     };
 
-    // 2. Secondary Floating Polyhedron Pavilion
+    // Secondary Floating Polyhedron Pavilion
     const pavilion: WireframeMesh = {
-      center: { x: -220, y: 40, z: 50 },
+      center: { x: -220, y: 30, z: 40 },
       rotX: 0,
       rotY: 0,
       rotZ: 0,
@@ -324,6 +334,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   private initParticles(): void {
     this.particles = [];
+    this.closingParticles = [];
     for (let i = 0; i < 45; i++) {
       this.particles.push({
         x: (Math.random() - 0.5) * 800,
@@ -332,16 +343,23 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         vx: (Math.random() - 0.5) * 0.4,
         vy: (Math.random() - 0.5) * 0.4
       });
+      this.closingParticles.push({
+        x: (Math.random() - 0.5) * 850,
+        y: (Math.random() - 0.5) * 650,
+        z: (Math.random() - 0.5) * 400,
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5
+      });
     }
   }
 
   private drawArchitecturalGrid(ctx: CanvasRenderingContext2D, width: number, height: number, time: number): void {
-    ctx.strokeStyle = 'rgba(255, 255, 255, 0.04)';
+    ctx.strokeStyle = 'rgba(15, 23, 42, 0.05)';
     ctx.lineWidth = 1;
 
     const gridSize = 60;
-    const offsetX = (time * 10) % gridSize;
-    const offsetY = (time * 10) % gridSize;
+    const offsetX = (time * 8) % gridSize;
+    const offsetY = (time * 8) % gridSize;
 
     ctx.beginPath();
     for (let x = offsetX; x < width; x += gridSize) {
@@ -354,22 +372,31 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     }
     ctx.stroke();
 
-    // Subtle radial light around cursor
+    this.drawCursorAura(ctx, width, height);
+  }
+
+  private drawCursorAura(ctx: CanvasRenderingContext2D, width: number, height: number): void {
     if (this.mouseX && this.mouseY) {
-      const grad = ctx.createRadialGradient(this.mouseX, this.mouseY, 10, this.mouseX, this.mouseY, 320);
-      grad.addColorStop(0, 'rgba(100, 180, 255, 0.08)');
-      grad.addColorStop(1, 'rgba(0, 0, 0, 0)');
+      const grad = ctx.createRadialGradient(this.mouseX, this.mouseY, 10, this.mouseX, this.mouseY, 280);
+      grad.addColorStop(0, 'rgba(30, 64, 175, 0.05)');
+      grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
     }
   }
 
-  private drawWireframeMeshes(ctx: CanvasRenderingContext2D, width: number, height: number, time: number): void {
+  private drawWireframeMeshes(
+    ctx: CanvasRenderingContext2D,
+    meshes: WireframeMesh[],
+    width: number,
+    height: number,
+    time: number
+  ): void {
     const cx = width / 2;
     const cy = height / 2;
     const fov = 450;
 
-    this.meshes.forEach((mesh, index) => {
+    meshes.forEach((mesh, index) => {
       const autoRotY = time * 0.15 * (index === 0 ? 1 : -1);
       const autoRotX = Math.sin(time * 0.2) * 0.1;
 
@@ -378,7 +405,6 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // Project vertices to 2D
       const projected: { x: number; y: number; z: number }[] = mesh.vertices.map((v) => {
-        // Offset by mesh center
         let x = v.x + mesh.center.x;
         let y = v.y + mesh.center.y;
         let z = v.z + mesh.center.z;
@@ -404,17 +430,17 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         };
       });
 
-      // Draw Edges
-      ctx.lineWidth = 1.2;
+      // Draw Edges (Crisp graphite lines)
+      ctx.lineWidth = 1.3;
       mesh.edges.forEach(([i, j]) => {
         const p1 = projected[i];
         const p2 = projected[j];
         if (!p1 || !p2) return;
 
         const avgZ = (p1.z + p2.z) / 2;
-        const alpha = Math.max(0.12, Math.min(0.65, 0.45 - avgZ / 800));
+        const alpha = Math.max(0.18, Math.min(0.75, 0.5 - avgZ / 800));
 
-        ctx.strokeStyle = `rgba(220, 235, 255, ${alpha})`;
+        ctx.strokeStyle = `rgba(30, 41, 59, ${alpha})`;
         ctx.beginPath();
         ctx.moveTo(p1.x, p1.y);
         ctx.lineTo(p2.x, p2.y);
@@ -423,8 +449,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
       // Draw Vertex Nodes
       projected.forEach((p) => {
-        const nodeAlpha = Math.max(0.2, Math.min(0.85, 0.6 - p.z / 600));
-        ctx.fillStyle = `rgba(255, 255, 255, ${nodeAlpha})`;
+        const nodeAlpha = Math.max(0.3, Math.min(0.9, 0.7 - p.z / 600));
+        ctx.fillStyle = `rgba(15, 23, 42, ${nodeAlpha})`;
         ctx.beginPath();
         ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
         ctx.fill();
@@ -432,25 +458,30 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
-  private drawParticles(ctx: CanvasRenderingContext2D, width: number, height: number): void {
+  private drawParticles(
+    ctx: CanvasRenderingContext2D,
+    particles: { x: number; y: number; z: number; vx: number; vy: number }[],
+    width: number,
+    height: number
+  ): void {
     const cx = width / 2;
     const cy = height / 2;
 
-    this.particles.forEach((p) => {
+    particles.forEach((p) => {
       p.x += p.vx;
       p.y += p.vy;
 
-      if (p.x < -400) p.x = 400;
-      if (p.x > 400) p.x = -400;
-      if (p.y < -300) p.y = 300;
-      if (p.y > 300) p.y = -300;
+      if (p.x < -425) p.x = 425;
+      if (p.x > 425) p.x = -425;
+      if (p.y < -325) p.y = 325;
+      if (p.y > 325) p.y = -325;
 
-      const px = cx + p.x + this.currentRotY * 120;
-      const py = cy + p.y + this.currentRotX * 120;
+      const px = cx + p.x + this.currentRotY * 130;
+      const py = cy + p.y + this.currentRotX * 130;
 
-      ctx.fillStyle = 'rgba(255, 255, 255, 0.35)';
+      ctx.fillStyle = 'rgba(71, 85, 105, 0.45)';
       ctx.beginPath();
-      ctx.arc(px, py, 1.5, 0, Math.PI * 2);
+      ctx.arc(px, py, 1.8, 0, Math.PI * 2);
       ctx.fill();
     });
   }

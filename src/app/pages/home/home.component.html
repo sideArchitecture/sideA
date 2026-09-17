@@ -1,6 +1,6 @@
 <div class="fullpage-experience-container">
 
-  <!-- Right Floating Vertical Navigation Rail -->
+  <!-- Right Floating Vertical Navigation Rail (Adaptive) -->
   <nav class="side-nav-rail d-none d-lg-flex flex-column align-items-center gap-3" aria-label="Project Navigation">
     <!-- Intro Vision Dot -->
     <div
@@ -30,38 +30,38 @@
       class="nav-dot-wrapper d-flex align-items-center"
       [class.active]="activeSectionIndex === projects.length + 1"
       (click)="scrollToSection(projects.length + 1)"
-      title="Let's Collaborate"
+      title="Connect & Collaborate"
     >
       <span class="nav-label me-2">Connect &amp; Collaborate</span>
       <button class="nav-dot" aria-label="Go to Connect &amp; Collaborate"></button>
     </div>
   </nav>
 
-  <!-- SECTION 0: Interactive 3D Architectural Blueprint Canvas Hero -->
+  <!-- SECTION 0: Interactive 3D Architectural Blueprint Canvas Hero (White BG, Dark/Grey Text, Lines + Mouse Animation) -->
   <section
     #sectionRef
     class="fullscreen-project-section interactive-blueprint-section position-relative d-flex align-items-center justify-content-center"
     data-section-index="0"
   >
-    <!-- Interactive Canvas Background -->
+    <!-- Interactive Canvas Background with 3D wireframe lines & mouse animation -->
     <canvas #blueprintCanvas class="blueprint-interactive-canvas position-absolute top-0 start-0 w-100 h-100"></canvas>
     <div class="blueprint-vignette-scrim"></div>
 
-    <!-- Central Editorial Studio Content -->
-    <div class="container position-relative z-3 text-center text-white hero-intro-content py-5">
+    <!-- Central Editorial Studio Content (White BG / Dark & Grey Text) -->
+    <div class="container position-relative z-3 text-center hero-intro-content py-5">
       <div class="row justify-content-center">
         <div class="col-lg-9 col-xl-8">
           <div class="d-inline-flex align-items-center gap-2 mb-3">
-            <span class="hero-top-badge text-uppercase px-3 py-1 rounded-pill">
+            <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-2 letter-spacing-2 rounded-pill shadow-sm">
               Architecture &bull; Spatial Design &bull; Urbanism
             </span>
           </div>
 
-          <h1 class="display-3 fw-bold hero-main-heading mb-3">
+          <h1 class="display-3 fw-bold text-dark hero-main-heading mb-3">
             Architecture is Storytelling
           </h1>
 
-          <p class="lead text-white-75 mb-4 hero-lead-manifesto mx-auto">
+          <p class="lead text-secondary mb-4 hero-lead-manifesto mx-auto">
             An evolving dialogue between form, light, and soul. We embrace minimalism as an art of precision, sculpting spaces that elevate human experience.
           </p>
 
@@ -69,7 +69,7 @@
             <button
               type="button"
               (click)="scrollToSection(1)"
-              class="btn btn-light rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2 shadow btn-explore-hero"
+              class="btn btn-dark rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2 shadow btn-explore-hero"
             >
               <span>Explore Selected Works</span>
               <i class="bi bi-arrow-down-circle-fill"></i>
@@ -77,7 +77,7 @@
 
             <a
               routerLink="/about"
-              class="btn btn-outline-light rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2"
+              class="btn btn-outline-dark rounded-pill px-4 py-3 fw-medium d-inline-flex align-items-center gap-2"
             >
               <span>About Studio</span>
               <i class="bi bi-arrow-right"></i>
@@ -88,7 +88,7 @@
     </div>
 
     <!-- Scroll Down Prompt -->
-    <div class="scroll-cue position-absolute start-50 translate-middle-x text-center text-white-50" (click)="scrollToSection(1)">
+    <div class="scroll-cue position-absolute start-50 translate-middle-x text-center text-muted" (click)="scrollToSection(1)">
       <span class="scroll-text text-uppercase small letter-spacing-2">Scroll to explore</span>
       <div class="scroll-mouse-icon mt-2">
         <div class="scroll-wheel"></div>
@@ -96,14 +96,14 @@
     </div>
   </section>
 
-  <!-- Fullscreen Project Sections (Index 1 to 5) -->
+  <!-- Fullscreen Project Sections (Index 1 to 5 - FULL LENGTH, NO BORDERS/CARDS, IMMERSIVE) -->
   <section
     #sectionRef
     *ngFor="let project of projects; let i = index"
     class="fullscreen-project-section position-relative"
     [attr.data-section-index]="i + 1"
   >
-    <!-- Background Architectural Image -->
+    <!-- Full-bleed Background Architectural Image -->
     <div class="project-bg-wrapper">
       <img
         [src]="project.imageUrl"
@@ -114,7 +114,7 @@
     </div>
 
     <!-- Section Main Content (Bottom Left) -->
-    <div class="container position-relative h-100 d-flex flex-column justify-content-end pb-5">
+    <div class="container position-relative h-100 d-flex flex-column justify-content-end pb-5 z-3">
       <div class="project-content-card text-white">
         <!-- Metadata Row (Location, Year, Category Tag, Design Style) -->
         <div class="project-meta-row d-flex align-items-center gap-3 flex-wrap mb-2 text-white-50 small">
@@ -164,35 +164,39 @@
     </div>
   </section>
 
-  <!-- Section 6: Closing Collaboration & Architecture Statement -->
+  <!-- Section 6: Closing Collaboration & Architecture Statement (White BG, Dark/Grey Text, Mouse Animation Only) -->
   <section
     #sectionRef
-    class="fullscreen-project-section philosophy-section position-relative d-flex align-items-center"
+    class="fullscreen-project-section philosophy-section position-relative d-flex align-items-center justify-content-center"
     [attr.data-section-index]="projects.length + 1"
   >
-    <div class="container py-5 text-center text-white position-relative z-2">
+    <!-- Interactive Blueprint Canvas for Closing Section (Mouse animation only, no wireframe line meshes) -->
+    <canvas #closingCanvas class="closing-interactive-canvas position-absolute top-0 start-0 w-100 h-100"></canvas>
+    <div class="closing-vignette-scrim"></div>
+
+    <div class="container py-5 text-center position-relative z-3">
       <div class="row justify-content-center">
         <div class="col-lg-8">
-          <span class="badge bg-white bg-opacity-10 text-white text-uppercase px-3 py-2 mb-4 letter-spacing-2">
+          <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-2 mb-4 letter-spacing-2 rounded-pill shadow-sm">
             Studio Ideal Architecture &bull; SIDE A
           </span>
 
-          <blockquote class="display-5 fw-light fst-italic mb-3 philosophy-quote">
+          <blockquote class="display-5 fw-light fst-italic text-dark mb-3 philosophy-quote">
             &ldquo;Less is more.&rdquo;
           </blockquote>
 
-          <p class="text-white-50 lead mb-4">
+          <p class="text-muted lead mb-4">
             &mdash; Ludwig Mies van der Rohe
           </p>
 
-          <p class="lead text-white-75 mb-5 philosophy-text">
+          <p class="lead text-secondary mb-5 philosophy-text">
             Every meaningful structure begins with a conversation. From private sanctuaries to civic landmarks, we transform bold visions into enduring, purposeful spaces. Let&rsquo;s create something extraordinary together.
           </p>
 
           <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
             <a
               routerLink="/about"
-              class="btn btn-light rounded-pill px-5 py-3 fw-medium d-inline-flex align-items-center gap-2 shadow"
+              class="btn btn-dark rounded-pill px-5 py-3 fw-medium d-inline-flex align-items-center gap-2 shadow"
             >
               <span>Connect with Studio</span>
               <i class="bi bi-envelope-paper-heart"></i>
@@ -201,7 +205,7 @@
             <a
               [routerLink]="['/projects']"
               [queryParams]="{ category: 'All' }"
-              class="btn btn-outline-light rounded-pill px-5 py-3 fw-medium d-inline-flex align-items-center gap-2"
+              class="btn btn-outline-dark rounded-pill px-5 py-3 fw-medium d-inline-flex align-items-center gap-2"
             >
               <span>View Full Portfolio</span>
               <i class="bi bi-grid-fill"></i>
