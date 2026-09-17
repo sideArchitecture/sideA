@@ -115,10 +115,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
         Array.isArray(project.category) &&
         project.category.some(c => c.toLowerCase() === this.selectedCategory.toLowerCase())
       );
-<<<<<<< Updated upstream
     }
-=======
->>>>>>> Stashed changes
 
     this.animateCards();
 
@@ -137,14 +134,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
         setTimeout(restoreScrollIfReady, 50);
       }
     };
-<<<<<<< Updated upstream
     setTimeout(restoreScrollIfReady, 50);
-=======
-    setTimeout(() => {
-      this.isLoading = false;
-      restoreScrollIfReady();
-    }, 0);
->>>>>>> Stashed changes
   }
 
   selectCategoryName(category: string): void {
@@ -195,23 +185,12 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
 
   animateCards(): void {
     setTimeout(() => {
-<<<<<<< Updated upstream
       gsap.fromTo(
         '.project-card',
         { opacity: 0, y: 15 },
         { opacity: 1, y: 0, duration: 0.4, ease: 'power2.out', stagger: 0.04 }
       );
     }, 50);
-=======
-      gsap.from('.project-card', {
-        opacity: 0,
-        y: 25,
-        duration: 0.6,
-        ease: 'power2.out',
-        stagger: 0.08
-      });
-    }, 10);
->>>>>>> Stashed changes
   }
 
   computeCategoryCounts(): void {
