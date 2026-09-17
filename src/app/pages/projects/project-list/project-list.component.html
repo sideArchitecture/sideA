@@ -1,115 +1,162 @@
+<div class="container py-4 projects-page-container" *ngIf="!isLoading">
 
-<div class="container mt-5" *ngIf="isLoading == false">
-  <div class="row mb-4">
-    <div class="col-md-4">
-      <label class="form-label fw-semibold mb-2 text-secondary">Search Category / Projects: </label>
+  <!-- Portfolio Header -->
+  <div class="portfolio-header text-center mb-5">
+    <span class="badge bg-secondary bg-opacity-10 text-secondary text-uppercase px-3 py-1 mb-2 tracking-wide">
+      Portfolio &amp; Archives
+    </span>
+    <h1 class="display-5 text-secondary fw-bold portfolio-heading mb-2">
+      Selected Works
+    </h1>
+    <p class="text-muted lead fs-6 mb-0 mx-auto portfolio-subtitle">
+      A curated collection of built architecture, spatial concepts, and master plans.
+    </p>
+  </div>
 
-      <div class="position-relative">
-        <ng-container *ngIf="isSearchProjectsEnabled(); else simpleDropdown">
-          <input
-            type="text"
-            class="form-control"
-            [(ngModel)]="searchTerm"
-            (input)="filterCategoryOptions()"
-            (click)="onInputClick()"
-            placeholder="Search category / projects"
-          />
+  <!-- Filter & Search Bar -->
+  <div class="filter-search-section mb-4">
+    <div class="row align-items-center g-3">
 
+      <!-- Category Filter Pills (Horizontal Bar) -->
+      <div class="col-lg-8">
+        <div class="category-pills-wrapper d-flex align-items-center gap-2 flex-wrap">
+          <button
+            *ngFor="let cat of filteredCategories"
+            type="button"
+            class="btn category-pill-btn"
+            [class.active]="selectedCategory === cat"
+            (click)="selectCategoryName(cat)"
+          >
+            <span>{{ getCategoryTitleOnly(cat) }}</span>
+            <span class="pill-count-badge ms-1" *ngIf="showCounts">
+              {{ getCategoryCountOnly(cat) }}
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Search Bar -->
+      <div class="col-lg-4" *ngIf="isSearchProjectsEnabled()">
+        <div class="position-relative search-box-wrapper">
+          <div class="input-group">
+            <span class="input-group-text bg-white border-end-0 text-muted">
+              <i class="bi bi-search"></i>
+            </span>
+            <input
+              type="text"
+              class="form-control border-start-0 ps-0 shadow-none search-input"
+              [(ngModel)]="searchTerm"
+              (input)="filterCategoryOptions()"
+              (click)="onInputClick()"
+              placeholder="Search projects or categories..."
+            />
+          </div>
+
+          <!-- Autocomplete Dropdown -->
           <ul
-            class="list-group position-absolute w-100 z-3 border rounded shadow-sm"
+            class="list-group position-absolute w-100 z-3 border-0 rounded-3 shadow search-dropdown-menu mt-1"
             *ngIf="showDropdown"
           >
-            <li class="list-group-item fw-bold text-muted" *ngIf="visibleCategories.length > 0">
-<!--              <i class="bi bi-tags me-2"></i>-->
-              Categories:
+            <li class="list-group-item bg-light fw-bold text-muted small py-2" *ngIf="visibleCategories.length > 0">
+              Categories
             </li>
             <ng-container *ngFor="let item of combinedResults">
               <li
-                class="list-group-item list-group-item-action"
+                class="list-group-item list-group-item-action dropdown-item-custom py-2"
                 *ngIf="item.type === 'category'"
                 (click)="selectCategory(item)"
               >
-                <i class="bi bi-tags me-2 text-secondary"></i>
-                {{ getCategoryLabel(item.value) }}
+                <i class="bi bi-tag text-secondary me-2"></i>
+                <span>{{ getCategoryLabel(item.value) }}</span>
               </li>
             </ng-container>
 
-            <li class="list-group-item fw-bold text-muted " *ngIf="visibleProjects.length > 0">
-<!--              <i class="bi bi-building me-2"></i>-->
-              Projects:
+            <li class="list-group-item bg-light fw-bold text-muted small py-2" *ngIf="visibleProjects.length > 0">
+              Projects
             </li>
             <ng-container *ngFor="let item of combinedResults">
               <li
-                class="list-group-item list-group-item-action"
+                class="list-group-item list-group-item-action dropdown-item-custom py-2 d-flex align-items-center justify-content-between"
                 *ngIf="item.type === 'project'"
                 (click)="selectCategory(item)"
               >
-                <i class="bi bi-building me-2 text-secondary"></i>
-
-                {{ item.value.title }}
-
-                <span class="float-end">
-                  <i class="bi bi-arrow-up-right-circle-fill"></i>
-                </span>
+                <div class="text-truncate me-2">
+                  <i class="bi bi-building text-secondary me-2"></i>
+                  <span>{{ item.value.title }}</span>
+                </div>
+                <i class="bi bi-arrow-up-right small text-muted"></i>
               </li>
             </ng-container>
           </ul>
-        </ng-container>
+        </div>
+      </div>
 
-        <ng-template #simpleDropdown>
-          <select class="form-select " [(ngModel)]="selectedCategory" (change)="selectCategory({ type: 'category', value: selectedCategory })">
-            <option *ngFor="let cat of filteredCategories" [value]="cat">
-              {{ getCategoryLabel(cat) }}
-            </option>
-          </select>
-        </ng-template>
+    </div>
+  </div>
+
+  <!-- Projects Grid -->
+  <div class="row g-4" *ngIf="projects.length > 0">
+    <div class="col-lg-4 col-md-6" *ngFor="let project of projects">
+      <div
+        class="card project-card h-100 border-0 rounded-4 shadow-sm"
+        [class.highlighted]="project.id === highlightedProjectId"
+        (click)="navigateToProject(project)"
+      >
+        <!-- Cover Image Showcase -->
+        <div class="project-card-image-wrapper">
+          <img
+            [src]="getCoverImageUrl(project.coverImage)"
+            [alt]="project.title"
+            class="project-card-image"
+          />
+          <div class="card-image-gradient"></div>
+          <span class="card-category-tag badge bg-dark bg-opacity-75 text-white" *ngIf="getPrimaryCategory(project)">
+            {{ getPrimaryCategory(project) | uppercase }}
+          </span>
+        </div>
+
+        <!-- Card Body -->
+        <div class="card-body p-4 d-flex flex-column justify-content-between">
+          <div>
+            <div class="d-flex align-items-center gap-2 text-muted small mb-2" *ngIf="project.location || project.year">
+              <span *ngIf="project.location"><i class="bi bi-geo-alt me-1"></i>{{ project.location }}</span>
+              <span *ngIf="project.year">&bull; {{ project.year }}</span>
+            </div>
+
+            <h5 class="card-title text-secondary fw-bold mb-2 project-card-title">
+              {{ project.title }}
+            </h5>
+
+            <p class="card-text text-muted small project-card-desc mb-3" *ngIf="project.description">
+              {{ project.description }}
+            </p>
+          </div>
+
+          <div class="project-card-footer pt-2 border-top d-flex align-items-center justify-content-between">
+            <span class="explore-text small fw-semibold text-secondary">Explore Project</span>
+            <i class="bi bi-arrow-right text-secondary explore-icon"></i>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col-md-4 mb-4" *ngFor="let project of projects">
-      <div
-        class="card h-100 shadow-sm"
-        [class.highlighted]="project.id === highlightedProjectId"
-        (click)="navigateToProject(project)"
-      >
-        <div class="square-wrapper">
-          <img
-            [src]="getCoverImageUrl(project.coverImage)"
-            [alt]="project.title"
-            class="square-image"
-          />
-        </div>
-        <div class="card-body text-center">
-          <h5 class="card-title text-secondary">{{ project.title  }}</h5>
-        </div>
-      </div>
-    </div>
+  <!-- Empty State -->
+  <div *ngIf="projects.length === 0" class="text-center py-5 my-5 bg-light rounded-4">
+    <i class="bi bi-folder2-open display-3 text-muted mb-3 d-block"></i>
+    <h5 class="text-secondary fw-bold">No Projects Found</h5>
+    <p class="text-muted small mb-4">No projects match the selected criteria.</p>
+    <button class="btn btn-outline-secondary rounded-pill px-4" (click)="selectCategoryName('All')">
+      View All Projects
+    </button>
   </div>
 
 </div>
 
-
-<div *ngIf="isLoading == true">
-
-  <br/>
-  <br/>
-
-
-
-
-
-  <div class="container text-muted"><h5>Loading, Please wait..
-<!--    <span class="spinner-border text-secondary" role="status">-->
-<!--      <span class="visually-hidden">Loading...</span>-->
-<!--    </span>-->
-
-    <div class="spinner-grow text-secondary" role="status">
-      <span class="visually-hidden">Loading...</span>
-    </div>
-
-  </h5>
+<!-- Loading State -->
+<div *ngIf="isLoading" class="container text-center py-5">
+  <div class="spinner-grow text-secondary my-4" role="status">
+    <span class="visually-hidden">Loading...</span>
   </div>
-
+  <p class="text-muted">Loading projects portfolio...</p>
 </div>

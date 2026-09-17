@@ -71,7 +71,7 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
           });
         }
 
-        this.searchTerm = search ?? this.getCategoryLabel(this.selectedCategory);
+        this.searchTerm = search ?? '';
         this.lastConfirmedCategory = this.selectedCategory;
         this.filterProjects();
       });
@@ -79,13 +79,6 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    gsap.from('.card', {
-      opacity: 0,
-      y: 30,
-      duration: 1,
-      ease: 'power2.out',
-      stagger: 0.1
-    });
     this.animateCards();
   }
 
@@ -93,23 +86,19 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     const scrollY = window.scrollY;
     sessionStorage.setItem('scrollRestorePending', 'true');
     sessionStorage.setItem('scrollY', scrollY.toString());
-    sessionStorage.setItem('highlightProjectId', project.id); // ✅ NEW
-    console.log('Stored scrollY:', scrollY);
-    var isUrlBase64Enabled= this.flipperFlagsService.isEnabled('urlBase64');
+    sessionStorage.setItem('highlightProjectId', project.id);
+    const isUrlBase64Enabled = this.flipperFlagsService.isEnabled('urlBase64');
 
-    if(isUrlBase64Enabled){
+    if (isUrlBase64Enabled) {
       this.router.navigate(['/projects', project.slugHex], {
         queryParams: { category: this.selectedCategory }
       });
-    }else{
+    } else {
       this.router.navigate(['/projects', project.slug], {
         queryParams: { category: this.selectedCategory }
       });
     }
-
-
   }
-
 
   filterProjects(): void {
     this.isLoading = true;
@@ -119,62 +108,57 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
         Array.isArray(project.category) &&
         project.category.includes(this.selectedCategory as ProjectCategory)
       );
-    // this.isLoading = false;
 
     this.animateCards();
 
-    // ✅ Wait until .card elements are in the DOM
     const restoreScrollIfReady = () => {
-      const cards = document.querySelectorAll('.card');
+      const cards = document.querySelectorAll('.project-card');
       if (cards.length > 0) {
         const scrollY = sessionStorage.getItem('scrollY');
         const restoreFlag = sessionStorage.getItem('scrollRestorePending');
 
         if (scrollY && restoreFlag === 'true') {
           window.scrollTo({ top: parseInt(scrollY, 10), behavior: 'auto' });
-          console.log('Restored scrollY:', scrollY);
           sessionStorage.removeItem('scrollY');
           sessionStorage.removeItem('scrollRestorePending');
         }
       } else {
-        // Retry after a short delay
         setTimeout(restoreScrollIfReady, 50);
       }
     };
     setTimeout(() => {
       this.isLoading = false;
       restoreScrollIfReady();
-    }, 0); // 300ms minimum loading time
+    }, 0);
+  }
 
-
-    // restoreScrollIfReady();
+  selectCategoryName(category: string): void {
+    this.searchTerm = '';
+    this.showDropdown = false;
+    this.router.navigate(['/projects'], {
+      queryParams: { category }
+    });
   }
 
   selectCategory(item: { type: 'category' | 'project'; value: any }): void {
     if (item.type === 'category') {
-      const category = item.value;
-      this.router.navigate(['/projects'], {
-        queryParams: { category }
-      });
+      this.selectCategoryName(item.value);
     } else {
       const scrollY = window.scrollY;
       sessionStorage.setItem('scrollRestorePending', 'true');
       sessionStorage.setItem('scrollY', scrollY.toString());
-      console.log('Stored scrollY:', scrollY);
 
-      var isUrlBase64Enabled= this.flipperFlagsService.isEnabled('urlBase64');
-
-      if(isUrlBase64Enabled){
+      const isUrlBase64Enabled = this.flipperFlagsService.isEnabled('urlBase64');
+      if (isUrlBase64Enabled) {
         this.router.navigate(['/projects', item.value.slugHex], {
           queryParams: { category: this.selectedCategory }
         });
-      }else{
+      } else {
         this.router.navigate(['/projects', item.value.slug], {
           queryParams: { category: this.selectedCategory }
         });
       }
     }
-
     this.showDropdown = false;
   }
 
@@ -182,22 +166,28 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     if (!url) return '';
     const isDev = !environment.production;
     const localBase = environment.imageBaseUrl;
-    // const localBase = 'http://localhost:8081/projects';
     return isDev
       ? url.replace('https://sidearchitecture.github.io/sideAImages/images/projects', localBase)
       : url;
   }
 
+  getPrimaryCategory(project: Project): string {
+    if (!project.category || !project.category.length) return '';
+    const nonFeatured = project.category.find(c => c !== 'featured');
+    const cat = nonFeatured || project.category[0];
+    return cat ? cat.replace(/_/g, ' ') : '';
+  }
+
   animateCards(): void {
     setTimeout(() => {
-      gsap.from('.card', {
+      gsap.from('.project-card', {
         opacity: 0,
-        y: 30,
-        duration: 1,
+        y: 25,
+        duration: 0.6,
         ease: 'power2.out',
-        stagger: 0.1
+        stagger: 0.08
       });
-    }, 0);
+    }, 10);
   }
 
   computeCategoryCounts(): void {
@@ -226,7 +216,6 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   onInputClick(): void {
-    this.searchTerm = '';
     this.visibleCategories = [...this.filteredCategories];
     this.visibleProjects = [];
 
@@ -244,7 +233,6 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
       this.getCategoryLabel(cat).toLowerCase().includes(term)
     );
 
-    // ✅ Only search projects when user typed something
     const matchedProjects = term
       ? this.allProjects.filter(project =>
         project.title.toLowerCase().includes(term)
@@ -267,12 +255,11 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.showDropdown = true;
   }
+
   handleOutsideClick(event: MouseEvent): void {
     const target = event.target as HTMLElement;
-    if (!target.closest('.position-relative')) {
+    if (!target.closest('.search-box-wrapper')) {
       this.showDropdown = false;
-      this.searchTerm = this.getCategoryLabel(this.lastConfirmedCategory);
-      this.selectedCategory = this.lastConfirmedCategory;
     }
   }
 
@@ -291,6 +278,19 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
     return `${titleCase} (${count})`;
   }
 
+  getCategoryTitleOnly(cat: string): string {
+    if (cat === 'All') return 'All Projects';
+    return cat
+      .toLowerCase()
+      .split(' ')
+      .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+      .join(' ');
+  }
+
+  getCategoryCountOnly(cat: string): number {
+    return this.categoryCounts[cat] ?? 0;
+  }
+
   getSortIndexForCategory(cat: string): number {
     const matchingProject = this.allProjects.find(p =>
       p.projectPath?.toLowerCase().includes(cat.toLowerCase())
@@ -307,9 +307,6 @@ export class ProjectListComponent implements OnInit, OnDestroy, AfterViewInit {
   isSearchProjectsEnabled(): boolean {
     return this.flipperFlagsService.isEnabled('searchProjects');
   }
-
-
-
 
   ngOnDestroy(): void {
     document.removeEventListener('click', this.handleOutsideClick.bind(this));
