@@ -307,16 +307,10 @@
   }
 }
 
-<<<<<<< Updated upstream
 // Section 6: Philosophy / Closing Section (White Background, Dark/Grey Text, Mouse Animation Only)
 .philosophy-section {
   background: #ffffff;
   justify-content: center !important;
-=======
-// Philosophy / Closing Section (Section 6 - Light Theme with Interactive 3D Canvas)
-.philosophy-section {
-  background: #ffffff;
->>>>>>> Stashed changes
   cursor: crosshair;
 
   .closing-interactive-canvas {
@@ -332,11 +326,7 @@
       ellipse at center,
       transparent 0%,
       rgba(255, 255, 255, 0.3) 55%,
-<<<<<<< Updated upstream
       rgba(255, 255, 255, 0.85) 100%
-=======
-      rgba(255, 255, 255, 0.82) 100%
->>>>>>> Stashed changes
     );
     pointer-events: none;
   }

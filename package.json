@@ -5,13 +5,12 @@
     "ng": "ng",
     "start": "ng serve",
     "startdev": "node generate_manifest.js && ng serve --host 0.0.0.0",
-
-
     "startdefault": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
-    "build:prod": "ng build --configuration production --output-path docs --base-href / && cp src/CNAME docs/CNAME"
+    "prerender": "node prerender-ssg.js",
+    "build:prod": "ng build --configuration production --output-path docs --base-href / && cp src/CNAME docs/CNAME && node prerender-ssg.js"
   },
   "private": true,
   "dependencies": {
@@ -48,5 +47,3 @@
     "typescript": "~4.7.2"
   }
 }
-
-
