@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
-import {PeopleComponent} from "./pages/people/people.component";
-import {ProjectsComponent} from "./pages/projects/projects.component";
+import { PeopleComponent } from './pages/people/people.component';
+import { ProjectsComponent } from './pages/projects/projects.component';
 import { ProjectDetailComponent } from './pages/projects/project-detail/project-detail.component';
-
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -16,13 +15,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    useHash: true ,
-
-
-    // scrollPositionRestoration: 'enabled', // ✅ restores scroll on back/forward
-    // anchorScrolling: 'enabled' // optional: enables fragment scrolling
-  })],
+  imports: [
+    RouterModule.forRoot(routes, {
+      useHash: false,
+      anchorScrolling: 'enabled'
+    })
+  ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

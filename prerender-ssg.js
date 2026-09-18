@@ -5,7 +5,8 @@ const https = require('https');
 
 const OUTPUT_DIR = path.join(__dirname, 'docs');
 const BASE_INDEX_PATH = path.join(OUTPUT_DIR, 'index.html');
-const MANIFEST_URL = 'https://sidearchitecture.github.io/sideAImages/images/projects/manifest.json';
+const LOCAL_MANIFEST_PATH = path.resolve(__dirname, '../sideAImages/images/projects/manifest.json');
+const REMOTE_MANIFEST_URL = 'https://sidearchitecture.github.io/sideAImages/images/projects/manifest.json';
 const BASE_DOMAIN = 'https://sidea.co.in';
 const DEFAULT_IMAGE = 'https://sidearchitecture.github.io/sideAImages/images/projects/01-featured/HOSPITALITY-001-ADALI-RESORT/cover.jpg';
 
@@ -19,7 +20,7 @@ function fetchRemoteManifest(url) {
           const parsed = JSON.parse(data);
           resolve(parsed);
         } catch (e) {
-          console.warn('⚠️ Could not parse remote manifest JSON, using fallback data.');
+          console.warn('⚠️ Could not parse remote manifest JSON.');
           resolve([]);
         }
       });
@@ -28,6 +29,24 @@ function fetchRemoteManifest(url) {
       resolve([]);
     });
   });
+}
+
+async function getProjectManifest() {
+  // 1. Check local sideAImages first
+  if (fs.existsSync(LOCAL_MANIFEST_PATH)) {
+    try {
+      const raw = fs.readFileSync(LOCAL_MANIFEST_PATH, 'utf8');
+      const data = JSON.parse(raw);
+      console.log(`📁 Loaded local manifest from sideAImages (${data.length} projects).`);
+      return data;
+    } catch (e) {
+      console.warn('⚠️ Could not read local manifest, falling back to remote URL...');
+    }
+  }
+
+  // 2. Fallback to remote manifest
+  console.log(`🌐 Fetching remote manifest from ${REMOTE_MANIFEST_URL}...`);
+  return await fetchRemoteManifest(REMOTE_MANIFEST_URL);
 }
 
 function escapeHtml(text) {
@@ -40,8 +59,15 @@ function escapeHtml(text) {
     .replace(/>/g, '&gt;');
 }
 
+function fixAssetPaths(html) {
+  // Ensure all script src, link href, and image src use absolute root-relative paths /
+  return html
+    .replace(/src="(?!\/|http:\/\/|https:\/\/|data:)([^"]+)"/g, 'src="/$1"')
+    .replace(/href="(?!\/|http:\/\/|https:\/\/|#|mailto:|tel:)([^"]+)"/g, 'href="/$1"');
+}
+
 function generateHtml(templateHtml, meta) {
-  let html = templateHtml;
+  let html = fixAssetPaths(templateHtml);
 
   // Title
   if (meta.title) {
@@ -104,7 +130,9 @@ async function runSSG() {
     process.exit(1);
   }
 
-  const baseHtml = fs.readFileSync(BASE_INDEX_PATH, 'utf8');
+  let baseHtml = fs.readFileSync(BASE_INDEX_PATH, 'utf8');
+  baseHtml = fixAssetPaths(baseHtml);
+  fs.writeFileSync(BASE_INDEX_PATH, baseHtml, 'utf8');
 
   // 1. Pre-render About Page
   const aboutHtml = generateHtml(baseHtml, {
@@ -129,8 +157,7 @@ async function runSSG() {
   console.log('✅ Generated static route: /projects');
 
   // 3. Pre-render Individual Project Pages for Social Media Sharing
-  const manifest = await fetchRemoteManifest(MANIFEST_URL);
-  console.log(`📦 Fetched ${manifest.length} projects for static pre-rendering.`);
+  const manifest = await getProjectManifest();
 
   let count = 0;
   for (const project of manifest) {
