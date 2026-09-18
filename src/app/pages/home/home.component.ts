@@ -51,7 +51,7 @@ interface WireframeMesh {
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChildren('sectionRef') sectionRefs!: QueryList<ElementRef<HTMLElement>>;
+  @ViewChildren('sectionRef') sectionRefs!: QueryList<ElementRef<HTMLElement>> | undefined;
   @ViewChild('blueprintCanvas', { static: false }) canvasRef?: ElementRef<HTMLCanvasElement>;
   @ViewChild('closingCanvas', { static: false }) closingCanvasRef?: ElementRef<HTMLCanvasElement>;
 
@@ -71,8 +71,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private closingParticles: { x: number; y: number; z: number; vx: number; vy: number }[] = [];
 
   projects: FullpageProject[] = [
-    {
-      id: 'HOSPITALITY-001-ADALI-RESORT',
+    {      id: 'HOSPITALITY-001-ADALI-RESORT',
       number: '01',
       title: 'Adali Cultural Center',
       category: 'Institutional & Hospitality',
@@ -154,7 +153,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.titleService.setTitle('Home | SideA Architecture');
+    this.titleService.setTitle('SIDE A Architecture | Studio I Deal Architecture');
 
     // Handle return navigation (via on-page Back button or browser Back button)
     this.route.queryParamMap.subscribe((params) => {
