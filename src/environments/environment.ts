@@ -5,15 +5,9 @@
 export const environment = {
   production: false,
   flipperFlagsFile: '/assets/flipper-model.dev.json',
-  imageBaseUrl: 'http://192.168.68.107:8081/projects'
-  // imageBaseUrl: 'http://10.156.202.166:8081/projects'
-  // imageBaseUrl: 'http://192.168.68.107:8081/projects'
-  // imageBaseUrl: 'http://localhost:8081/projects'
+  imageBaseUrl: 'http://localhost:8081/projects'
 };
 
-
-// http://192.168.68.107:8081/projects
-//   http://localhost:8081/projects
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
