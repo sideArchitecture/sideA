@@ -67,6 +67,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   private currentRotX = 0;
   private currentRotY = 0;
   private meshes: WireframeMesh[] = [];
+  private closingMeshes: WireframeMesh[] = [];
   private particles: { x: number; y: number; z: number; vx: number; vy: number }[] = [];
   private closingParticles: { x: number; y: number; z: number; vx: number; vy: number }[] = [];
 
@@ -180,6 +181,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     this.setupIntersectionObserver();
     this.initInteractiveCanvases();
+<<<<<<< Updated upstream
 
     // Secondary check in case view elements initialize after route subscription
     const storedSection = sessionStorage.getItem('navigated_from_home_section');
@@ -192,6 +194,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         }, 220);
       }
     }
+=======
+>>>>>>> Stashed changes
   }
 
   ngOnDestroy(): void {
@@ -244,9 +248,14 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     });
   }
 
+<<<<<<< Updated upstream
   // --- Interactive Architectural 3D Canvases ---
+=======
+  // --- Interactive Architectural 3D Canvases (Hero & Closing Section) ---
+>>>>>>> Stashed changes
   private initInteractiveCanvases(): void {
     this.initMeshes();
+    this.initClosingMeshes();
     this.initParticles();
 
     const canvas1 = this.canvasRef?.nativeElement;
@@ -285,7 +294,11 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         this.currentRotX += (this.targetRotX - this.currentRotX) * 0.05;
         this.currentRotY += (this.targetRotY - this.currentRotY) * 0.05;
 
+<<<<<<< Updated upstream
         // Render Canvas 1 (Hero: Blueprint Grid + Offset Side 3D Wireframe Lines + Mouse Tracking)
+=======
+        // Render Canvas 1 (Hero)
+>>>>>>> Stashed changes
         if (canvas1) {
           const ctx1 = canvas1.getContext('2d');
           if (ctx1) {
@@ -296,12 +309,21 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         }
 
+<<<<<<< Updated upstream
         // Render Canvas 2 (Closing: Mouse Animation with Floating Coordinate Particles & Ambient Cursor Light only)
+=======
+        // Render Canvas 2 (Closing "Less is More" Section)
+>>>>>>> Stashed changes
         if (canvas2) {
           const ctx2 = canvas2.getContext('2d');
           if (ctx2) {
             ctx2.clearRect(0, 0, canvas2.width, canvas2.height);
+<<<<<<< Updated upstream
             this.drawCursorAura(ctx2, canvas2.width, canvas2.height);
+=======
+            this.drawArchitecturalGrid(ctx2, canvas2.width, canvas2.height, -time);
+            this.drawWireframeMeshes(ctx2, this.closingMeshes, canvas2.width, canvas2.height, time);
+>>>>>>> Stashed changes
             this.drawParticles(ctx2, this.closingParticles, canvas2.width, canvas2.height);
           }
         }
@@ -320,6 +342,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       rotY: 0,
       rotZ: 0,
       vertices: [
+<<<<<<< Updated upstream
         { x: -90, y: -150, z: -70 },
         { x: 90, y: -150, z: -70 },
         { x: 90, y: 150, z: -70 },
@@ -336,6 +359,24 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         { x: 140, y: -70, z: -20 },
         { x: 140, y: -30, z: -20 },
         { x: -140, y: -30, z: -20 }
+=======
+        { x: -100, y: -160, z: -80 },
+        { x: 100, y: -160, z: -80 },
+        { x: 100, y: 160, z: -80 },
+        { x: -100, y: 160, z: -80 },
+        { x: -100, y: -160, z: 80 },
+        { x: 100, y: -160, z: 80 },
+        { x: 100, y: 160, z: 80 },
+        { x: -100, y: 160, z: 80 },
+        { x: -160, y: -80, z: 140 },
+        { x: 160, y: -80, z: 140 },
+        { x: 160, y: -40, z: 140 },
+        { x: -160, y: -40, z: 140 },
+        { x: -160, y: -80, z: -20 },
+        { x: 160, y: -80, z: -20 },
+        { x: 160, y: -40, z: -20 },
+        { x: -160, y: -40, z: -20 }
+>>>>>>> Stashed changes
       ],
       edges: [
         [0, 1], [1, 2], [2, 3], [3, 0],
@@ -371,6 +412,70 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
     this.meshes = [tower, pavilion];
   }
 
+  private initClosingMeshes(): void {
+    // Geodesic Icosahedron & Intersecting Spatial Rings for "Less is More" Section
+    const phi = (1 + Math.sqrt(5)) / 2;
+    const s = 100;
+
+    const rawVertices = [
+      { x: -s, y: phi * s, z: 0 },
+      { x: s, y: phi * s, z: 0 },
+      { x: -s, y: -phi * s, z: 0 },
+      { x: s, y: -phi * s, z: 0 },
+      { x: 0, y: -s, z: phi * s },
+      { x: 0, y: s, z: phi * s },
+      { x: 0, y: -s, z: -phi * s },
+      { x: 0, y: s, z: -phi * s },
+      { x: phi * s, y: 0, z: -s },
+      { x: phi * s, y: 0, z: s },
+      { x: -phi * s, y: 0, z: -s },
+      { x: -phi * s, y: 0, z: s }
+    ];
+
+    const rawEdges: [number, number][] = [
+      [0, 11], [0, 5], [0, 1], [0, 7], [0, 10],
+      [1, 5], [1, 9], [1, 8], [1, 7],
+      [2, 11], [2, 10], [2, 6], [2, 3], [2, 4],
+      [3, 4], [3, 9], [3, 8], [3, 6],
+      [4, 5], [4, 9], [4, 11],
+      [5, 9], [5, 11],
+      [6, 7], [6, 8], [6, 10],
+      [7, 8], [7, 10],
+      [8, 9],
+      [10, 11]
+    ];
+
+    const geodesicDome: WireframeMesh = {
+      center: { x: 0, y: 0, z: 0 },
+      rotX: 0,
+      rotY: 0,
+      rotZ: 0,
+      vertices: rawVertices,
+      edges: rawEdges
+    };
+
+    // Peripheral Spatial Pavilion Structure
+    const spatialArch: WireframeMesh = {
+      center: { x: 260, y: -40, z: -50 },
+      rotX: 0,
+      rotY: 0,
+      rotZ: 0,
+      vertices: [
+        { x: -70, y: -120, z: -70 },
+        { x: 70, y: -120, z: -70 },
+        { x: 70, y: 120, z: -70 },
+        { x: -70, y: 120, z: -70 },
+        { x: 0, y: 0, z: 120 }
+      ],
+      edges: [
+        [0, 1], [1, 2], [2, 3], [3, 0],
+        [0, 4], [1, 4], [2, 4], [3, 4]
+      ]
+    };
+
+    this.closingMeshes = [geodesicDome, spatialArch];
+  }
+
   private initParticles(): void {
     this.particles = [];
     this.closingParticles = [];
@@ -383,11 +488,19 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         vy: (Math.random() - 0.5) * 0.4
       });
       this.closingParticles.push({
+<<<<<<< Updated upstream
         x: (Math.random() - 0.5) * 850,
         y: (Math.random() - 0.5) * 650,
         z: (Math.random() - 0.5) * 400,
         vx: (Math.random() - 0.5) * 0.5,
         vy: (Math.random() - 0.5) * 0.5
+=======
+        x: (Math.random() - 0.5) * 800,
+        y: (Math.random() - 0.5) * 600,
+        z: (Math.random() - 0.5) * 400,
+        vx: (Math.random() - 0.5) * 0.4,
+        vy: (Math.random() - 0.5) * 0.4
+>>>>>>> Stashed changes
       });
     }
   }
@@ -410,6 +523,7 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       ctx.lineTo(width, y);
     }
     ctx.stroke();
+<<<<<<< Updated upstream
 
     this.drawCursorAura(ctx, width, height);
   }
@@ -422,6 +536,8 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
       ctx.fillStyle = grad;
       ctx.fillRect(0, 0, width, height);
     }
+=======
+>>>>>>> Stashed changes
   }
 
   private drawWireframeMeshes(
@@ -469,7 +585,12 @@ export class HomeComponent implements OnInit, AfterViewInit, OnDestroy {
         };
       });
 
+<<<<<<< Updated upstream
       ctx.lineWidth = 1.2;
+=======
+      // Draw Edges
+      ctx.lineWidth = 1.3;
+>>>>>>> Stashed changes
       mesh.edges.forEach(([i, j]) => {
         const p1 = projected[i];
         const p2 = projected[j];
